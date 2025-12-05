@@ -1,8 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
   // Configuración Multi-Zone: Esta es la aplicación principal (router central)
   async rewrites() {
     const isProduction = process.env.NODE_ENV === 'production';
