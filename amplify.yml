@@ -10,6 +10,7 @@ applications:
   # APLICACIÓN PRINCIPAL: WEB (Router Central)
   # ==========================================
   - appRoot: apps/web
+    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -22,12 +23,9 @@ applications:
           commands:
             # Build de la aplicación web usando Turbo
             - pnpm turbo run build --filter=web
-            # Copiar archivos necesarios para standalone
-            - cp -r .next/static .next/standalone/apps/web/.next/static
-            - cp -r public .next/standalone/apps/web/public
       artifacts:
-        # Output de Next.js standalone
-        baseDirectory: .next/standalone
+        # Output de Next.js
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
@@ -49,6 +47,7 @@ applications:
   # APLICACIÓN SECUNDARIA: DOCS (Zona Docs)
   # ==========================================
   - appRoot: apps/docs
+    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -61,12 +60,9 @@ applications:
           commands:
             # Build de la aplicación docs usando Turbo
             - pnpm turbo run build --filter=docs
-            # Copiar archivos necesarios para standalone
-            - cp -r .next/static .next/standalone/apps/docs/.next/static
-            - cp -r public .next/standalone/apps/docs/public
       artifacts:
-        # Output de Next.js standalone
-        baseDirectory: .next/standalone
+        # Output de Next.js
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
