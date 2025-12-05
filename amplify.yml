@@ -1,0 +1,77 @@
+# ============================================
+# AWS AMPLIFY BUILD CONFIGURATION
+# Para arquitectura Multi-Zone con Turborepo
+# ============================================
+
+version: 1
+
+applications:
+  # ==========================================
+  # APLICACIÓN PRINCIPAL: WEB (Router Central)
+  # ==========================================
+  - appRoot: apps/web
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            # Instalar pnpm globalmente con la versión específica del proyecto
+            - npm install -g pnpm@10.19.0
+            # Instalar todas las dependencias del monorepo
+            - pnpm install --frozen-lockfile
+        build:
+          commands:
+            # Build de la aplicación web usando Turbo
+            - pnpm turbo run build --filter=web
+      artifacts:
+        # Output de Next.js está en .next dentro de apps/web
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          # Cache de node_modules del workspace
+          - node_modules/**/*
+          # Cache de Next.js
+          - .next/cache/**/*
+          # Cache de pnpm store
+          - ../../.pnpm-store/**/*
+      # Variables de entorno para producción
+      environmentVariables:
+        - name: DOCS_DOMAIN
+          value: https://docs.tu-dominio.amplifyapp.com
+        - name: ALLOWED_ORIGINS
+          value: tu-dominio.amplifyapp.com
+
+  # ==========================================
+  # APLICACIÓN SECUNDARIA: DOCS (Zona Docs)
+  # ==========================================
+  - appRoot: apps/docs
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            # Instalar pnpm globalmente con la versión específica del proyecto
+            - npm install -g pnpm@10.19.0
+            # Instalar todas las dependencias del monorepo
+            - pnpm install --frozen-lockfile
+        build:
+          commands:
+            # Build de la aplicación docs usando Turbo
+            - pnpm turbo run build --filter=docs
+      artifacts:
+        # Output de Next.js está en .next dentro de apps/docs
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          # Cache de node_modules del workspace
+          - node_modules/**/*
+          # Cache de Next.js
+          - .next/cache/**/*
+          # Cache de pnpm store
+          - ../../.pnpm-store/**/*
+      # Variables de entorno para producción
+      environmentVariables:
+        - name: ALLOWED_ORIGINS
+          value: tu-dominio.amplifyapp.com
