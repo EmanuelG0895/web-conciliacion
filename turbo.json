@@ -6,7 +6,7 @@
       "dependsOn": ["^build"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["DOCS_DOMAIN", "ALLOWED_ORIGINS"]
+      "env": ["NODE_ENV", "DOCS_DOMAIN", "ALLOWED_ORIGINS"]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -17,7 +17,7 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["DOCS_DOMAIN", "ALLOWED_ORIGINS"]
+      "env": ["NODE_ENV", "DOCS_DOMAIN", "ALLOWED_ORIGINS"]
     }
   }
 }
