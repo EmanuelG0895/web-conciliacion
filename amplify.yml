@@ -22,9 +22,12 @@ applications:
           commands:
             # Build de la aplicación web usando Turbo
             - pnpm turbo run build --filter=web
+            # Copiar archivos necesarios para standalone
+            - cp -r .next/static .next/standalone/apps/web/.next/static
+            - cp -r public .next/standalone/apps/web/public
       artifacts:
-        # Output de Next.js está en .next dentro de apps/web
-        baseDirectory: .next
+        # Output de Next.js standalone
+        baseDirectory: .next/standalone
         files:
           - '**/*'
       cache:
@@ -58,9 +61,12 @@ applications:
           commands:
             # Build de la aplicación docs usando Turbo
             - pnpm turbo run build --filter=docs
+            # Copiar archivos necesarios para standalone
+            - cp -r .next/static .next/standalone/apps/docs/.next/static
+            - cp -r public .next/standalone/apps/docs/public
       artifacts:
-        # Output de Next.js está en .next dentro de apps/docs
-        baseDirectory: .next
+        # Output de Next.js standalone
+        baseDirectory: .next/standalone
         files:
           - '**/*'
       cache:

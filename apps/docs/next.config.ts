@@ -1,6 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  // Configuración necesaria para AWS Amplify
+  output: 'standalone',
+  
   typescript: {
     ignoreBuildErrors: true,
   },
