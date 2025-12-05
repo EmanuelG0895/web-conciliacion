@@ -10,7 +10,6 @@ applications:
   # APLICACIÓN PRINCIPAL: WEB (Router Central)
   # ==========================================
   - appRoot: apps/web
-    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -18,13 +17,17 @@ applications:
             # Instalar pnpm globalmente con la versión específica del proyecto
             - npm install -g pnpm@10.19.0
             # Instalar todas las dependencias del monorepo
-            - pnpm install --frozen-lockfile
+            - cd ../.. && pnpm install --frozen-lockfile
         build:
           commands:
-            # Build de la aplicación web usando Turbo
-            - pnpm turbo run build --filter=web
+            # Build de la aplicación web usando Turbo desde la raíz
+            - cd ../.. && pnpm turbo run build --filter=web
+        postBuild:
+          commands:
+            # Verificar que el build se completó
+            - ls -la .next/
+            - echo "Build completed for web app"
       artifacts:
-        # Output de Next.js
         baseDirectory: .next
         files:
           - '**/*'
@@ -47,7 +50,6 @@ applications:
   # APLICACIÓN SECUNDARIA: DOCS (Zona Docs)
   # ==========================================
   - appRoot: apps/docs
-    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -55,13 +57,12 @@ applications:
             # Instalar pnpm globalmente con la versión específica del proyecto
             - npm install -g pnpm@10.19.0
             # Instalar todas las dependencias del monorepo
-            - pnpm install --frozen-lockfile
+            - cd ../.. && pnpm install --frozen-lockfile
         build:
           commands:
-            # Build de la aplicación docs usando Turbo
-            - pnpm turbo run build --filter=docs
+            # Build de la aplicación docs usando Turbo desde la raíz
+            - cd ../.. && pnpm turbo run build --filter=docs
       artifacts:
-        # Output de Next.js
         baseDirectory: .next
         files:
           - '**/*'
