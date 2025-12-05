@@ -14,34 +14,34 @@ applications:
       phases:
         preBuild:
           commands:
-            # Volver a la raíz del repositorio
-            - cd $CODEBUILD_SRC_DIR
             # Instalar pnpm globalmente
             - npm install -g pnpm@10.19.0
+            # Navegar a la raíz del repositorio clonado
+            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
             # Instalar dependencias desde la raíz
             - pnpm install --frozen-lockfile
         build:
           commands:
-            # Asegurarse de estar en la raíz
-            - cd $CODEBUILD_SRC_DIR
+            # Navegar a la raíz del repositorio
+            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
             # Build usando turbo desde la raíz
             - pnpm turbo run build --filter=web
         postBuild:
           commands:
             - echo "Build completed for web app"
-            - ls -la $CODEBUILD_SRC_DIR/apps/web/.next/
+            - ls -la $CODEBUILD_SRC_DIR/limpieza-proyecto/apps/web/.next/
       artifacts:
-        baseDirectory: apps/web/.next
+        baseDirectory: limpieza-proyecto/apps/web/.next
         files:
           - '**/*'
       cache:
         paths:
           # Cache de node_modules del workspace
-          - node_modules/**/*
+          - limpieza-proyecto/node_modules/**/*
           # Cache de Next.js
-          - .next/cache/**/*
+          - limpieza-proyecto/apps/web/.next/cache/**/*
           # Cache de pnpm store
-          - ../../.pnpm-store/**/*
+          - limpieza-proyecto/.pnpm-store/**/*
       # Variables de entorno para producción
       environmentVariables:
         - name: DOCS_DOMAIN
@@ -57,30 +57,30 @@ applications:
       phases:
         preBuild:
           commands:
-            # Volver a la raíz del repositorio
-            - cd $CODEBUILD_SRC_DIR
             # Instalar pnpm globalmente
             - npm install -g pnpm@10.19.0
+            # Navegar a la raíz del repositorio clonado
+            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
             # Instalar dependencias desde la raíz
             - pnpm install --frozen-lockfile
         build:
           commands:
-            # Asegurarse de estar en la raíz
-            - cd $CODEBUILD_SRC_DIR
+            # Navegar a la raíz del repositorio
+            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
             # Build usando turbo desde la raíz
             - pnpm turbo run build --filter=docs
       artifacts:
-        baseDirectory: apps/docs/.next
+        baseDirectory: limpieza-proyecto/apps/docs/.next
         files:
           - '**/*'
       cache:
         paths:
           # Cache de node_modules del workspace
-          - node_modules/**/*
+          - limpieza-proyecto/node_modules/**/*
           # Cache de Next.js
-          - .next/cache/**/*
+          - limpieza-proyecto/apps/docs/.next/cache/**/*
           # Cache de pnpm store
-          - ../../.pnpm-store/**/*
+          - limpieza-proyecto/.pnpm-store/**/*
       # Variables de entorno para producción
       environmentVariables:
         - name: ALLOWED_ORIGINS
