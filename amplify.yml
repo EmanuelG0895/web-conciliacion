@@ -31,7 +31,7 @@ applications:
             - echo "Build completed for web app"
             - ls -la $CODEBUILD_SRC_DIR/limpieza-proyecto/apps/web/.next/
       artifacts:
-        baseDirectory: limpieza-proyecto/apps/web/.next
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
@@ -70,7 +70,7 @@ applications:
             # Build usando turbo desde la raíz
             - pnpm turbo run build --filter=docs
       artifacts:
-        baseDirectory: limpieza-proyecto/apps/docs/.next
+        baseDirectory: .next
         files:
           - '**/*'
       cache:
