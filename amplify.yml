@@ -11,10 +11,10 @@ applications:
         preBuild:
           commands:
             - npm install -g pnpm@10.19.0
-            - cd ../.. && pnpm install
+            - cd $CODEBUILD_SRC_DIR && pnpm install
         build:
           commands:
-            - cd ../.. && pnpm turbo run build --filter=web
+            - cd $CODEBUILD_SRC_DIR && pnpm turbo run build --filter=web
       artifacts:
         baseDirectory: .next
         files:
@@ -34,10 +34,10 @@ applications:
         preBuild:
           commands:
             - npm install -g pnpm@10.19.0
-            - cd ../.. && pnpm install
+            - cd $CODEBUILD_SRC_DIR && pnpm install
         build:
           commands:
-            - cd ../.. && pnpm turbo run build --filter=docs
+            - cd $CODEBUILD_SRC_DIR && pnpm turbo run build --filter=docs
       artifacts:
         baseDirectory: .next
         files:
