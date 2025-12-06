@@ -1,9 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configuración Multi-Zone: zona secundaria
+  // Multi-Zone: Zona secundaria para /docs
   basePath: '/docs',
-  assetPrefix: '/docs-static',
   
   // Optimizaciones generales
   compress: true,
