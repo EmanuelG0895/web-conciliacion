@@ -5,18 +5,20 @@ const nextConfig: NextConfig = {
   
   // Configuración de rewrites para enrutar a otras zonas
   async rewrites() {
+    const docsUrl = process.env.DOCS_DOMAIN || 'http://localhost:3000';
+    
     return [
       {
         source: '/docs',
-        destination: `${process.env.DOCS_DOMAIN}/docs`,
+        destination: `${docsUrl}/docs`,
       },
       {
         source: '/docs/:path+',
-        destination: `${process.env.DOCS_DOMAIN}/docs/:path+`,
+        destination: `${docsUrl}/docs/:path+`,
       },
       {
         source: '/docs-static/:path+',
-        destination: `${process.env.DOCS_DOMAIN}/docs-static/:path+`,
+        destination: `${docsUrl}/docs-static/:path+`,
       },
     ];
   },
