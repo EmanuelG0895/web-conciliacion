@@ -1,6 +1,6 @@
 # ============================================
 # AWS AMPLIFY BUILD CONFIGURATION
-# Para arquitectura Multi-Zone con Turborepo
+# Para Turborepo + pnpm según documentación oficial
 # ============================================
 
 version: 1
@@ -10,39 +10,26 @@ applications:
   # APLICACIÓN PRINCIPAL: WEB (Router Central)
   # ==========================================
   - appRoot: apps/web
-    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
           commands:
             # Instalar pnpm globalmente
             - npm install -g pnpm@10.19.0
-            # Navegar a la raíz del repositorio clonado
-            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
-            # Instalar dependencias desde la raíz
-            - pnpm install --frozen-lockfile
+            # Instalar dependencias del monorepo
+            - pnpm install
         build:
           commands:
-            # Navegar a la raíz del repositorio
-            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
-            # Build usando turbo desde la raíz
-            - pnpm turbo run build --filter=web
-        postBuild:
-          commands:
-            - echo "Build completed for web app"
-            - ls -la $CODEBUILD_SRC_DIR/limpieza-proyecto/apps/web/.next/
+            # Ejecutar turbo build solo para la app web
+            - pnpm exec turbo run build --filter=web
       artifacts:
+        # Directorio de salida relativo a appRoot (apps/web)
         baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
-          # Cache de node_modules del workspace
-          - limpieza-proyecto/node_modules/**/*
-          # Cache de Next.js
-          - limpieza-proyecto/apps/web/.next/cache/**/*
-          # Cache de pnpm store
-          - limpieza-proyecto/.pnpm-store/**/*
+          - node_modules/**/*
       # Variables de entorno para producción
       environmentVariables:
         - name: DOCS_DOMAIN
@@ -54,36 +41,28 @@ applications:
   # APLICACIÓN SECUNDARIA: DOCS (Zona Docs)
   # ==========================================
   - appRoot: apps/docs
-    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
           commands:
             # Instalar pnpm globalmente
             - npm install -g pnpm@10.19.0
-            # Navegar a la raíz del repositorio clonado
-            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
-            # Instalar dependencias desde la raíz
-            - pnpm install --frozen-lockfile
+            # Instalar dependencias del monorepo
+            - pnpm install
         build:
           commands:
-            # Navegar a la raíz del repositorio
-            - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
-            # Build usando turbo desde la raíz
-            - pnpm turbo run build --filter=docs
+            # Ejecutar turbo build solo para la app docs
+            - pnpm exec turbo run build --filter=docs
       artifacts:
+        # Directorio de salida relativo a appRoot (apps/docs)
         baseDirectory: .next
         files:
           - '**/*'
       cache:
         paths:
-          # Cache de node_modules del workspace
-          - limpieza-proyecto/node_modules/**/*
-          # Cache de Next.js
-          - limpieza-proyecto/apps/docs/.next/cache/**/*
-          # Cache de pnpm store
-          - limpieza-proyecto/.pnpm-store/**/*
+          - node_modules/**/*
       # Variables de entorno para producción
       environmentVariables:
         - name: ALLOWED_ORIGINS
           value: tu-dominio.amplifyapp.com
+
