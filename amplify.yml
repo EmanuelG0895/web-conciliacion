@@ -10,6 +10,7 @@ applications:
   # APLICACIÓN PRINCIPAL: WEB (Router Central)
   # ==========================================
   - appRoot: apps/web
+    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -30,10 +31,6 @@ applications:
           commands:
             - echo "Build completed for web app"
             - ls -la $CODEBUILD_SRC_DIR/limpieza-proyecto/apps/web/.next/
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
       cache:
         paths:
           # Cache de node_modules del workspace
@@ -53,6 +50,7 @@ applications:
   # APLICACIÓN SECUNDARIA: DOCS (Zona Docs)
   # ==========================================
   - appRoot: apps/docs
+    platform: WEB_COMPUTE
     frontend:
       phases:
         preBuild:
@@ -69,10 +67,6 @@ applications:
             - cd $CODEBUILD_SRC_DIR/limpieza-proyecto
             # Build usando turbo desde la raíz
             - pnpm turbo run build --filter=docs
-      artifacts:
-        baseDirectory: .next
-        files:
-          - '**/*'
       cache:
         paths:
           # Cache de node_modules del workspace

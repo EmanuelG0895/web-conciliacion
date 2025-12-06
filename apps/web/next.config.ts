@@ -1,34 +1,27 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Configuración Multi-Zone: Esta es la aplicación principal (router central)
+  // La zona principal NO necesita assetPrefix
+  
+  // Configuración de rewrites para enrutar a otras zonas
   async rewrites() {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const docsUrl = process.env.DOCS_DOMAIN || 'http://localhost:3000';
-    
     return [
-      // Reescribir rutas de /docs a la zona de documentación
       {
         source: '/docs',
-        destination: isProduction 
-          ? `${docsUrl}/docs`
-          : `${docsUrl}`,
+        destination: `${process.env.DOCS_DOMAIN}/docs`,
       },
       {
-        source: '/docs/:path*',
-        destination: isProduction
-          ? `${docsUrl}/docs/:path*`
-          : `${docsUrl}/:path*`,
+        source: '/docs/:path+',
+        destination: `${process.env.DOCS_DOMAIN}/docs/:path+`,
       },
-      // Reescribir activos estáticos de la zona docs (usando assetPrefix)
       {
-        source: '/docs-static/:path*',
-        destination: `${docsUrl}/docs-static/:path*`,
+        source: '/docs-static/:path+',
+        destination: `${process.env.DOCS_DOMAIN}/docs-static/:path+`,
       },
     ];
   },
-
-  // Configuración para Server Actions en Multi-Zone
+  
+  // Optimizaciones generales
   compress: true,
   poweredByHeader: false,
   trailingSlash: false,

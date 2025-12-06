@@ -1,0 +1,12 @@
+[
+  {
+    "source": "/_next/static/<file>",
+    "target": "/_next/static/<file>",
+    "status": "200"
+  },
+  {
+    "source": "/<*>",
+    "target": "/index.html",
+    "status": "200"
+  }
+]
