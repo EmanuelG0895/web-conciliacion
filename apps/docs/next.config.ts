@@ -2,7 +2,8 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Multi-Zone: Zona secundaria para /docs
-  basePath: '/docs',
+  // Solo usa basePath en producción, no en desarrollo
+  basePath: process.env.NODE_ENV === 'production' ? '/docs' : '',
   
   // Optimizaciones generales
   compress: true,
