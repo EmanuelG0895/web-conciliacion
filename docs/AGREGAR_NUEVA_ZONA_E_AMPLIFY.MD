@@ -1,3 +1,0 @@
-Para que que AWS Amplify detecte una nueva zona, debe realizarse un nuevo despliegue de la zona de manera individual pero desde el mismo repositorio siguiendo los siguientes pasos 
-
-1 seleccionar la opción donde este guardado el repositorio(en este caso github) conceder permisos de la cuenta, se recomienda solo dar acceso a unicamente el repositorio en el cual esta almacenado el proyecto monorepo. Una vez otorgados los permisos seleccionamos el repositorio, debemos aclarar a amplify que el repo que estamos subiendo es un mono repo 
