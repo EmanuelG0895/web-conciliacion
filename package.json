@@ -16,5 +16,10 @@
   "packageManager": "pnpm@10.19.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "clsx": "^2.1.1",
+    "cookies-next": "^6.1.1",
+    "lucide-react": "^0.556.0"
   }
 }

@@ -1,6 +1,7 @@
 import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
+import Navbar from "@repo/ui/layout/navbar/navbar";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -14,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <header>
+          <Navbar />
+        </header>
+        <main>{children}</main>
+        <footer>footer</footer>
+      </body>
     </html>
   );
 }
