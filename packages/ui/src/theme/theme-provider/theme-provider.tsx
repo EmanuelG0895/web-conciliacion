@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { setCookie } from 'cookies-next';
 
-type Theme = 'dark' | 'light';
+export type Theme = 'dark' | 'light';
 
 interface ThemeContextType {
   theme: Theme;
@@ -110,3 +110,5 @@ export default function ThemeProvider({
     </ThemeContext.Provider>
   );
 }
+
+export { ThemeProvider };

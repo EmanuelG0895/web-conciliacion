@@ -1,1 +1,2 @@
-export { default as ThemeProvider } from './theme-provider';
+export { ThemeProvider, useTheme } from './theme-provider';
+export type { Theme } from './theme-provider';

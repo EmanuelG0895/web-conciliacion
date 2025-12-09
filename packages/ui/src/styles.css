@@ -1,3 +1,10 @@
 /* Component-level styles for the UI package */
-@import "tailwindcss" prefix(ui);
+@import "tailwindcss";
 @import "@repo/tailwind-config";
+
+/* Colores personalizados */
+@theme {
+  --color-gs-yellow: #fbbf24;
+  --color-gs-yellow-dark: #92400e;
+  --color-gs-black: #000000;
+}

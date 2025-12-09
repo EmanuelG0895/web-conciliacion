@@ -1,19 +1,11 @@
 'use client';
 import Button from '../../user-interaction/button/button';
 
-function Sidebar() {
-  // Importar el hook dinámicamente desde el contexto de la app
-  let useSidebar: any;
-  try {
-    // eslint-disable-next-line @typescript-eslint/no-require-imports
-    useSidebar = require('../../../apps/seguros/app/sidebar-provider').useSidebar;
-  } catch {
-    // Fallback si no está disponible
-    useSidebar = () => ({ isOpen: true });
-  }
-  
-  const { isOpen } = useSidebar();
+interface SidebarProps {
+  readonly isOpen?: boolean;
+}
 
+function Sidebar({ isOpen = true }: SidebarProps) {
   return (
     <div
       className={`${isOpen ? 'flex' : 'hidden'} bg-gs-yellow dark:bg-gs-yellow-dark text-gs-black relative px-2`}
