@@ -2,7 +2,7 @@ version: 1
 
 applications:
   # Zona Principal: WEB
-  - appRoot: apps/web
+  - appRoot: apps/home
     env:
       variables:
         NODE_ENV: production
@@ -11,10 +11,10 @@ applications:
         preBuild:
           commands:
             - npm install -g pnpm@10.19.0
-            - cd ../../ && pnpm install && cd apps/web
+            - cd ../../ && pnpm install && cd apps/home
         build:
           commands:
-            - cd ../../ && pnpm turbo run build --filter=web
+            - cd ../../ && pnpm turbo run build --filter=home
       artifacts:
         baseDirectory: .next
         files:
@@ -25,7 +25,7 @@ applications:
           - .next/cache/**/*
 
   # Zona Secundaria: DOCS
-  - appRoot: apps/docs
+  - appRoot: apps/seguros
     env:
       variables:
         NODE_ENV: production
@@ -34,10 +34,10 @@ applications:
         preBuild:
           commands:
             - npm install -g pnpm@10.19.0
-            - cd ../../ && pnpm install && cd apps/docs
+            - cd ../../ && pnpm install && cd apps/seguros
         build:
           commands:
-            - cd ../../ && pnpm turbo run build --filter=docs
+            - cd ../../ && pnpm turbo run build --filter=seguros
       artifacts:
         baseDirectory: .next
         files:

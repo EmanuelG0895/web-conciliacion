@@ -1,30 +1,82 @@
-import { type ReactNode } from "react";
+'use client';
+import { ArrowRightIcon } from '@radix-ui/react-icons';
+import React, { JSX } from 'react';
+import { Button } from '../../user-interaction';
+
 
 export function Card({
+  className,
+  textButton,
   title,
   children,
+  image,
   href,
+  onClick,
 }: {
-  title: string;
-  children: ReactNode;
-  href: string;
-}) {
-  return (
-    <a
-      className="ui:group ui:rounded-lg ui:border ui:border-transparent ui:px-5 ui:py-4 ui:transition-colors hover:ui:border-neutral-700 hover:ui:bg-neutral-800/30"
-      href={`${href}?utm_source=create-turbo&utm_medium=with-tailwind&utm_campaign=create-turbo"`}
-      rel="noopener noreferrer"
-      target="_blank"
-    >
-      <h2 className="ui:mb-3 ui:text-2xl ui:font-semibold">
-        {title}{" "}
-        <span className="ui:inline-block ui:transition-transform group-hover:ui:translate-x-1 motion-reduce:ui:transform-none">
-          -&gt;
-        </span>
-      </h2>
-      <p className="ui:m-0 ui:max-w-[30ch] ui:text-sm ui:opacity-50">
-        {children}
-      </p>
-    </a>
+  readonly className?: string;
+  readonly textButton?: string;
+  readonly image?: string | React.ReactNode;
+  readonly title: string;
+  readonly children: React.ReactNode;
+  readonly href?: string;
+  readonly onClick?: () => void;
+}): JSX.Element {
+  const renderImage = () => {
+    if (typeof image === 'string') {
+      return (
+        <img
+          className="rounded-md h-48 sm:h-64 w-full object-cover md:h-auto md:w-full lg:w-48"
+          src={image}
+          alt={`Imagen para ${title}`}
+        />
+      );
+    }
+    return image;
+  };
+
+  const baseClasses = `${className} border-default bg-gs-gray-light block rounded-lg border px-4 py-2 sm:px-6 sm:py-4 text-black shadow-lg transition-shadow hover:shadow-2xl dark:bg-gray-900 dark:text-white`;
+
+  const content = (
+    <div className="space-y-3 sm:space-y-5">
+      {image && (
+        <a className="flex flex-col items-center justify-center" href={href}>
+          {renderImage()}
+        </a>
+      )}
+      <h5
+        className={`${
+          image ? 'mt-4 sm:mt-6' : ''
+        } text-heading text-xl sm:text-2xl font-semibold tracking-tight`}
+      >
+        {title}
+      </h5>
+      <div className="text-black dark:text-white">{children}</div>
+      {textButton && (
+        <Button
+          className="flex items-center"
+          variant="ghost"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <a href={href}>{textButton}</a>
+          <ArrowRightIcon />
+        </Button>
+      )}
+    </div>
   );
+
+  // Si tiene onClick, usar button nativo
+  if (onClick) {
+    return (
+      <button
+        type="button"
+        className={`${baseClasses} cursor-pointer text-left`}
+        onClick={onClick}
+      >
+        {content}
+      </button>
+    );
+  }
+
+  // Sin onClick, usar div estático
+  return <div className={baseClasses}>{content}</div>;
 }

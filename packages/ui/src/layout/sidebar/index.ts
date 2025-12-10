@@ -1,1 +1,2 @@
-export { default as Sidebar } from './sidebar';
+export { Sidebar } from './sidebar';
+export { SidebarTrigger } from './sidebar-trigger';
