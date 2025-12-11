@@ -1,13 +1,14 @@
 import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Navbar } from "@repo/ui/layout/navbar/navbar";
-import { Profile, Sidebar, SidebarTrigger } from "@repo/ui";
-import ThemeProvider from "@repo/ui/theme-provider";
+
+import { Navbar, Profile, Sidebar, SidebarTrigger, ThemeProvider } from "@repo/ui";
+
 import { cookies } from "next/headers";
 import { Home, Image, Settings, Users } from "lucide-react";
-import ThemeToggle from "@repo/ui/theme/dark-mode-toggle/dark-mode-toggle";
+
 import { SidebarProvider } from "@repo/providers";
+import ThemeToggle from "@repo/ui/ui/src/theme/dark-mode-toggle/dark-mode-toggle";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",

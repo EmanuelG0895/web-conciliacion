@@ -1,14 +1,20 @@
 import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
-import { Navbar } from "@repo/ui/layout/navbar/navbar";
-import { Profile, Sidebar, SidebarTrigger } from "@repo/ui";
 
-import ThemeProvider from "@repo/ui/theme-provider";
+import {
+  Navbar,
+  Profile,
+  Sidebar,
+  SidebarTrigger,
+  ThemeProvider,
+} from "@repo/ui";
+
 import { cookies } from "next/headers";
 import { Home, Image, Settings, Users } from "lucide-react";
-import ThemeToggle from "@repo/ui/theme/dark-mode-toggle/dark-mode-toggle";
+
 import { SidebarProvider } from "@repo/providers";
+import ThemeToggle from "@repo/ui/ui/src/theme/dark-mode-toggle/dark-mode-toggle";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -41,10 +47,9 @@ export default async function RootLayout({
         <ThemeProvider initialTheme={temaInicial}>
           <SidebarProvider>
             <header>
-              <Navbar >
-                <div className="flex flex-row items-end justify-end">
+              <Navbar logo={<SidebarTrigger />}>
+                <div className="flex flex-col md:flex-row items-end md:justify-end">
                   <ThemeToggle />
-                  <SidebarTrigger />
                   <Profile
                     image_profile={<Image />}
                     image_alt="userImage"
@@ -55,7 +60,7 @@ export default async function RootLayout({
               </Navbar>
             </header>
             <main className="flex h-full overflow-hidden">
-              <div className="flex-1 overflow-y-auto">
+              <div className="flex overflow-y-auto">
                 <Sidebar links={sidebarLinks} />
                 {children}
               </div>
