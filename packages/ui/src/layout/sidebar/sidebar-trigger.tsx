@@ -1,10 +1,10 @@
 "use client";
 
-import { Menu } from "lucide-react";
-import { useSidebar } from "@repo/providers"
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { useSidebar } from "@repo/providers";
 
 export function SidebarTrigger() {
-  const { toggleSidebar } = useSidebar();
+  const { isOpen, toggleSidebar } = useSidebar();
 
   return (
     <button
@@ -12,8 +12,11 @@ export function SidebarTrigger() {
       className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
       aria-label="Abrir menú"
     >
-      menu
-      <Menu className="w-5 h-5 text-foreground" />
+      {isOpen ? (
+        <PanelLeftOpen className="w-5 h-5 text-foreground" />
+      ) : (
+        <PanelLeftClose className="w-5 h-5 text-foreground" />
+      )}
     </button>
   );
 }

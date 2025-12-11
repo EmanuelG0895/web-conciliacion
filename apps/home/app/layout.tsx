@@ -42,7 +42,7 @@ export default async function RootLayout({
           <SidebarProvider>
             <header>
               <Navbar >
-                <div className="flex flex-col md:flex-row items-end md:justify-end">
+                <div className="flex flex-row items-end justify-end">
                   <ThemeToggle />
                   <SidebarTrigger />
                   <Profile

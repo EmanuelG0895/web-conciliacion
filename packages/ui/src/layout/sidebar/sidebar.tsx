@@ -16,17 +16,11 @@ interface SidebarProps {
 }
 
 export function Sidebar({ links, title = "Menu" }: SidebarProps) {
-  const { isOpen, closeSidebar } = useSidebar();
-  console.log(isOpen);
+  const { isOpen } = useSidebar();
+
   return (
-    <>
-      {isOpen ? (
-        "abierto"
-      ) : (
-        <button className="bg-red-700" onClick={closeSidebar}>
-          cerrar
-        </button>
-      )}
-    </>
+    <div className={`${isOpen ? "hidden" : "flex"} absolute bg-gray-950`}>
+      abierto
+    </div>
   );
 }

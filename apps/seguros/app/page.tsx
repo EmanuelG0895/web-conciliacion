@@ -1,53 +1,69 @@
 import { Card } from "@repo/ui";
+import {
+  ArrowRightIcon,
+  Building2,
+  Columns3Cog,
+  Handshake,
+  MonitorCog,
+  PackagePlusIcon,
+  User,
+} from "lucide-react";
+import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       <Card
-        image="https://picsum.photos/200/300"
+        image={<MonitorCog width={50} height={50} />}
         href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
+        title="Administración de sistema"
+        textButton="ir a administración"
       >
         <p>Descripcion de que es lo que se hace en esta zona</p>
       </Card>
       <Card
-        image="https://picsum.photos/200/300"
+        image={<Columns3Cog width={50} height={50} />}
         href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
+        title="Bitácora"
+        textButton="ir a bitácora"
       >
         <p>Descripcion de que es lo que se hace en esta zona</p>
       </Card>
       <Card
-        image="https://picsum.photos/200/300"
+        image={<Handshake width={50} height={50} />}
+        title="Conciliador ZAS"
+      >
+        <p>descripcion de la zona a la que quieres llegar </p>
+        <Link
+          className="flex items-center border border-black rounded-lg px-2 py-1 w-fit mt-3"
+          href="/seguros/conciliador"
+        >
+          Conciliador
+          <ArrowRightIcon className="ml-3" width={12} height={12} />
+        </Link>
+      </Card>
+
+      <Card
+        image={<PackagePlusIcon width={50} height={50} />}
         href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
+        title="Nuevo Producto"
+        textButton="ir a nuevo producto"
       >
         <p>Descripcion de que es lo que se hace en esta zona</p>
       </Card>
       <Card
-        image="https://picsum.photos/200/300"
+        image={<Building2 width={50} height={50} />}
         href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
+        title="Sociedades"
+        textButton="ir a sociedades"
       >
         <p>Descripcion de que es lo que se hace en esta zona</p>
       </Card>
       <Card
-        image="https://picsum.photos/200/300"
+        image={<User width={50} height={50} />}
         href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
-      >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
-      </Card>
-      <Card
-        image="https://picsum.photos/200/300"
-        href="/seguros"
-        title="Seguros"
-        textButton="ir a seguros"
+        title="Usuarios"
+        textButton="ir a usuarios"
       >
         <p>Descripcion de que es lo que se hace en esta zona</p>
       </Card>

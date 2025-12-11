@@ -10,7 +10,7 @@ interface NavLink {
 }
 
 interface NavbarProps {
-  readonly logo?: string;
+  readonly logo?: React.ReactElement | string;
   readonly logoText?: string;
   readonly links?: NavLink[];
   readonly showUserMenu?: boolean;
@@ -18,29 +18,14 @@ interface NavbarProps {
   readonly children: React.ReactElement;
 }
 
-export function Navbar({
-  logo = "",
-  logoText = "GS",
-  children,
-}: NavbarProps) {
+export function Navbar({ logo = "", logoText = "GS", children }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
     <nav className="sticky top-0 z-50 bg-background border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-3">
-            <Link
-              href="/"
-              className="flex items-center gap-2 hover:opacity-80 transition-opacity"
-            >
-              <span className="text-2xl font-bold text-foreground">{logo}</span>
-              <span className="hidden sm:inline text-lg font-semibold text-foreground">
-                {logoText}
-              </span>
-            </Link>
-          </div>
-
+          <div className="flex items-center gap-3">{logo}</div>
           {/* Right Section */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block">{children}</div>
