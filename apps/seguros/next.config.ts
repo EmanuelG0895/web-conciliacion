@@ -14,9 +14,9 @@ const PUBLIC_HOST =
 
 const nextConfig: NextConfig = {
   // Multi-Zone: Next debe buscar los assets en el dominio del Home (solo en desarrollo)
-  ...(process.env.NODE_ENV === "development" && {
-    assetPrefix: `${PUBLIC_HOST}/seguros`,
-  }),
+  // ...(process.env.NODE_ENV === "development" && {
+  //   assetPrefix: `${PUBLIC_HOST}/seguros`,
+  // }),
 
   experimental: {
     serverActions: {
