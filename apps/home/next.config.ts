@@ -4,7 +4,7 @@ import type { NextConfig } from "next";
 const SEGUROS_URL =
   process.env.NODE_ENV === "production"
     ? (process.env.SEGUROS_DOMAIN ?? "")
-    : "http://localhost:3001"; // Puerto donde corre seguros en dev
+    : "http://localhost:3000"; // Puerto donde corre seguros en dev
 
 // Validación opcional pero recomendada
 if (process.env.NODE_ENV === "production" && !process.env.SEGUROS_DOMAIN) {

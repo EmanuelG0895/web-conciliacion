@@ -13,8 +13,10 @@ const PUBLIC_HOST =
     : "http://localhost:3000";
 
 const nextConfig: NextConfig = {
-  // Multi-Zone: Next debe buscar los assets en el dominio del Home
-  assetPrefix: `${PUBLIC_HOST}/seguros`,
+  // Multi-Zone: Next debe buscar los assets en el dominio del Home (solo en desarrollo)
+  ...(process.env.NODE_ENV === "development" && {
+    assetPrefix: `${PUBLIC_HOST}/seguros`,
+  }),
 
   experimental: {
     serverActions: {
