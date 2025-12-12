@@ -12,7 +12,7 @@ export function SidebarTrigger() {
       className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
       aria-label="Abrir menú"
     >
-      {isOpen ? (
+      {!isOpen ? (
         <PanelLeftOpen className="w-5 h-5 text-foreground" />
       ) : (
         <PanelLeftClose className="w-5 h-5 text-foreground" />

@@ -19,7 +19,7 @@ export default function Page() {
         title="Administración de sistema"
         textButton="ir a administración"
       >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
+        <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>
       <Card
         image={<Columns3Cog width={50} height={50} />}
@@ -27,13 +27,13 @@ export default function Page() {
         title="Bitácora"
         textButton="ir a bitácora"
       >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
+        <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>
       <Card
         image={<Handshake width={50} height={50} />}
         title="Conciliador ZAS"
       >
-        <p>descripcion de la zona a la que quieres llegar </p>
+        <p>Descripción de la zona a la que quieres llegar </p>
         <Link
           className="flex items-center border border-black rounded-lg px-2 py-1 w-fit mt-3"
           href="/seguros/conciliador"
@@ -42,30 +42,33 @@ export default function Page() {
           <ArrowRightIcon className="ml-3" width={12} height={12} />
         </Link>
       </Card>
-
       <Card
         image={<PackagePlusIcon width={50} height={50} />}
         href="/seguros"
         title="Nuevo Producto"
         textButton="ir a nuevo producto"
       >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
+        <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>
-      <Card
-        image={<Building2 width={50} height={50} />}
-        href="/seguros"
-        title="Sociedades"
-        textButton="ir a sociedades"
-      >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
+      <Card image={<Building2 width={50} height={50} />} title="Sociedades">
+        <p>Descipcion de lo que se puede hacer en la zona</p>
+        <Link
+          className="flex items-center border border-black rounded-lg px-2 py-1 w-fit mt-3"
+          href="/seguros/sociedades"
+        >
+          Sociedades
+          <ArrowRightIcon className="ml-3" width={12} height={12} />
+        </Link>
       </Card>
-      <Card
-        image={<User width={50} height={50} />}
-        href="/seguros"
-        title="Usuarios"
-        textButton="ir a usuarios"
-      >
-        <p>Descripcion de que es lo que se hace en esta zona</p>
+      <Card image={<User width={50} height={50} />} title="Usuarios">
+        <p>Descripción de que es lo que se hace en esta zona</p>
+        <Link
+          className="flex items-center border border-black rounded-lg px-2 py-1 w-fit mt-3"
+          href="/seguros/usuarios"
+        >
+          Conciliador
+          <ArrowRightIcon className="ml-3" width={12} height={12} />
+        </Link>
       </Card>
     </div>
   );

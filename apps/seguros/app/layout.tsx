@@ -2,13 +2,20 @@ import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
 
-import { Navbar, Profile, Sidebar, SidebarTrigger, ThemeProvider } from "@repo/ui";
+import {
+  Navbar,
+  Profile,
+  Sidebar,
+  SidebarTrigger,
+  ThemeProvider,
+} from "@repo/ui";
 
 import { cookies } from "next/headers";
 import { Home, Image, Settings, Users } from "lucide-react";
 
 import { SidebarProvider } from "@repo/providers";
 import ThemeToggle from "@repo/ui/ui/src/theme/dark-mode-toggle/dark-mode-toggle";
+import { Theme } from "@radix-ui/themes";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -53,8 +60,8 @@ export default async function RootLayout({
                 </div>
               </Navbar>
             </header>
-            <main className="flex h-full overflow-hidden">
-              <div className="flex overflow-y-auto">
+            <main className="flex h-full overflow-hidden w-full">
+              <div className="flex overflow-y-auto w-full">
                 <Sidebar links={sidebarLinks} />
                 {children}
               </div>

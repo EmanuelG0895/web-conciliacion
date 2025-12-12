@@ -2,7 +2,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-blue-1000: #2a8af6;
-  --color-purple-1000: #a853ba;
-  --color-red-1000: #e92a67;
+  --color-gs-yellow: #ffd700;
+  --color-gs-yellow-dark: #ffc107;
+  --color-gs-yellow-light: #fff8dc;
+  --color-gs-black: #1a1a1a;
+  --color-gs-gray-dark: #2d2d2d;
+  --color-gs-gray-medium: #6b7280;
+  --color-gs-gray-light: #f3f4f6;
+  --color-gs-white: #ffffff;
 }
