@@ -1,35 +1,47 @@
 import type { NextConfig } from "next";
 
+// En producción esta variable debe apuntar a la URL pública de SEGUROS (Amplify)
+const SEGUROS_URL =
+  process.env.NODE_ENV === "production"
+    ? (process.env.SEGUROS_DOMAIN ?? "")
+    : "http://localhost:3001"; // Puerto donde corre seguros en dev
+
+// Validación opcional pero recomendada
+if (process.env.NODE_ENV === "production" && !process.env.SEGUROS_DOMAIN) {
+  throw new Error(
+    "Falta la variable SEGUROS_DOMAIN para la zona secundaria (seguros)."
+  );
+}
+
 const nextConfig: NextConfig = {
-  // Multi-Zone: Zona principal con rewrites a docs
   async rewrites() {
-    // En desarrollo usa el puerto directo, en producción usa el dominio
-    const docsUrl = process.env.SEGUROS_DOMAIN || 'http://localhost:3000';
-
-    // FIX: Use a ternary operator to ensure docsPath is an empty string in development.
-    const docsPath = process.env.NODE_ENV === 'production' ? '/seguros' : '';
-
     return [
-      // REGLA NUEVA Y CRÍTICA: Reescribe los activos estáticos a la zona secundaria.
-      // This rule looks faulty: it should likely point to the root zone, not static assets.
-      // If 'seguros' is another Next.js app, its static assets path should be correct.
+      // ✔️ 1. Reenvía los assets de la zona secundaria al servidor de seguros
       {
-        source: '/seguros/_next/static/:path*',
-        destination: `${docsUrl}/_next/static/:path*`,
+        source: "/seguros/_next/static/:path*",
+        destination: `${SEGUROS_URL}/_next/static/:path*`,
       },
-      // Reglas existentes para las páginas
+
+      // ✔️ 2. Reenvía las imágenes optimizadas (_next/image)
       {
-        source: '/seguros',
-        destination: `${docsUrl}${docsPath}`,
+        source: "/seguros/_next/image",
+        destination: `${SEGUROS_URL}/_next/image`,
       },
+
+      // ✔️ 3. Página raíz de la zona secundaria
       {
-        source: '/seguros/:path*',
-        destination: `${docsUrl}${docsPath}/:path*`,
+        source: "/seguros",
+        destination: `${SEGUROS_URL}`,
+      },
+
+      // ✔️ 4. Todas las rutas internas de la zona secundaria
+      {
+        source: "/seguros/:path*",
+        destination: `${SEGUROS_URL}/:path*`,
       },
     ];
   },
 
-  // Optimizaciones generales
   compress: true,
   poweredByHeader: false,
   trailingSlash: false,

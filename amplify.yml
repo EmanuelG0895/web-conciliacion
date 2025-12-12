@@ -1,7 +1,6 @@
 version: 1
 
 applications:
-  # Zona Principal: WEB
   - appRoot: apps/home
     env:
       variables:
@@ -18,7 +17,7 @@ applications:
       artifacts:
         baseDirectory: .next
         files:
-          - '**/*'
+          - "**/*"
       cache:
         paths:
           - ../../node_modules/**/*
@@ -41,7 +40,7 @@ applications:
       artifacts:
         baseDirectory: .next
         files:
-          - '**/*'
+          - "**/*"
       cache:
         paths:
           - ../../node_modules/**/*

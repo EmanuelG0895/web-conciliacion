@@ -2,26 +2,26 @@
 
 import type { NextConfig } from "next";
 
+if (process.env.NODE_ENV === "production" && !process.env.SEGUROS_DOMAIN) {
+  throw new Error("Falta la variable SEGUROS_DOMAIN en producción");
+}
+
 // Define el dominio público del Router Principal (la aplicación raíz)
 const PUBLIC_HOST =
   process.env.NODE_ENV === "production"
-    ? (process.env.SEGUROS_DOMAIN ?? "http://localhost:3000")
+    ? (process.env.SEGUROS_DOMAIN ?? "")
     : "http://localhost:3000";
 
 const nextConfig: NextConfig = {
-  // 1. Multi-Zone: assetPrefix ahora es una URL ABSOLUTA que apunta al Router Principal.
-  // Esto obliga al navegador a no cambiar de host y usar el dominio del Router para los activos.
-  assetPrefix: `${PUBLIC_HOST}/seguros-static`,
+  // Multi-Zone: Next debe buscar los assets en el dominio del Home
+  assetPrefix: `${PUBLIC_HOST}/seguros`,
 
-  // 2. Paso 3: Server Actions (solo si las usas)
-  // Nota: Usa solo el dominio base aquí, no el prefijo.
   experimental: {
     serverActions: {
       allowedOrigins: [PUBLIC_HOST],
     },
   },
 
-  // 3. Optimizaciones generales...
   compress: true,
   poweredByHeader: false,
   trailingSlash: false,
