@@ -32,7 +32,7 @@ export function Card({
     return image;
   };
 
-  const baseClasses = `${className} p-3  border-default bg-gs-gray-light block rounded-lg border text-black shadow-lg transition-shadow hover:shadow-2xl dark:bg-gray-900 dark:text-white`;
+  const baseClasses = `${className} p-3 border-default bg-gs-gray-light block rounded-lg border text-black shadow-lg transition-shadow hover:shadow-2xl dark:bg-gray-900 dark:text-white`;
 
   const content = (
     <div className="space-y-3 sm:space-y-5">
