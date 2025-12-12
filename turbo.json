@@ -3,21 +3,43 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
-      "env": ["NODE_ENV", "SEGUROS_DOMAIN", "ALLOWED_ORIGINS"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "$TURBO_DEFAULT$",
+        ".env*"
+      ],
+      "outputs": [
+        "dist/**",
+        ".next/**",
+        "!.next/cache/**"
+      ],
+      "env": [
+        "NODE_ENV",
+        "SEGUROS_DOMAIN",
+        "ALLOWED_ORIGINS",
+        "HOME_DOMAIN"
+      ]
     },
     "lint": {
-      "dependsOn": ["^lint"]
+      "dependsOn": [
+        "^lint"
+      ]
     },
     "check-types": {
-      "dependsOn": ["^check-types"]
+      "dependsOn": [
+        "^check-types"
+      ]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "env": ["NODE_ENV", "DOCS_DOMAIN", "ALLOWED_ORIGINS"]
+      "env": [
+        "NODE_ENV",
+        "DOCS_DOMAIN",
+        "ALLOWED_ORIGINS"
+      ]
     }
   }
 }
