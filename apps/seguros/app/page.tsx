@@ -12,7 +12,7 @@ import Link from "next/link";
 
 export default function Page() {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
+    <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-4">
       <Card
         image={<MonitorCog width={50} height={50} />}
         href="/seguros"
@@ -23,9 +23,9 @@ export default function Page() {
       </Card>
       <Card
         image={<Columns3Cog width={50} height={50} />}
-        href="/seguros"
+        href="/seguros/bitacora"
         title="Bitácora"
-        textButton="ir a bitácora"
+        textButton="Ir a bitácora"
       >
         <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { Menu, X } from "lucide-react";
 
 interface NavLink {
@@ -21,11 +20,16 @@ interface NavbarProps {
 export function Navbar({ logo = "", logoText = "GS", children }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <nav className="sticky top-0 z-50 bg-background border-b border-border">
+    <nav
+      className="sticky top-0 z-50 bg-background border-b border-border border-gs-yellow shadow-sm shadow-gs-yellow"
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center gap-3">{logo}</div>
+          <div className="flex items-center justify-between gap-3 text-2xl font-bold">
+            <span className="md:hidden">{logo}</span>
+            <a href="/">{logoText}</a>
+          </div>
           {/* Right Section */}
           <div className="flex items-center gap-4">
             <div className="hidden md:block">{children}</div>

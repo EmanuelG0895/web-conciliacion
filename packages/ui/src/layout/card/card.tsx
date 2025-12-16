@@ -32,7 +32,20 @@ export function Card({
     return image;
   };
 
-  const baseClasses = `${className} p-3 border-default bg-gs-gray-light block rounded-lg border text-black shadow-lg transition-shadow hover:shadow-2xl dark:bg-gray-900 dark:text-white`;
+  // 1. Clases Base de la Tarjeta (Fondo, Borde, y Texto)
+  const baseClasses = `${className} p-3 rounded-lg block shadow-lg transition-shadow hover:shadow-2xl 
+    
+    /* ESTILOS DE MODO CLARO PERSONALIZADOS */
+    bg-gs-surface-dark /* ¡CAMBIO! Fondo de la tarjeta ahora usa blanco puro (#ffffff) */
+    border-gs-surface-medium /* ¡CAMBIO! Borde: Usamos el gris sutil (#f0f0f0) */
+    text-gs-text-dark /* Texto principal en negro */
+    border-gs-text-dark border
+    
+    /* ESTILOS DE MODO OSCURO (Mantenidos) */
+    dark:bg-gs-surface-dark 
+    dark:border-gs-surface-light 
+    dark:text-gs-text-light 
+  `;
 
   const content = (
     <div className="space-y-3 sm:space-y-5">
@@ -48,15 +61,31 @@ export function Card({
       >
         {title}
       </h5>
-      <div className="text-black dark:text-white">{children}</div>
+
+      {/* 2. Contenido (Hereda el color de texto base) */}
+      <div>{children}</div>
+
+      {/* 3. Botón de Enlace (Acento Primario) */}
       {textButton && (
         <a
           href={href}
-          className="flex items-center border border-black rounded-lg px-2 py-1 w-fit"
+          className="flex items-center rounded-lg px-2 py-1 w-fit transition-colors 
+            border 
+            
+            /* Modo Claro (Usa el tono oscuro primario para alto contraste) */
+            border-gs-primary-dark 
+            text-gs-primary-dark 
+            hover:bg-gs-tonal-light /* ¡CAMBIO! Usamos tonal-light para un hover sutil */
+            
+            /* Modo Oscuro (Mantenidos) */
+            dark:border-gs-primary-dark 
+            dark:text-gs-primary-dark
+            dark:hover:bg-gs-surface-dark 
+          "
           onClick={(e) => e.stopPropagation()}
         >
           {textButton}
-          <ArrowRightIcon className="ml-3"/>
+          <ArrowRightIcon className="ml-3" />
         </a>
       )}
     </div>
