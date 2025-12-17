@@ -1,6 +1,7 @@
 "use client";
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import React, { JSX } from "react";
+import Link from "next/link";
 
 export function Card({
   className,
@@ -9,12 +10,14 @@ export function Card({
   children,
   image,
   href = "",
+  link = false,
   onClick,
 }: {
   readonly className?: string;
+  readonly link?: boolean;
   readonly textButton?: string;
   readonly image?: string | React.ReactNode;
-  readonly title: string;
+  readonly title?: string;
   readonly children: React.ReactNode;
   readonly href?: string;
   readonly onClick?: () => void;
@@ -36,7 +39,7 @@ export function Card({
   const baseClasses = `${className} p-3 rounded-lg block shadow-lg transition-shadow hover:shadow-2xl 
     
     /* ESTILOS DE MODO CLARO PERSONALIZADOS */
-    bg-gs-surface-dark /* ¡CAMBIO! Fondo de la tarjeta ahora usa blanco puro (#ffffff) */
+    bg-gs-surface-medium /* ¡CAMBIO! Fondo de la tarjeta ahora usa blanco puro (#ffffff) */
     border-gs-surface-medium /* ¡CAMBIO! Borde: Usamos el gris sutil (#f0f0f0) */
     text-gs-text-dark /* Texto principal en negro */
     border-gs-text-dark border
@@ -46,6 +49,8 @@ export function Card({
     dark:border-gs-surface-light 
     dark:text-gs-text-light 
   `;
+  const btnClassName =
+    "flex justify-center items-baseline border dark:hover:bg-gs-primary-dark border-gs-primary-light rounded-lg px-2 py-1 w-fit mt-3 hover:bg-gs-primary-medium hover:text-white";
 
   const content = (
     <div className="space-y-3 sm:space-y-5">
@@ -66,27 +71,21 @@ export function Card({
       <div>{children}</div>
 
       {/* 3. Botón de Enlace (Acento Primario) */}
-      {textButton && (
+      {textButton && !link && (
         <a
           href={href}
-          className="flex items-center rounded-lg px-2 py-1 w-fit transition-colors 
-            border 
-            
-            /* Modo Claro (Usa el tono oscuro primario para alto contraste) */
-            border-gs-primary-dark 
-            text-gs-primary-dark 
-            hover:bg-gs-tonal-light /* ¡CAMBIO! Usamos tonal-light para un hover sutil */
-            
-            /* Modo Oscuro (Mantenidos) */
-            dark:border-gs-primary-dark 
-            dark:text-gs-primary-dark
-            dark:hover:bg-gs-surface-dark 
-          "
+          className={btnClassName}
           onClick={(e) => e.stopPropagation()}
         >
           {textButton}
           <ArrowRightIcon className="ml-3" />
         </a>
+      )}
+      {link && (
+        <Link href={href} className={btnClassName}>
+          {textButton}
+          <ArrowRightIcon className="ml-3" />
+        </Link>
       )}
     </div>
   );
