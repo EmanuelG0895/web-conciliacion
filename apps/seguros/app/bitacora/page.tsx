@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button, Table, Form, Card } from "@repo/ui";
+import type { SelectOption } from "@repo/ui";
 import { Download, Search, Calendar, User, Activity } from "lucide-react";
 
 // Interfaces
@@ -120,13 +121,13 @@ export default function Bitacora() {
   const handleFilter = (filtros: FiltrosBitacora) => {
     let filtered = [...registros];
 
-    if (filtros.usuarioId) {
+    if (filtros.usuarioId && filtros.usuarioId !== "all") {
       filtered = filtered.filter((r) =>
         r.usuarioId.toLowerCase().includes(filtros.usuarioId.toLowerCase())
       );
     }
 
-    if (filtros.accion) {
+    if (filtros.accion && filtros.accion !== "all") {
       filtered = filtered.filter((r) =>
         r.accionRealizada.toLowerCase().includes(filtros.accion.toLowerCase())
       );
@@ -203,8 +204,8 @@ export default function Bitacora() {
     },
   ];
 
-  const accionesOptions = [
-    { value: "", label: "Todas las acciones" },
+  const accionesOptions: SelectOption[] = [
+    { value: "all", label: "Todas las acciones" },
     { value: "Login/Logout", label: "Login/Logout" },
     { value: "Gestión de Sociedades", label: "Gestión de Sociedades" },
     { value: "Gestión de Usuarios", label: "Gestión de Usuarios" },
@@ -214,6 +215,13 @@ export default function Bitacora() {
       value: "Administración del Sistema",
       label: "Administración del Sistema",
     },
+  ];
+
+  const usuariosOptions: SelectOption[] = [
+    { value: "all", label: "Todos los usuarios" },
+    { value: "admin001", label: "Administrador 001" },
+    { value: "user002", label: "Usuario 002" },
+    { value: "user003", label: "Usuario 003" },
   ];
 
   return (
@@ -249,62 +257,76 @@ export default function Bitacora() {
 
       {/* Panel de Filtros */}
       {isFilterOpen && (
-        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-4 shadow-sm">
+        <Card title="Filtros de Búsqueda" className="shadow-sm">
           <Form<FiltrosBitacora>
             onSubmit={handleFilter}
             defaultValues={{
               fechaInicio: "",
               fechaFin: "",
-              usuarioId: "",
-              accion: "",
+              usuarioId: "all",
+              accion: "all",
             }}
-            className="space-y-4"
+            mode="onChange"
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Form.Field
-                name="usuarioId"
-                label="ID Usuario"
-                placeholder="Buscar por usuario..."
-                fullWidth
-              />
+            <Form.Section>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <Form.Select
+                  name="usuarioId"
+                  label="Usuario"
+                  options={usuariosOptions}
+                  placeholder="Seleccionar usuario"
+                  variant="outlined"
+                  size="md"
+                  helperText="Filtrar por usuario específico"
+                  fullWidth
+                />
 
-              <Form.Select
-                name="accion"
-                label="Acción"
-                options={accionesOptions}
-                placeholder="Seleccionar acción"
-                fullWidth
-              />
+                <Form.Select
+                  name="accion"
+                  label="Tipo de Acción"
+                  options={accionesOptions}
+                  placeholder="Seleccionar acción"
+                  variant="outlined"
+                  size="md"
+                  helperText="Filtrar por tipo de actividad"
+                  fullWidth
+                />
 
-              <Form.Field
-                name="fechaInicio"
-                label="Fecha Inicio"
-                type="date"
-                fullWidth
-              />
+                <Form.Field
+                  name="fechaInicio"
+                  label="Fecha de Inicio"
+                  type="date"
+                  variant="outlined"
+                  size="md"
+                  fullWidth
+                />
 
-              <Form.Field
-                name="fechaFin"
-                label="Fecha Fin"
-                type="date"
-                fullWidth
-              />
-            </div>
+                <Form.Field
+                  name="fechaFin"
+                  label="Fecha de Fin"
+                  type="date"
+                  variant="outlined"
+                  size="md"
+                  fullWidth
+                />
+              </div>
 
-            <Form.Actions align="left">
-              <Form.SubmitButton variant="default">
-                Aplicar Filtros
-              </Form.SubmitButton>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={handleClearFilters}
-              >
-                Limpiar
-              </Button>
-            </Form.Actions>
+              <Form.Actions align="left">
+                <Form.SubmitButton variant="default">
+                  <Search className="w-4 h-4 mr-2" />
+                  Aplicar Filtros
+                </Form.SubmitButton>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleClearFilters}
+                >
+                  Limpiar Filtros
+                </Button>
+              </Form.Actions>
+            </Form.Section>
           </Form>
-        </div>
+        </Card>
       )}
 
       {/* Estadísticas rápidas */}

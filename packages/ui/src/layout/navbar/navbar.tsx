@@ -20,13 +20,11 @@ interface NavbarProps {
 export function Navbar({ logo = "", logoText = "GS", children }: NavbarProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   return (
-    <nav
-      className="sticky top-0 z-50 bg-background border-b border-border border-gs-yellow shadow-sm shadow-gs-yellow"
-    >
+    <nav className="sticky top-0 z-50 bg-gs-surface-light dark:bg-gs-surface-dark border-b border-gs-primary-light dark:border-gs-primary-dark shadow-sm shadow-gs-primary-light dark:shadow-gs-primary-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center justify-between gap-3 text-2xl font-bold">
+          <div className="flex items-center justify-between gap-3 text-2xl font-bold text-gs-text-dark dark:text-gs-text-light">
             <span className="md:hidden">{logo}</span>
             <a href="/">{logoText}</a>
           </div>
@@ -36,12 +34,15 @@ export function Navbar({ logo = "", logoText = "GS", children }: NavbarProps) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
+              className="md:hidden p-2 rounded-lg bg-gs-surface-medium dark:bg-gs-tonal-dark hover:bg-gs-tonal-medium dark:hover:bg-gs-tonal-medium transition-colors"
             >
               {isMobileMenuOpen ? (
-                <X className="w-5 h-5 text-foreground" />
+                <X className="w-5 h-5 text-gs-text-dark dark:text-gs-text-light" />
               ) : (
-                <Menu className="w-5 h-5 text-foreground" />
+                <Menu
+                  color="#FFFFF"
+                  className="w-5 h-5"
+                />
               )}
             </button>
           </div>
@@ -49,7 +50,7 @@ export function Navbar({ logo = "", logoText = "GS", children }: NavbarProps) {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden border-t border-border py-4">
+          <div className="md:hidden border-t border-gs-primary-light dark:border-gs-primary-dark py-4">
             {children}
           </div>
         )}

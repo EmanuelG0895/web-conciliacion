@@ -40,7 +40,8 @@ export default async function RootLayout({
   ];
   return (
     <html lang="en" className={temaInicial} data-theme={temaInicial}>
-      <body className="h-dvh flex flex-col overflow-hidden">
+      {/* 1. Aseguramos que el body ocupe todo el alto sin scroll global */}
+      <body className="h-dvh flex flex-col overflow-hidden dark:bg-black">
         <ThemeProvider initialTheme={temaInicial}>
           <SidebarProvider>
             <header className="shrink-0">
@@ -56,8 +57,11 @@ export default async function RootLayout({
                 </div>
               </Navbar>
             </header>
+
+            {/* 2. El main debe ser flex y ocupar el 100% del espacio restante */}
             <main className="flex flex-1 overflow-hidden">
               <Sidebar links={sidebarLinks} />
+              {/* 3. El contenedor de children debe tener scroll independiente */}
               <div className="flex-1 overflow-y-auto">
                 {children}
               </div>

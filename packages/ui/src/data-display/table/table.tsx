@@ -33,7 +33,7 @@ const ColumnSortIndicator = ({
   if (!isActive) {
     return (
       <svg
-        className="w-4 h-4 ml-1 text-gs-gray-medium"
+        className="w-4 h-4 ml-1 text-gs-tonal-dark dark:text-gs-tonal-medium"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
@@ -50,7 +50,7 @@ const ColumnSortIndicator = ({
 
   return direction === "asc" ? (
     <svg
-      className="w-4 h-4 ml-1 text-gs-yellow"
+      className="w-4 h-4 ml-1 text-gs-text-dark dark:text-gs-text-light"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -64,7 +64,7 @@ const ColumnSortIndicator = ({
     </svg>
   ) : (
     <svg
-      className="w-4 h-4 ml-1 text-gs-yellow"
+      className="w-4 h-4 ml-1 text-gs-text-dark dark:text-gs-text-light"
       fill="none"
       stroke="currentColor"
       viewBox="0 0 24 24"
@@ -137,23 +137,23 @@ export default function Table<T extends Record<string, unknown>>({
   return (
     <div className="w-full overflow-x-auto">
       <table
-        className={`w-full text-sm ${getAlignClass("left")} rtl:text-right text-gs-black dark:text-gs-white ${className || ""}`}
+        className={`w-full text-sm ${getAlignClass("left")} rtl:text-right text-gs-text-dark dark:text-gs-text-light ${className || ""}`}
       >
         <thead
           className={`text-sm uppercase ${
             bordered
-              ? "border-b border-gs-gray-medium dark:border-gs-gray-dark"
+              ? "border-b border-gs-surface-medium dark:border-gs-tonal-dark"
               : ""
           }`}
         >
-          <tr className="bg-gs-yellow dark:bg-gs-yellow-dark text-gs-black font-bold">
+          <tr className="bg-gs-primary-light dark:bg-gs-primary-dark text-gs-text-dark dark:text-gs-text-light font-bold">
             {columns.map((column) => (
               <th
                 key={column.key}
                 scope="col"
                 className={`px-6 py-3 font-medium ${
                   column.sortable
-                    ? "cursor-pointer hover:bg-gs-yellow-dark dark:hover:bg-gs-yellow"
+                    ? "cursor-pointer hover:bg-gs-primary-medium dark:hover:bg-gs-primary-medium"
                     : ""
                 } ${getAlignClass(column.align)} ${column.className || ""}`}
                 onClick={() => column.sortable && handleSort(column.key)}
@@ -176,7 +176,7 @@ export default function Table<T extends Record<string, unknown>>({
             <tr>
               <td
                 colSpan={columns.length}
-                className="px-6 py-8 text-center text-gs-gray-medium"
+                className="px-6 py-8 text-center text-gs-tonal-dark dark:text-gs-tonal-medium"
               >
                 {emptyMessage}
               </td>
@@ -187,20 +187,20 @@ export default function Table<T extends Record<string, unknown>>({
                 key={keyExtractor(row, index)}
                 onClick={() => onRowClick?.(row, index)}
                 className={`
-                  bg-gs-white dark:bg-gs-gray-dark
+                  bg-gs-surface-light dark:bg-gs-surface-dark
                   ${
                     hoverable
-                      ? "hover:bg-gs-gray-light dark:hover:bg-gs-gray-medium"
+                      ? "hover:bg-gs-surface-medium dark:hover:bg-gs-tonal-dark"
                       : ""
                   }
                   ${
                     striped && index % 2 === 1
-                      ? "bg-gs-gray-light dark:bg-gs-gray-medium"
+                      ? "bg-gs-surface-medium dark:bg-gs-tonal-dark"
                       : ""
                   }
                   ${
                     bordered && index < sortedData.length - 1
-                      ? "border-b border-gs-gray-light dark:border-gs-gray-dark"
+                      ? "border-b border-gs-surface-medium dark:border-gs-tonal-dark"
                       : ""
                   }
                   ${onRowClick ? "cursor-pointer" : ""}

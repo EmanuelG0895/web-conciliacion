@@ -15,6 +15,8 @@ interface UserData {
   name: string;
   email: string;
   role: string;
+  department: string;
+  status: string;
 }
 
 function MyForm() {
@@ -24,17 +26,55 @@ function MyForm() {
 
   return (
     <Form<UserData> onSubmit={handleSubmit}>
-      <Form.Field name="name" label="Nombre" required />
-      <Form.Field name="email" label="Email" type="email" required />
-      <Form.Select 
-        name="role" 
-        label="Rol" 
-        options={[
-          { value: "admin", label: "Administrador" },
-          { value: "user", label: "Usuario" }
-        ]}
-      />
+      <Form.Section title="Información Personal">
+        <Form.Field name="name" label="Nombre" required />
+        <Form.Field name="email" label="Email" type="email" required />
+      </Form.Section>
+
+      <Form.Section title="Información Laboral">
+        <Form.Select 
+          name="role" 
+          label="Rol" 
+          options={[
+            { value: "admin", label: "Administrador" },
+            { value: "user", label: "Usuario" },
+            { value: "guest", label: "Invitado" }
+          ]}
+          placeholder="Selecciona un rol"
+          required
+        />
+        
+        <Form.Select 
+          name="department" 
+          label="Departamento" 
+          variant="outlined"
+          size="lg"
+          options={[
+            { value: "it", label: "Tecnología" },
+            { value: "hr", label: "Recursos Humanos" },
+            { value: "sales", label: "Ventas" },
+            { value: "marketing", label: "Marketing" }
+          ]}
+          helperText="Selecciona tu área de trabajo"
+          required
+        />
+
+        <Form.Select 
+          name="status" 
+          label="Estado" 
+          variant="filled"
+          options={[
+            { value: "active", label: "Activo" },
+            { value: "inactive", label: "Inactivo" },
+            { value: "suspended", label: "Suspendido", disabled: true }
+          ]}
+        />
+      </Form.Section>
+
       <Form.Actions>
+        <Form.CancelButton onClick={() => console.log("Cancelado")}>
+          Cancelar
+        </Form.CancelButton>
         <Form.SubmitButton>Guardar</Form.SubmitButton>
       </Form.Actions>
     </Form>
@@ -101,7 +141,7 @@ Campo de entrada de texto que utiliza el componente Input existente.
 
 ### Form.Select
 
-Campo de selección con opciones predefinidas.
+Campo de selección con opciones predefinidas. Utiliza el componente Select basado en Radix UI para mejor accesibilidad y experiencia de usuario.
 
 #### Props
 
@@ -109,12 +149,28 @@ Campo de selección con opciones predefinidas.
 |------|------|---------|-------------|
 | `name` | `string` | - | **Requerido.** Nombre del campo |
 | `label` | `string` | - | Etiqueta del campo |
-| `options` | `Array<{value: string, label: string}>` | - | **Requerido.** Opciones disponibles |
+| `options` | `SelectOption[]` | - | **Requerido.** Opciones disponibles |
 | `placeholder` | `string` | `"Seleccionar..."` | Texto cuando no hay selección |
 | `required` | `boolean` | `false` | Si el campo es requerido |
 | `disabled` | `boolean` | `false` | Deshabilitar el campo |
+| `size` | `"sm" \| "md" \| "lg"` | `"md"` | Tamaño del campo |
+| `variant` | `"default" \| "outlined" \| "filled"` | `"default"` | Variante del diseño |
 | `fullWidth` | `boolean` | `true` | Si ocupa todo el ancho disponible |
+| `helperText` | `string` | - | Texto de ayuda debajo del campo |
 
+#### SelectOption Interface
+
+```tsx
+interface SelectOption {
+  value: string;
+  label: string;
+  disabled?: boolean; // Opcional: deshabilitar opción específica
+}
+```
+
+#### Ejemplos
+
+**Uso Básico:**
 ```tsx
 <Form.Select
   name="country"
@@ -128,6 +184,82 @@ Campo de selección con opciones predefinidas.
   required
 />
 ```
+
+**Con diferentes variantes y tamaños:**
+```tsx
+{/* Select con variante outlined */}
+<Form.Select
+  name="department"
+  label="Departamento"
+  variant="outlined"
+  size="lg"
+  options={[
+    { value: "it", label: "Tecnología" },
+    { value: "hr", label: "Recursos Humanos" },
+    { value: "sales", label: "Ventas" }
+  ]}
+  helperText="Selecciona tu área de trabajo"
+  required
+/>
+
+{/* Select compacto */}
+<Form.Select
+  name="priority"
+  label="Prioridad"
+  size="sm"
+  variant="filled"
+  options={[
+    { value: "low", label: "Baja" },
+    { value: "medium", label: "Media" },
+    { value: "high", label: "Alta" },
+    { value: "critical", label: "Crítica", disabled: true }
+  ]}
+/>
+```
+
+**Con opción deshabilitada:**
+```tsx
+<Form.Select
+  name="status"
+  label="Estado"
+  options={[
+    { value: "active", label: "Activo" },
+    { value: "inactive", label: "Inactivo" },
+    { value: "suspended", label: "Suspendido", disabled: true }
+  ]}
+  helperText="Las opciones deshabilitadas no se pueden seleccionar"
+/>
+```
+
+#### Características del Select
+
+- **🎯 Basado en Radix UI**: Mejor accesibilidad y navegación con teclado
+- **⌨️ Navegación por teclado**: Space/Enter para abrir, flechas para navegar, Esc para cerrar
+- **🎨 Responsive**: Se adapta automáticamente al contenedor
+- **🌙 Tema**: Soporte completo para modo oscuro/claro
+- **♿ Accesible**: Cumple estándares WCAG 2.1
+
+#### ✨ Mejoras vs Select HTML Nativo
+
+El nuevo `Form.Select` ofrece ventajas significativas sobre un select HTML tradicional:
+
+| Característica | Select HTML | Form.Select (Radix UI) |
+|---|---|---|
+| **Navegación teclado** | ✅ Básica | ✅ Completa + atajos |
+| **Accesibilidad** | ✅ Limitada | ✅ WCAG 2.1 compliant |
+| **Personalización** | ❌ Muy limitada | ✅ Totalmente personalizable |
+| **Animaciones** | ❌ Ninguna | ✅ Animaciones suaves |
+| **Responsive** | ✅ Básico | ✅ Completamente adaptable |
+| **Opciones deshabilitadas** | ✅ Sí | ✅ Con mejor indicación visual |
+| **Modo oscuro** | ❌ Inconsistente | ✅ Soporte nativo |
+| **Focus management** | ❌ Básico | ✅ Avanzado |
+
+**Navegación por teclado disponible:**
+- `Space` / `Enter`: Abrir/cerrar dropdown
+- `↑` / `↓`: Navegar por las opciones
+- `Home` / `End`: Primera/última opción
+- `Esc`: Cerrar dropdown
+- `A-Z`: Buscar opciones por letra
 
 ### Form.Checkbox
 
@@ -597,7 +729,218 @@ function MyForm() {
 >
 ```
 
-## 🔧 Integración con React Hook Form
+## � Ejemplo Completo: Formulario de Usuario
+
+Aquí tienes un ejemplo completo que muestra todas las capacidades del formulario con el Select mejorado:
+
+```tsx
+import { Form } from "@repo/ui";
+import type { SelectOption } from "@repo/ui";
+
+interface UserFormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  country: string;
+  state: string;
+  department: string;
+  role: string;
+  status: string;
+  isActive: boolean;
+  gender: string;
+  notifications: string[];
+  avatar?: FileList | File;
+}
+
+// Definir opciones para los selects
+const countryOptions: SelectOption[] = [
+  { value: "mx", label: "México" },
+  { value: "us", label: "Estados Unidos" },
+  { value: "ca", label: "Canadá" },
+  { value: "es", label: "España" },
+];
+
+const departmentOptions: SelectOption[] = [
+  { value: "it", label: "Tecnología" },
+  { value: "hr", label: "Recursos Humanos" },
+  { value: "sales", label: "Ventas" },
+  { value: "marketing", label: "Marketing" },
+  { value: "finance", label: "Finanzas" },
+];
+
+const roleOptions: SelectOption[] = [
+  { value: "admin", label: "Administrador" },
+  { value: "manager", label: "Gerente" },
+  { value: "employee", label: "Empleado" },
+  { value: "contractor", label: "Contratista" },
+];
+
+const statusOptions: SelectOption[] = [
+  { value: "active", label: "Activo" },
+  { value: "inactive", label: "Inactivo" },
+  { value: "pending", label: "Pendiente" },
+  { value: "suspended", label: "Suspendido", disabled: true },
+];
+
+export function UserRegistrationForm() {
+  const handleSubmit = (data: UserFormData) => {
+    console.log("Datos del usuario:", data);
+    // Aquí enviarías los datos al backend
+  };
+
+  const handleCancel = () => {
+    // Lógica para cancelar
+    console.log("Formulario cancelado");
+  };
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-6">Registro de Usuario</h1>
+      
+      <Form<UserFormData>
+        onSubmit={handleSubmit}
+        defaultValues={{
+          status: "active", // Valor por defecto
+          isActive: true,
+        }}
+      >
+        <Form.Section title="Información Personal">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Form.Field
+              name="firstName"
+              label="Nombre"
+              placeholder="Ingresa el nombre"
+              required
+            />
+            
+            <Form.Field
+              name="lastName"
+              label="Apellido"
+              placeholder="Ingresa el apellido"
+              required
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <Form.Field
+              name="email"
+              label="Correo Electrónico"
+              type="email"
+              placeholder="usuario@ejemplo.com"
+              required
+            />
+            
+            <Form.Field
+              name="phone"
+              label="Teléfono"
+              type="tel"
+              placeholder="+52 55 1234 5678"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Select básico */}
+            <Form.Select
+              name="country"
+              label="País"
+              options={countryOptions}
+              placeholder="Selecciona un país"
+              required
+              helperText="País de residencia"
+            />
+
+            {/* Select con variante outlined */}
+            <Form.Select
+              name="state"
+              label="Estado/Provincia"
+              variant="outlined"
+              options={[
+                { value: "cdmx", label: "Ciudad de México" },
+                { value: "jal", label: "Jalisco" },
+                { value: "nl", label: "Nuevo León" },
+                { value: "qro", label: "Querétaro" },
+              ]}
+              placeholder="Selecciona estado"
+            />
+          </div>
+        </Form.Section>
+
+        <Form.Section title="Información Laboral">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {/* Select grande con variante filled */}
+            <Form.Select
+              name="department"
+              label="Departamento"
+              variant="filled"
+              size="lg"
+              options={departmentOptions}
+              placeholder="Selecciona departamento"
+              required
+              helperText="Área de trabajo"
+            />
+
+            {/* Select mediano */}
+            <Form.Select
+              name="role"
+              label="Rol"
+              size="md"
+              options={roleOptions}
+              placeholder="Selecciona rol"
+              required
+            />
+
+            {/* Select con opción deshabilitada */}
+            <Form.Select
+              name="status"
+              label="Estado"
+              size="sm"
+              options={statusOptions}
+              helperText="Estado actual del usuario"
+            />
+          </div>
+        </Form.Section>
+
+        <Form.Section title="Información Adicional">
+          <Form.RadioGroup
+            name="gender"
+            label="Género"
+            options={[
+              { value: "male", label: "Masculino" },
+              { value: "female", label: "Femenino" },
+              { value: "other", label: "Otro" },
+              { value: "prefer-not-to-say", label: "Prefiero no decir" },
+            ]}
+          />
+
+          <Form.Checkbox
+            name="isActive"
+            label="Usuario activo en el sistema"
+          />
+
+          <Form.FileUpload
+            name="avatar"
+            label="Foto de Perfil"
+            accept="image/*"
+            maxSize={5 * 1024 * 1024}
+          />
+        </Form.Section>
+
+        <Form.Actions align="right">
+          <Form.CancelButton onClick={handleCancel}>
+            Cancelar
+          </Form.CancelButton>
+          <Form.SubmitButton>
+            Registrar Usuario
+          </Form.SubmitButton>
+        </Form.Actions>
+      </Form>
+    </div>
+  );
+}
+```
+
+## �🔧 Integración con React Hook Form
 
 El componente está construido sobre React Hook Form, por lo que tienes acceso a todas sus características:
 

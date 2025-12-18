@@ -29,16 +29,16 @@ const BASE_STYLES =
   "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive";
 
 const VARIANT_STYLES = {
-  default: 'bg-gs-yellow dark:bg-gs-yellow-dark text-gs-black hover:opacity-90',
+  default: 'bg-gs-primary-light dark:bg-gs-primary-dark text-gs-text-dark dark:text-gs-text-light hover:opacity-90',
   danger:
-    'bg-red-600 dark:bg-red-700 text-gs-white hover:bg-red-700 dark:hover:bg-red-800 focus-visible:ring-red-200 dark:focus-visible:ring-red-800',
+    'bg-red-600 dark:bg-red-700 text-gs-text-light hover:bg-red-700 dark:hover:bg-red-800 focus-visible:ring-red-200 dark:focus-visible:ring-red-800',
   outline:
-    'border border-gs-gray-light dark:border-gs-gray-dark bg-gs-white dark:bg-gs-gray-dark text-gs-black dark:text-gs-white hover:bg-gs-gray-light dark:hover:bg-gs-gray-medium',
+    'border border-gs-surface-medium dark:border-gs-tonal-dark bg-gs-surface-light dark:bg-gs-surface-dark text-gs-text-dark dark:text-gs-text-light hover:bg-gs-surface-medium dark:hover:bg-gs-tonal-dark',
   secondary:
-    'bg-gs-gray-light dark:bg-gs-gray-dark text-gs-black dark:text-gs-white hover:bg-gs-gray-medium dark:hover:bg-gs-gray-medium',
+    'bg-gs-surface-medium dark:bg-gs-tonal-dark text-gs-text-dark dark:text-gs-text-light hover:bg-gs-tonal-medium dark:hover:bg-gs-tonal-medium',
   ghost:
-    'hover:bg-gs-gray-light dark:hover:bg-gs-gray-dark text-gs-black dark:text-gs-white border border-gs-gray-light dark:border-gs-gray-dark',
-  link: 'text-gs-yellow dark:text-gs-yellow-dark underline-offset-4 hover:underline',
+    'hover:bg-gs-surface-medium dark:hover:bg-gs-tonal-dark text-gs-text-dark dark:text-gs-text-light border border-gs-surface-medium dark:border-gs-tonal-dark',
+  link: 'text-gs-primary-light dark:text-gs-primary-dark underline-offset-4 hover:underline',
 } as const;
 
 const SIZE_STYLES = {

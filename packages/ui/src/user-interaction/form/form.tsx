@@ -6,10 +6,13 @@ import {
   FormProvider,
   useFormContext,
   DefaultValues,
+  Controller,
 } from "react-hook-form";
 import Input from "../input/input";
 import Button from "../button/button";
-import { ChevronDown, Upload, X } from "lucide-react";
+import CustomSelect from "../select/select";
+import type { SelectOption } from "../select/types";
+import { Upload, X } from "lucide-react";
 
 // Form Context
 interface FormContextType {
@@ -123,12 +126,15 @@ function FormField({
 interface FormSelectProps {
   name: string;
   label?: string;
-  options: Array<{ value: string; label: string }>;
+  options: SelectOption[];
   placeholder?: string;
   required?: boolean;
   disabled?: boolean;
   className?: string;
+  size?: "sm" | "md" | "lg";
+  variant?: "default" | "outlined" | "filled";
   fullWidth?: boolean;
+  helperText?: string;
 }
 
 function FormSelect({
@@ -139,54 +145,40 @@ function FormSelect({
   required = false,
   disabled,
   className,
+  size = "md",
+  variant = "default",
   fullWidth = true,
+  helperText,
 }: FormSelectProps) {
-  const {
-    register,
-    formState: { errors },
-  } = useFormContext();
+  const { control } = useFormContext();
   const { disabled: formDisabled } = useContext(FormContext);
 
-  const error = errors[name]?.message as string;
   const isDisabled = disabled || formDisabled;
 
   return (
-    <div className={fullWidth ? "w-full" : ""}>
-      {label && (
-        <label className="block text-sm font-medium text-gs-black dark:text-gs-white mb-2">
-          {label}
-          {required && <span className="text-red-500 ml-1">*</span>}
-        </label>
-      )}
-      <div className="relative">
-        <select
-          {...register(name, {
-            required: required ? "Este campo es requerido" : false,
-          })}
+    <Controller
+      name={name}
+      control={control}
+      rules={{
+        required: required ? "Este campo es requerido" : false,
+      }}
+      render={({ field, fieldState: { error } }) => (
+        <CustomSelect
+          options={options}
+          placeholder={placeholder}
+          label={label}
+          required={required}
           disabled={isDisabled}
-          className={`
-            w-full px-3 py-2 text-base rounded-md transition-all duration-200 outline-none
-            border border-gs-gray-medium bg-gs-white text-gs-black
-            dark:border-gs-gray-dark dark:bg-gs-gray-dark dark:text-gs-white
-            focus:border-gs-yellow dark:focus:border-gs-yellow-dark 
-            disabled:opacity-50 disabled:cursor-not-allowed
-            ${error ? "border-red-500 dark:border-red-600" : ""}
-            ${className || ""}
-          `}
-        >
-          <option value="">{placeholder}</option>
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
-        <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" />
-      </div>
-      {error && (
-        <p className="text-red-500 dark:text-red-400 text-xs mt-1">{error}</p>
+          className={className}
+          size={size}
+          variant={variant}
+          fullWidth={fullWidth}
+          helperText={helperText}
+          field={field}
+          error={error?.message}
+        />
       )}
-    </div>
+    />
   );
 }
 
