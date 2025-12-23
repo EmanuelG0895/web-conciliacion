@@ -60,7 +60,7 @@ export default async function RootLayout({
 
             {/* 2. El main debe ser flex y ocupar el 100% del espacio restante */}
             <main className="flex flex-1 overflow-hidden">
-              <Sidebar links={sidebarLinks} />
+              <Sidebar />
               {/* 3. El contenedor de children debe tener scroll independiente */}
               <div className="flex-1 overflow-y-auto">
                 {children}
