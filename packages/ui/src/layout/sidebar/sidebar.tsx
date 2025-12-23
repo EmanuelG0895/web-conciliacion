@@ -1,6 +1,12 @@
 "use client";
 import type React from "react";
-import { SidebarClose, SidebarOpen } from "lucide-react";
+import {
+  Home,
+  MonitorCog,
+  Shield,
+  SidebarClose,
+  SidebarOpen,
+} from "lucide-react";
 import { useSidebar } from "@repo/providers";
 
 interface SidebarLink {
@@ -10,12 +16,29 @@ interface SidebarLink {
 }
 
 interface SidebarProps {
-  links: SidebarLink[];
+  //links: SidebarLink[];
   title?: string;
 }
 
-export function Sidebar({ links, title = "Grupo Salinas" }: SidebarProps) {
+export function Sidebar({ title = "Grupo Salinas" }: SidebarProps) {
   const { isOpen, toggleSidebar } = useSidebar();
+  const sidebarLinks: SidebarLink[] = [
+    {
+      label: "Inicio",
+      href: "/",
+      icon: <Home className="w-5 h-5" />,
+    },
+    {
+      label: "Seguros",
+      href: "/seguros",
+      icon: <Shield className="w-5 h-5" />,
+    },
+    {
+      label: "Back Office",
+      href: "/backoffice",
+      icon: <MonitorCog className="w-5 h-5" />,
+    },
+  ];
 
   const sidebarWidthClass = isOpen
     ? "translate-x-0 w-64"
@@ -59,7 +82,7 @@ export function Sidebar({ links, title = "Grupo Salinas" }: SidebarProps) {
 
       {/* Navegación */}
       <nav className="p-2 space-y-2 overflow-x-hidden overflow-y-auto flex-1">
-        {links.map((link) => (
+        {sidebarLinks.map((link) => (
           <a
             key={link.href}
             href={link.href}

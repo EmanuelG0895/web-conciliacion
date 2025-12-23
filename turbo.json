@@ -19,7 +19,8 @@
         "NODE_ENV",
         "SEGUROS_DOMAIN",
         "ALLOWED_ORIGINS",
-        "HOME_DOMAIN"
+        "HOME_DOMAIN",
+        "BACKOFFICE_DOMAIN"
       ]
     },
     "lint": {
@@ -38,6 +39,7 @@
       "env": [
         "NODE_ENV",
         "DOCS_DOMAIN",
+        "BACKOFFICE_DOMAIN",
         "ALLOWED_ORIGINS"
       ]
     }

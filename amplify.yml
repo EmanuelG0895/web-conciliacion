@@ -23,7 +23,7 @@ applications:
           - ../../node_modules/**/*
           - .next/cache/**/*
 
-  # Zona Secundaria: DOCS
+  # Zona Secundaria: seguros
   - appRoot: apps/seguros
     env:
       variables:
@@ -37,6 +37,29 @@ applications:
         build:
           commands:
             - cd ../../ && pnpm turbo run build --filter=seguros
+      artifacts:
+        baseDirectory: .next
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - ../../node_modules/**/*
+          - .next/cache/**/*
+
+  # Zona Secundaria: backoffice
+  - appRoot: apps/backoffice
+    env:
+      variables:
+        NODE_ENV: production
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install -g pnpm@10.19.0
+            - cd ../../ && pnpm install && cd apps/backoffice
+        build:
+          commands:
+            - cd ../../ && pnpm turbo run build --filter=backoffice
       artifacts:
         baseDirectory: .next
         files:
