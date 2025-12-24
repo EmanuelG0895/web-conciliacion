@@ -10,7 +10,7 @@ import {
   ThemeToggle,
 } from "@repo/ui";
 import { cookies } from "next/headers";
-import { Home, Image, Shield } from "lucide-react";
+import { User } from "lucide-react";
 import { SidebarProvider } from "@repo/providers";
 
 export const metadata: Metadata = {
@@ -26,18 +26,6 @@ export default async function RootLayout({
   const cookieStore = cookies();
   const savedTheme = (await cookieStore).get("theme")?.value;
   const temaInicial = savedTheme === "dark" ? "dark" : "light";
-  const sidebarLinks = [
-    {
-      label: "Inicio",
-      href: "/",
-      icon: <Home className="w-5 h-5" />,
-    },
-    {
-      label: "Seguros",
-      href: "/seguros",
-      icon: <Shield className="w-5 h-5" />,
-    },
-  ];
   return (
     <html lang="en" className={temaInicial} data-theme={temaInicial}>
       {/* 1. Aseguramos que el body ocupe todo el alto sin scroll global */}
@@ -49,7 +37,7 @@ export default async function RootLayout({
                 <div className="flex flex-col md:flex-row items-end md:justify-end gap-4">
                   <ThemeToggle />
                   <Profile
-                    image_profile={<Image />}
+                    image_profile={<User />}
                     image_alt="userImage"
                     userName="nombre de usuario"
                     showUserMenu={true}
@@ -62,9 +50,7 @@ export default async function RootLayout({
             <main className="flex flex-1 overflow-hidden">
               <Sidebar />
               {/* 3. El contenedor de children debe tener scroll independiente */}
-              <div className="flex-1 overflow-y-auto">
-                {children}
-              </div>
+              <div className="flex-1 overflow-y-auto">{children}</div>
             </main>
 
             <footer className="shrink-0 border-t p-2">footer</footer>
