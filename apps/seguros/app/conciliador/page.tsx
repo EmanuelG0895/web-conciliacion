@@ -4,6 +4,14 @@ import { Input, Modal, Select, SelectOption, StatusIndicator } from "@repo/ui";
 import { Button, Card, DynamicTabs } from "@repo/ui";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
+import { SubmitHandler, useForm, Controller } from "react-hook-form";
+
+interface Inputs {
+  fechaInicio: string;
+  fechaFin: string;
+  tipoNegocio: string;
+  tipoProducto: string;
+}
 
 export default function Conciliador() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -94,15 +102,22 @@ export default function Conciliador() {
     .split("T")[0];
 
   const businessOptions: SelectOption[] = [
-    { value: "1", label: "Tipo de Negocio: Todos" },
-    { value: "2", label: "MASIVO" },
-    { value: "3", label: "CORPORATIVO" },
+    { value: "1", label: "MASIVO" },
+    { value: "2", label: "CORPORATIVO" },
   ];
 
   const productOptions: SelectOption[] = [
     { value: "1", label: "Seguro Auto Total" },
-    { value: "1", label: "Seguro Vida Plena" },
+    { value: "2", label: "Seguro Vida Plena" },
   ];
+
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Inputs>();
+  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <div className="bg-gs-white dark:bg-gs-black text-gs-black dark:text-gs-text-light w-full space-y-3 p-2 sm:p-4">
@@ -112,33 +127,60 @@ export default function Conciliador() {
             label: "Vida",
             content: (
               <div className="space-y-4">
-                <div className="flex flex-col items-stretch justify-between gap-4 lg:flex-row lg:items-center">
-                  <div className="bg-gs-white dark:bg-gs-gray-dark flex flex-col gap-2 rounded-xl p-3 shadow-md sm:flex-row sm:gap-4 sm:p-4">
-                    <div className="text-gs-gray-medium flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
+                <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
+                  <div className="bg-gs-white dark:bg-gs-gray-dark p-4 rounded-xl shadow-md w-full lg:w-auto">
+                    <form
+                      className="text-gs-gray-medium flex flex-col items-start lg:items-center gap-2 lg:flex-row"
+                      onSubmit={handleSubmit(onSubmit)}
+                    >
                       <Input
                         fullWidth={true}
                         type="date"
                         placeholder="Fecha Inicio"
                         max={fechaMaximaAyer}
+                        {...register("fechaInicio", { required: true })}
+                        error={errors.fechaInicio && "Seleccione una opción"}
                       />
-
                       <Input
+                        fullWidth={true}
                         type="date"
                         placeholder="Fecha Fin"
                         max={fechaMaximaAyer}
+                        {...register("fechaFin", { required: true })}
+                        error={errors.fechaFin && "Seleccione una opción"}
                       />
-                    </div>
-                    <div className="text-gs-gray-medium flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
-                      <Select
-                        options={businessOptions}
-                        placeholder="Seleccione el tipo de negocio"
+                      <Controller
+                        name="tipoNegocio"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            field={field}
+                            variant="default"
+                            options={businessOptions}
+                            placeholder="Tipo de negocio"
+                            error={
+                              errors.tipoNegocio && "Seleccione una opción"
+                            }
+                          />
+                        )}
                       />
-                      <Select
-                        options={productOptions}
-                        placeholder="Seleccione una opción"
+                      <Controller
+                        name="tipoProducto"
+                        control={control}
+                        rules={{ required: true }}
+                        render={({ field }) => (
+                          <Select
+                            field={field}
+                            variant="default"
+                            options={productOptions}
+                            placeholder="Tipo de producto"
+                            error={
+                              errors.tipoProducto && "Seleccione una opción"
+                            }
+                          />
+                        )}
                       />
-                    </div>
-                    <div className="w-full sm:w-auto">
                       <Button
                         type="submit"
                         variant="default"
@@ -147,14 +189,11 @@ export default function Conciliador() {
                       >
                         Buscar
                       </Button>
-                    </div>
+                    </form>
                   </div>
-                  <div className="w-full lg:w-auto">
-                    {/* Botón de Descarga */}
                     <Button icon={<DownloadIcon />} iconPosition="right">
                       <span>Descargar Informe (.xlsx)</span>
                     </Button>
-                  </div>
                 </div>
                 <div className="bg-gs-white dark:bg-gs-gray-dark grid grid-cols-1 gap-4 rounded-xl p-3 shadow-md sm:grid-cols-2 sm:gap-6 sm:p-4 lg:grid-cols-3">
                   <Card title="Certificados Conciliados">
@@ -179,7 +218,7 @@ export default function Conciliador() {
                         <StatusIndicator status={data.status} />
                       </div>
                       <div className="text-gs-black dark:text-gs-white mt-4 text-sm">
-                        <table className="w-full border-separate border-spacing-y-4">
+                        <table className="w-full border-separate border-spacing-y-4 text-gs-text-dark dark:text-gs-text-light">
                           <thead>
                             <tr>
                               <th className="text-start text-xs font-semibold uppercase">
@@ -200,7 +239,7 @@ export default function Conciliador() {
                               </td>
 
                               {/* Columna 2: Monto */}
-                              <td className="text-right font-bold">
+                              <td className="text-right font-bold wrap-anywhere">
                                 $
                                 {data.amountA.toLocaleString("es-MX", {
                                   minimumFractionDigits: 2,
@@ -215,7 +254,7 @@ export default function Conciliador() {
                               <td className="text-start">{data.sourceB}:</td>
 
                               {/* Columna 2: Monto */}
-                              <td className="pt-1 text-right font-bold">
+                              <td className="pt-1 text-right font-bold wrap-anywhere">
                                 ${" "}
                                 {data.amountB.toLocaleString("es-MX", {
                                   minimumFractionDigits: 2,
@@ -229,7 +268,7 @@ export default function Conciliador() {
                                   DIFERENCIA
                                 </span>
                               </td>
-                              <td className="text-right text-lg font-bold">
+                              <td className="text-right text-lg font-bold wrap-anywhere">
                                 $
                                 {data.variation.toLocaleString("es-MX", {
                                   minimumFractionDigits: 2,

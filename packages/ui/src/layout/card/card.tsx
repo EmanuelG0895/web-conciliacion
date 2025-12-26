@@ -38,13 +38,13 @@ export function Card({
   // 1. Clases Base de la Tarjeta (Fondo, Borde, y Texto)
   const baseClasses = `${className} p-3 rounded-lg block shadow-lg transition-shadow hover:shadow-2xl 
     
-    /* ESTILOS DE MODO CLARO PERSONALIZADOS */
+    
     bg-gs-surface-medium /* ¡CAMBIO! Fondo de la tarjeta ahora usa blanco puro (#ffffff) */
     border-gs-surface-medium /* ¡CAMBIO! Borde: Usamos el gris sutil (#f0f0f0) */
     text-gs-text-dark /* Texto principal en negro */
     border-gs-text-dark border
     
-    /* ESTILOS DE MODO OSCURO (Mantenidos) */
+
     dark:bg-gs-surface-dark 
     dark:border-gs-surface-light 
     dark:text-gs-text-light 

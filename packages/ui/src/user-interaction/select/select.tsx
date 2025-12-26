@@ -12,21 +12,21 @@ const sizeClasses = {
 };
 
 const variantClasses = {
-  default: `border border-[var(--color-gs-gray-medium)] 
-    bg-[var(--color-gs-surface-light)] text-[var(--color-gs-black)]
-    dark:border-[var(--color-gs-gray-dark)] dark:bg-[var(--color-gs-gray-dark)] dark:text-[var(--color-gs-surface-light)]
-    focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
-    hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
-  outlined: `border-2 border-[var(--color-gs-gray-medium)] 
-    bg-transparent text-[var(--color-gs-black)]
-    dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-surface-light)]
-    focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
-    hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
-  filled: `border-b-2 border-[var(--color-gs-gray-light)] 
-    bg-[var(--color-gs-gray-light)] text-[var(--color-gs-black)]
-    dark:bg-[var(--color-gs-gray-dark)] dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-surface-light)]
-    focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
-    hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
+  default: `border border-gs-gray-medium 
+    bg-gs-surface-light text-gs-black
+    dark:border-gs-gray-dark dark:bg-gs-surface-dark dark:text-gs-surface-light
+    focus:border-gs-yellow dark:focus:border-gs-yellow-dark
+    hover:border-gs-gray-dark dark:hover:border-gs-gray-light`,
+  outlined: `border-2 border-gs-gray-medium 
+    bg-transparent text-gs-black
+    dark:border-gs-gray-medium dark:text-gs-surface-light
+    focus:border-gs-yellow dark:focus:border-gs-yellow-dark
+    hover:border-gs-gray-dark dark:hover:border-gs-gray-light`,
+  filled: `border-b-2 border-gs-gray-light 
+    bg-gs-gray-light text-gs-black
+    dark:bg-gs-surface-dark dark:border-gs-gray-medium dark:text-gs-surface-light
+    focus:border-gs-yellow dark:focus:border-gs-yellow-dark
+    hover:border-gs-gray-dark dark:hover:border-gs-gray-light`,
 };
 
 const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
@@ -60,17 +60,15 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
 
     const baseClasses = `
     inline-flex items-center justify-between rounded-md transition-all duration-200 outline-none
-    placeholder:text-[var(--color-gs-gray-medium)] dark:placeholder:text-[var(--color-gs-gray-light)]
-    disabled:cursor-not-allowed disabled:opacity-50
-    focus-visible:ring-2 focus-visible:ring-[var(--color-gs-yellow)] dark:focus-visible:ring-[var(--color-gs-yellow-dark)]
-    focus-visible:ring-offset-2
+    placeholder:text-gs-text-dark dark:placeholder:text-gs-gray-light
+    disabled:cursor-not-allowed disabled:opacity-50 
   `;
 
     const combinedClassName = `
     ${baseClasses}
     ${sizeClasses[size]}
     ${variantClasses[variant]}
-    ${fullWidth ? "w-full" : ""}
+    ${fullWidth ? "w-full" : "w-max"}
     ${error ? "border-red-500 dark:border-red-400" : ""}
     ${className}
   `
@@ -119,7 +117,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
               position="popper"
               sideOffset={4}
             >
-              <Select.ScrollUpButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-gray-dark text-gs-gray-medium">
+              <Select.ScrollUpButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-surface-dark text-gs-gray-medium">
                 <ChevronDownIcon className="h-3 w-3 rotate-180" />
               </Select.ScrollUpButton>
 
@@ -136,7 +134,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
                 ))}
               </Select.Viewport>
 
-              <Select.ScrollDownButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-gray-dark text-gs-gray-medium">
+              <Select.ScrollDownButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-surface-dark text-gs-gray-medium">
                 <ChevronDownIcon className="h-3 w-3" />
               </Select.ScrollDownButton>
             </Select.Content>
@@ -168,9 +166,9 @@ const SelectItem = forwardRef<
     className={`
       relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none
       focus:bg-gs-gray-light dark:focus:bg-gs-gray-medium
-      focus:text-gs-black dark:focus:text-gs-surface-light
+      focus:text-gs-black dark:focus:text-gs-text-light
       data-disabled:pointer-events-none data-disabled:opacity-50
-      hover:bg-gs-gray-light dark:hover:bg-gs-gray-medium
+      hover:bg-gs-gray-light dark:hover:bg-gs-surface-medium
       transition-colors
       ${className}
     `}
