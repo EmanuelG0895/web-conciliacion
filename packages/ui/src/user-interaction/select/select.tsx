@@ -13,18 +13,18 @@ const sizeClasses = {
 
 const variantClasses = {
   default: `border border-[var(--color-gs-gray-medium)] 
-    bg-[var(--color-gs-white)] text-[var(--color-gs-black)]
-    dark:border-[var(--color-gs-gray-dark)] dark:bg-[var(--color-gs-gray-dark)] dark:text-[var(--color-gs-white)]
+    bg-[var(--color-gs-surface-light)] text-[var(--color-gs-black)]
+    dark:border-[var(--color-gs-gray-dark)] dark:bg-[var(--color-gs-gray-dark)] dark:text-[var(--color-gs-surface-light)]
     focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
     hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
   outlined: `border-2 border-[var(--color-gs-gray-medium)] 
     bg-transparent text-[var(--color-gs-black)]
-    dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-white)]
+    dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-surface-light)]
     focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
     hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
   filled: `border-b-2 border-[var(--color-gs-gray-light)] 
     bg-[var(--color-gs-gray-light)] text-[var(--color-gs-black)]
-    dark:bg-[var(--color-gs-gray-dark)] dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-white)]
+    dark:bg-[var(--color-gs-gray-dark)] dark:border-[var(--color-gs-gray-medium)] dark:text-[var(--color-gs-surface-light)]
     focus:border-[var(--color-gs-yellow)] dark:focus:border-[var(--color-gs-yellow-dark)]
     hover:border-[var(--color-gs-gray-dark)] dark:hover:border-[var(--color-gs-gray-light)]`,
 };
@@ -80,7 +80,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
     return (
       <div className={fullWidth ? "w-full" : ""}>
         {label && (
-          <label className="block text-sm font-medium text-gs-black dark:text-gs-white mb-2">
+          <label className="block text-sm font-medium text-gs-black dark:text-gs-surface-light mb-2">
             {label}
             {required && <span className="text-red-500 ml-1">*</span>}
           </label>
@@ -111,7 +111,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
             <Select.Content
               className={`
               overflow-hidden rounded-md border border-gs-gray-medium
-              bg-gs-white dark:bg-gs-gray-dark
+              bg-gs-surface-light dark:bg-gs-surface-dark
               shadow-lg z-50 
               min-w-(--radix-select-trigger-width)
               max-h-[300px]
@@ -119,13 +119,14 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
               position="popper"
               sideOffset={4}
             >
-              <Select.ScrollUpButton className="flex h-6 cursor-default items-center justify-center bg-gs-white dark:bg-gs-gray-dark text-gs-gray-medium">
+              <Select.ScrollUpButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-gray-dark text-gs-gray-medium">
                 <ChevronDownIcon className="h-3 w-3 rotate-180" />
               </Select.ScrollUpButton>
 
               <Select.Viewport className="p-1">
                 {options.map((option) => (
                   <SelectItem
+                    className="hover:bg-gs-surface-medium dark:bg-gs-surface-dark"
                     key={option.value}
                     value={option.value}
                     disabled={option.disabled}
@@ -135,7 +136,7 @@ const CustomSelect = forwardRef<HTMLButtonElement, SelectProps>(
                 ))}
               </Select.Viewport>
 
-              <Select.ScrollDownButton className="flex h-6 cursor-default items-center justify-center bg-gs-white dark:bg-gs-gray-dark text-gs-gray-medium">
+              <Select.ScrollDownButton className="flex h-6 cursor-default items-center justify-center bg-gs-surface-light dark:bg-gs-gray-dark text-gs-gray-medium">
                 <ChevronDownIcon className="h-3 w-3" />
               </Select.ScrollDownButton>
             </Select.Content>
@@ -167,7 +168,7 @@ const SelectItem = forwardRef<
     className={`
       relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none
       focus:bg-gs-gray-light dark:focus:bg-gs-gray-medium
-      focus:text-gs-black dark:focus:text-gs-white
+      focus:text-gs-black dark:focus:text-gs-surface-light
       data-disabled:pointer-events-none data-disabled:opacity-50
       hover:bg-gs-gray-light dark:hover:bg-gs-gray-medium
       transition-colors

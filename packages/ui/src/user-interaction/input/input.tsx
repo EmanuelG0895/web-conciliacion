@@ -47,7 +47,7 @@ export default function Input({
 }: InputProps) {
   const baseClasses = `
     rounded-md transition-all duration-200 outline-none
-    placeholder:text-[var(--color-gs-gray-medium)] dark:placeholder:text-[var(--color-gs-gray-light)]
+    placeholder:text-gs-gray-medium dark:placeholder:text-gs-gray-light
     disabled:opacity-50 disabled:cursor-not-allowed
   `;
 
@@ -66,7 +66,7 @@ export default function Input({
     .trim();
 
   return (
-    <div className={fullWidth ? "w-full" : ""}>
+    <div className={widthClass}>
       {label && (
         <label className="block text-sm font-medium text-gs-black dark:text-gs-white mb-2">
           {label}

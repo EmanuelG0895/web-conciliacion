@@ -37,7 +37,7 @@ export default function Page() {
       </Card>
       <Card
         image={<PackagePlusIcon width={50} height={50} />}
-        href="/seguros"
+        href="/seguros/nuevoProducto"
         title="Nuevo Producto"
         link={true}
         textButton="ir a nuevo producto"

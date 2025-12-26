@@ -1,6 +1,6 @@
 "use client";
 
-import { Modal, StatusIndicator } from "@repo/ui";
+import { Input, Modal, Select, SelectOption, StatusIndicator } from "@repo/ui";
 import { Button, Card, DynamicTabs } from "@repo/ui";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
@@ -93,8 +93,19 @@ export default function Conciliador() {
     .toISOString()
     .split("T")[0];
 
+  const businessOptions: SelectOption[] = [
+    { value: "1", label: "Tipo de Negocio: Todos" },
+    { value: "2", label: "MASIVO" },
+    { value: "3", label: "CORPORATIVO" },
+  ];
+
+  const productOptions: SelectOption[] = [
+    { value: "1", label: "Seguro Auto Total" },
+    { value: "1", label: "Seguro Vida Plena" },
+  ];
+
   return (
-    <div className="bg-gs-white dark:bg-gs-black text-gs-black dark:text-gs-white w-full space-y-3 p-2 sm:p-4">
+    <div className="bg-gs-white dark:bg-gs-black text-gs-black dark:text-gs-text-light w-full space-y-3 p-2 sm:p-4">
       <DynamicTabs
         options={[
           {
@@ -102,36 +113,30 @@ export default function Conciliador() {
             content: (
               <div className="space-y-4">
                 <div className="flex flex-col items-stretch justify-between gap-4 lg:flex-row lg:items-center">
-                  {/* filtros */}
                   <div className="bg-gs-white dark:bg-gs-gray-dark flex flex-col gap-2 rounded-xl p-3 shadow-md sm:flex-row sm:gap-4 sm:p-4">
                     <div className="text-gs-gray-medium flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
-                      <input
+                      <Input
+                        fullWidth={true}
                         type="date"
-                        className="border-gs-gray-light dark:border-gs-white bg-gs-gray-light dark:bg-gs-gray-dark text-gs-black dark:text-gs-white focus:border-gs-yellow focus:ring-gs-yellow rounded-lg border p-2 text-sm md:w-full"
                         placeholder="Fecha Inicio"
                         max={fechaMaximaAyer}
                       />
 
-                      <input
+                      <Input
                         type="date"
-                        className="border-gs-gray-light dark:border-gs-white bg-gs-gray-light dark:bg-gs-gray-dark text-gs-black dark:text-gs-white focus:border-gs-yellow focus:ring-gs-yellow rounded-lg border p-2 text-sm"
                         placeholder="Fecha Fin"
-                        // Máximo: Ayer (Calculado en una sola línea para propósitos de ejemplo)
                         max={fechaMaximaAyer}
                       />
                     </div>
                     <div className="text-gs-gray-medium flex flex-col items-stretch gap-2 sm:flex-row sm:items-center">
-                      {/* <FilterIcon /> Usando SVG Inlined */}
-                      <select className="border-gs-gray-light dark:border-gs-white bg-gs-gray-light dark:bg-gs-gray-dark text-gs-black dark:text-gs-white focus:border-gs-yellow focus:ring-gs-yellow w-full rounded-lg border p-2 text-sm sm:w-auto">
-                        <option>Tipo de Negocio: Todos</option>
-                        <option>MASIVO</option>
-                        <option>CORPORATIVO</option>
-                      </select>
-                      <select className="border-gs-gray-light dark:border-gs-white bg-gs-gray-light dark:bg-gs-gray-dark text-gs-black dark:text-gs-white focus:border-gs-yellow focus:ring-gs-yellow w-full rounded-lg border p-2 text-sm sm:w-auto">
-                        <option>Producto: Todos</option>
-                        <option>Seguro Auto Total</option>
-                        <option>Seguro Vida Plena</option>
-                      </select>
+                      <Select
+                        options={businessOptions}
+                        placeholder="Seleccione el tipo de negocio"
+                      />
+                      <Select
+                        options={productOptions}
+                        placeholder="Seleccione una opción"
+                      />
                     </div>
                     <div className="w-full sm:w-auto">
                       <Button
@@ -146,29 +151,19 @@ export default function Conciliador() {
                   </div>
                   <div className="w-full lg:w-auto">
                     {/* Botón de Descarga */}
-                    <button className="bg-gs-yellow dark:bg-gs-yellow-dark text-gs-black flex w-full items-center justify-center space-x-2 rounded-lg px-4 py-2 font-semibold transition-colors hover:opacity-90 disabled:opacity-50 lg:w-auto">
-                      <DownloadIcon />
+                    <Button icon={<DownloadIcon />} iconPosition="right">
                       <span>Descargar Informe (.xlsx)</span>
-                    </button>
+                    </Button>
                   </div>
                 </div>
                 <div className="bg-gs-white dark:bg-gs-gray-dark grid grid-cols-1 gap-4 rounded-xl p-3 shadow-md sm:grid-cols-2 sm:gap-6 sm:p-4 lg:grid-cols-3">
-                  <Card
-                    className="border-b-gs-yellow dark:border-b-gs-yellow-dark border-0 border-b-4"
-                    title="Certificados Conciliados"
-                  >
+                  <Card title="Certificados Conciliados">
                     <p className="text-3xl font-bold">420</p>
                   </Card>
-                  <Card
-                    className="border-b-gs-yellow dark:border-b-gs-yellow-dark border-0 border-b-4"
-                    title="Certificados Conciliados"
-                  >
+                  <Card title="Certificados Conciliados">
                     <p className="text-3xl font-bold">420</p>
                   </Card>
-                  <Card
-                    className="border-b-gs-yellow dark:border-b-gs-yellow-dark border-0 border-b-4"
-                    title="Certificados Conciliados"
-                  >
+                  <Card title="Certificados Conciliados">
                     <p className="text-3xl font-bold">420</p>
                   </Card>
                 </div>
