@@ -1,38 +1,34 @@
 "use client";
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext } from "react";
 import {
   useForm,
-  SubmitHandler,
   FormProvider,
   useFormContext,
-  DefaultValues,
   Controller,
+  SubmitHandler,
 } from "react-hook-form";
 import Input from "../input/input";
 import Button from "../button/button";
 import CustomSelect from "../select/select";
-import type { SelectOption } from "../select/types";
 import { Upload, X } from "lucide-react";
+import type {
+  FormContextType,
+  FormProps,
+  FormFieldProps,
+  FormSelectProps,
+  FormCheckboxProps,
+  FormRadioProps,
+  FormFileUploadProps,
+  FormActionsProps,
+  FormSubmitButtonProps,
+  FormCancelButtonProps,
+  FormSectionProps,
+} from "./types";
 
 // Form Context
-interface FormContextType {
-  loading?: boolean;
-  disabled?: boolean;
-}
-
 const FormContext = createContext<FormContextType>({});
 
 // Base Form Component
-interface FormProps<T extends Record<string, unknown>> {
-  onSubmit: SubmitHandler<T>;
-  defaultValues?: DefaultValues<T>;
-  mode?: "onChange" | "onBlur" | "onSubmit";
-  loading?: boolean;
-  disabled?: boolean;
-  className?: string;
-  children: ReactNode;
-}
-
 function Form<T extends Record<string, unknown>>({
   onSubmit,
   defaultValues,
@@ -70,19 +66,6 @@ function Form<T extends Record<string, unknown>>({
 }
 
 // Form Field Component
-interface FormFieldProps {
-  name: string;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  variant?: "default" | "outlined" | "filled";
-  fullWidth?: boolean;
-}
-
 function FormField({
   name,
   label,
@@ -94,6 +77,8 @@ function FormField({
   size,
   variant,
   fullWidth = true,
+  min,
+  max,
 }: FormFieldProps) {
   const {
     register,
@@ -118,25 +103,13 @@ function FormField({
       size={size}
       variant={variant}
       fullWidth={fullWidth}
+      min={min}
+      max={max}
     />
   );
 }
 
 // Form Select Component
-interface FormSelectProps {
-  name: string;
-  label?: string;
-  options: SelectOption[];
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  variant?: "default" | "outlined" | "filled";
-  fullWidth?: boolean;
-  helperText?: string;
-}
-
 function FormSelect({
   name,
   label,
@@ -147,7 +120,7 @@ function FormSelect({
   className,
   size = "md",
   variant = "default",
-  fullWidth = true,
+  fullWidth = false,
   helperText,
 }: FormSelectProps) {
   const { control } = useFormContext();
@@ -183,15 +156,6 @@ function FormSelect({
 }
 
 // Form Checkbox Component
-interface FormCheckboxProps {
-  name: string;
-  label: string;
-  value?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-}
-
 function FormCheckbox({
   name,
   label,
@@ -237,15 +201,6 @@ function FormCheckbox({
 }
 
 // Form Radio Group Component
-interface FormRadioProps {
-  name: string;
-  label: string;
-  options: Array<{ value: string; label: string }>;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-}
-
 function FormRadioGroup({
   name,
   label,
@@ -302,17 +257,6 @@ function FormRadioGroup({
 }
 
 // Form File Upload Component
-interface FormFileUploadProps {
-  name: string;
-  label?: string;
-  accept?: string;
-  multiple?: boolean;
-  maxSize?: number; // in bytes
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-}
-
 function FormFileUpload({
   name,
   label,
@@ -439,12 +383,6 @@ function FormFileUpload({
 }
 
 // Form Actions Component
-interface FormActionsProps {
-  children: ReactNode;
-  className?: string;
-  align?: "left" | "center" | "right";
-}
-
 function FormActions({
   children,
   className,
@@ -466,20 +404,6 @@ function FormActions({
 }
 
 // Form Submit Button Component
-interface FormSubmitButtonProps {
-  children: ReactNode;
-  variant?:
-    | "default"
-    | "secondary"
-    | "outline"
-    | "ghost"
-    | "link"
-    | "danger";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
-  disabled?: boolean;
-}
-
 function FormSubmitButton({
   children,
   variant = "default",
@@ -508,20 +432,6 @@ function FormSubmitButton({
 }
 
 // Form Cancel Button Component
-interface FormCancelButtonProps {
-  children: ReactNode;
-  onClick: () => void;
-  variant?:
-    | "default"
-    | "secondary"
-    | "outline"
-    | "ghost"
-    | "link"
-    | "danger";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
-}
-
 function FormCancelButton({
   children,
   onClick,
@@ -543,12 +453,6 @@ function FormCancelButton({
 }
 
 // Form Section Component
-interface FormSectionProps {
-  title?: string;
-  children: ReactNode;
-  className?: string;
-}
-
 function FormSection({ title, children, className }: FormSectionProps) {
   return (
     <div className={`space-y-4 ${className || ""}`}>

@@ -42,7 +42,7 @@ export default function Profile({
           </button>
 
           {isUserMenuOpen && (
-            <div className="absolute right-0 mt-2 w-48 bg-card border border-border rounded-lg shadow-lg py-1">
+            <div className="absolute right-0 mt-2 w-48 bg-gs-surface-light dark:bg-gs-surface-dark border border-border rounded-lg shadow-lg py-1">
               <div className="px-4 py-2 border-b border-border">
                 <p className="text-sm font-semibold text-foreground">
                   {userName}

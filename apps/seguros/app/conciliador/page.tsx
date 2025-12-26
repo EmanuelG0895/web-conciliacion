@@ -1,10 +1,10 @@
 "use client";
 
-import { Input, Modal, Select, SelectOption, StatusIndicator } from "@repo/ui";
+import { Modal, SelectOption, StatusIndicator, Form } from "@repo/ui";
 import { Button, Card, DynamicTabs } from "@repo/ui";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
-import { SubmitHandler, useForm, Controller } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
 
 interface Inputs {
   fechaInicio: string;
@@ -15,6 +15,9 @@ interface Inputs {
 
 export default function Conciliador() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState<"download" | "detalle" | null>(
+    null
+  );
 
   const data = [
     {
@@ -95,7 +98,11 @@ export default function Conciliador() {
       status: "EN_PROCESO",
     },
   ];
-  const onClick = () => setIsModalOpen(true);
+
+  const onClick = () => {
+    setModalType("detalle");
+    setIsModalOpen(true);
+  };
 
   const fechaMaximaAyer = new Date(new Date().setDate(new Date().getDate() - 1))
     .toISOString()
@@ -111,13 +118,76 @@ export default function Conciliador() {
     { value: "2", label: "Seguro Vida Plena" },
   ];
 
-  const {
-    register,
-    handleSubmit,
-    control,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    console.log(data);
+  };
+
+  const content = (typeContent: "download" | "detalle" | null) => {
+    if (typeContent === "download") {
+      return (
+        <div className="space-y-4">
+          <Form
+            onSubmit={onSubmit}
+            className="text-gs-gray-medium flex flex-col items-start lg:items-center gap-2 lg:flex-row"
+            defaultValues={{
+              fechaInicio: "",
+              fechaFin: "",
+              tipoNegocio: "",
+              tipoProducto: "",
+            }}
+          >
+            <Form.Field
+              name="fechaInicio"
+              type="date"
+              placeholder="Fecha Inicio"
+              max={fechaMaximaAyer}
+              required
+            />
+            <Form.Field
+              name="fechaFin"
+              type="date"
+              placeholder="Fecha Fin"
+              max={fechaMaximaAyer}
+              required
+            />
+            <Form.Select
+              name="tipoNegocio"
+              options={businessOptions}
+              placeholder="Tipo de negocio"
+              required
+            />
+            <Form.Select
+              name="tipoProducto"
+              options={productOptions}
+              placeholder="Tipo de producto"
+              required
+            />
+            <Form.SubmitButton variant="default">Buscar</Form.SubmitButton>
+          </Form>
+        </div>
+      );
+    }
+    if (typeContent === "detalle") {
+      return (
+        <div className="space-y-4">
+          <DynamicTabs
+            options={[
+              { label: "Resumen", content: <div>Resumen de conciliación</div> },
+              {
+                label: "Detalles",
+                content: <div>Detalles de conciliación</div>,
+              },
+              {
+                label: "Discrepancias",
+                content: <div>Discrepancias encontradas</div>,
+              },
+            ]}
+          />
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     <div className="bg-gs-white dark:bg-gs-black text-gs-black dark:text-gs-text-light w-full space-y-3 p-2 sm:p-4">
@@ -129,71 +199,57 @@ export default function Conciliador() {
               <div className="space-y-4">
                 <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
                   <div className="bg-gs-white dark:bg-gs-gray-dark p-4 rounded-xl shadow-md w-full lg:w-auto">
-                    <form
+                    <Form
+                      onSubmit={onSubmit}
                       className="text-gs-gray-medium flex flex-col items-start lg:items-center gap-2 lg:flex-row"
-                      onSubmit={handleSubmit(onSubmit)}
+                      defaultValues={{
+                        fechaInicio: "",
+                        fechaFin: "",
+                        tipoNegocio: "",
+                        tipoProducto: "",
+                      }}
                     >
-                      <Input
-                        fullWidth={true}
+                      <Form.Field
+                        name="fechaInicio"
                         type="date"
                         placeholder="Fecha Inicio"
                         max={fechaMaximaAyer}
-                        {...register("fechaInicio", { required: true })}
-                        error={errors.fechaInicio && "Seleccione una opción"}
+                        required
                       />
-                      <Input
-                        fullWidth={true}
+                      <Form.Field
+                        name="fechaFin"
                         type="date"
                         placeholder="Fecha Fin"
                         max={fechaMaximaAyer}
-                        {...register("fechaFin", { required: true })}
-                        error={errors.fechaFin && "Seleccione una opción"}
+                        required
                       />
-                      <Controller
+                      <Form.Select
                         name="tipoNegocio"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            field={field}
-                            variant="default"
-                            options={businessOptions}
-                            placeholder="Tipo de negocio"
-                            error={
-                              errors.tipoNegocio && "Seleccione una opción"
-                            }
-                          />
-                        )}
+                        options={businessOptions}
+                        placeholder="Tipo de negocio"
+                        required
                       />
-                      <Controller
+                      <Form.Select
                         name="tipoProducto"
-                        control={control}
-                        rules={{ required: true }}
-                        render={({ field }) => (
-                          <Select
-                            field={field}
-                            variant="default"
-                            options={productOptions}
-                            placeholder="Tipo de producto"
-                            error={
-                              errors.tipoProducto && "Seleccione una opción"
-                            }
-                          />
-                        )}
+                        options={productOptions}
+                        placeholder="Tipo de producto"
+                        required
                       />
-                      <Button
-                        type="submit"
-                        variant="default"
-                        icon
-                        iconPosition="right"
-                      >
+                      <Form.SubmitButton variant="default">
                         Buscar
-                      </Button>
-                    </form>
+                      </Form.SubmitButton>
+                    </Form>
                   </div>
-                    <Button icon={<DownloadIcon />} iconPosition="right">
-                      <span>Descargar Informe (.xlsx)</span>
-                    </Button>
+                  <Button
+                    onClick={() => {
+                      setModalType("download");
+                      setIsModalOpen(true);
+                    }}
+                    icon={<DownloadIcon />}
+                    iconPosition="right"
+                  >
+                    <span>Descargar Informe (.xlsx)</span>
+                  </Button>
                 </div>
                 <div className="bg-gs-white dark:bg-gs-gray-dark grid grid-cols-1 gap-4 rounded-xl p-3 shadow-md sm:grid-cols-2 sm:gap-6 sm:p-4 lg:grid-cols-3">
                   <Card title="Certificados Conciliados">
@@ -293,15 +349,17 @@ export default function Conciliador() {
       {isModalOpen && (
         <Modal
           size="large"
-          onClose={() => setIsModalOpen(false)}
-          title="Detalle de Conciliación"
+          onClose={() => {
+            setIsModalOpen(false);
+            setModalType(null);
+          }}
+          title={
+            modalType === "download"
+              ? "Descargar Informe"
+              : "Detalle de Conciliación"
+          }
         >
-          <div className="space-y-4">
-            <p>
-              Aquí va el contenido detallado de la conciliación seleccionada.
-            </p>
-            <p>Puedes agregar tablas, gráficos u otra información relevante.</p>
-          </div>
+          {content(modalType)}
         </Modal>
       )}
     </div>

@@ -34,33 +34,7 @@ export default function Page() {
         textButton="Ir a conciliador"
       >
         <p>Descripción de la zona a la que quieres llegar </p>
-      </Card>
-      <Card
-        image={<PackagePlusIcon width={50} height={50} />}
-        href="/seguros/nuevoProducto"
-        title="Nuevo Producto"
-        link={true}
-        textButton="ir a nuevo producto"
-      >
-        <p>Descripción de que es lo que se hace en esta zona</p>
-      </Card>
-      <Card
-        image={<Building2 width={50} height={50} />}
-        title="Sociedades"
-       
-        href="/seguros/sociedades"
-        textButton="Ir a sociedades"
-      >
-        <p>Descripción de lo que se puede hacer en la zona</p>
-      </Card>
-      <Card
-        image={<User width={50} height={50} />}
-        title="Usuarios"     
-        href="/seguros/usuarios"
-        textButton="Ir a usuarios"
-      >
-        <p>Descripción de que es lo que se hace en esta zona</p>
-      </Card>
+      </Card>     
     </div>
   );
 }
