@@ -29,7 +29,6 @@ export default async function RootLayout({
   const temaInicial = savedTheme === "dark" ? "dark" : "light";
   return (
     <html lang="en" className={temaInicial} data-theme={temaInicial}>
-      {/*Aseguramos que el body ocupe todo el alto sin scroll global */}
       <body className="h-dvh flex flex-col overflow-hidden dark:bg-black">
         <ThemeProvider initialTheme={temaInicial}>
           <SidebarProvider>
@@ -50,7 +49,6 @@ export default async function RootLayout({
               <Sidebar />
               <div className="flex-1 overflow-y-auto">{children}</div>
             </main>
-
             <footer>
               <Footer />
             </footer>

@@ -47,7 +47,7 @@ export function Sidebar({ title = "Grupo Salinas" }: SidebarProps) {
   return (
     <div
       className={`
-        fixed md:relative h-dvh md:min-h-[calc(100vh-64px)] md:flex md:flex-col inset-y-0 left-0 z-50 shadow-xl border-r border-gs-primary-light dark:border-gs-primary-dark shadow-gs-primary-light dark:shadow-gs-primary-dark bg-gs-surface-light dark:bg-gs-surface-dark transition-[width,transform] duration-500 ease-in-out
+        fixed md:relative h-dvh md:min-h-[calc(100vh-64px)] md:flex md:flex-col inset-y-0 left-0 z-50 border-r bg-gs-surface-light border-b border-gs-primary-light dark:border-gs-primary-dark shadow-sm shadow-gs-primary-light dark:shadow-gs-primary-dark dark:bg-gs-surface-dark transition-[width,transform] duration-500 ease-in-out
         ${sidebarWidthClass}
       `}
     >

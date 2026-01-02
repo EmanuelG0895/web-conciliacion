@@ -3,14 +3,17 @@ interface ModalProps {
   readonly title?: string;
   readonly children: React.ReactNode;
   readonly size?: "small" | "medium" | "large";
+  readonly open: boolean;
 }
 
 export default function Modal({
+  open,
   onClose,
   children,
   title,
   size = "medium",
 }: ModalProps) {
+  if (!open) return null;
   const sizeClasses = {
     small: "max-w-2xl",
     medium: "max-w-4xl",
@@ -18,7 +21,7 @@ export default function Modal({
   };
 
   return (
-    <div className="bg-opacity-50 fixed py-4 inset-0 z-50 flex items-center justify-center bg-black/80">
+    <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/80">
       <div
         className={`w-full ${sizeClasses[size]} overflow-y-auto rounded-lg px-3 bg-gs-surface-light text-gs-black dark:bg-gs-surface-dark dark:text-gs-text-light`}
       >
@@ -35,7 +38,7 @@ export default function Modal({
             </h2>
           )}
         </div>
-        <div>{children}</div>
+        <div className="py-4">{children}</div>
       </div>
     </div>
   );

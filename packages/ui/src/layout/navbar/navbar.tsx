@@ -12,9 +12,7 @@ interface NavLink {
 interface NavbarProps {
   readonly logo?: React.ReactElement | string;
   readonly logoText?: string;
-  readonly links?: NavLink[];
-  readonly showUserMenu?: boolean;
-  readonly userName?: string;
+  readonly links?: NavLink[]; 
   readonly children: React.ReactElement;
 }
 

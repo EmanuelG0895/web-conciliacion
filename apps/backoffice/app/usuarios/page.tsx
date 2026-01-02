@@ -84,14 +84,14 @@ export default function Bitacora() {
   const handleDownloadTXT = () => {
     const txtContent = generateTXTContent(filteredRegistros);
     const blob = new Blob([txtContent], { type: "text/plain;charset=utf-8" });
-    const url = window.URL.createObjectURL(blob);
+    const url = globalThis.URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = `bitacora_${new Date().toISOString().split("T")[0]}.txt`;
     document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-    window.URL.revokeObjectURL(url);
+    link.remove();
+    globalThis.URL.revokeObjectURL(url);
   };
 
   // Generar contenido TXT

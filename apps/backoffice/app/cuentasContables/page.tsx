@@ -1,6 +1,7 @@
 "use client";
-import {  Table } from "@repo/ui";
-import {  CreditCard,  } from "lucide-react";
+import React, { useState } from "react";
+import { Table, Button, AlertDialogRoot, AlertDialogContent, AlertDialogHeader, AlertDialogFooter, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from "@repo/ui";
+import { CreditCard, Edit2, Trash2 } from "lucide-react";
 
 interface CuentaContable extends Record<string, unknown> {
   id: number;
@@ -11,7 +12,7 @@ interface CuentaContable extends Record<string, unknown> {
 }
 
 export default function Page() {
-  const cuentasContables: CuentaContable[] = [
+  const [cuentasContables, setCuentasContables] = useState<CuentaContable[]>([
     {
       id: 1,
       numeroCuenta: "DUMMY001",
@@ -26,7 +27,20 @@ export default function Page() {
       sociedadesAsociadas: ["DUMMY_SOC1", "DUMMY_SOC2"],
       activa: false,
     },
-  ];
+  ]);
+
+  const [deleteCuenta, setDeleteCuenta] = useState<CuentaContable | null>(null);
+
+  const handleEdit = (cuenta: CuentaContable) => {
+    alert(`Editar cuenta: ${cuenta.nombre}`);
+  };
+
+  const handleDelete = () => {
+    if (deleteCuenta) {
+      setCuentasContables((prev) => prev.filter((c) => c.id !== deleteCuenta.id));
+      setDeleteCuenta(null);
+    }
+  };
 
   const cuentasColumns = [
     { key: "numeroCuenta", label: "Número de Cuenta", sortable: true },
@@ -55,6 +69,21 @@ export default function Page() {
         </span>
       ),
     },
+    {
+      key: "acciones",
+      label: "Acciones",
+      sortable: false,
+      render: (cuenta: CuentaContable) => (
+        <div className="flex gap-2">
+          <Button size="icon" variant="ghost" onClick={() => handleEdit(cuenta)} title="Editar">
+            <Edit2 className="w-4 h-4" />
+          </Button>
+          <Button size="icon" variant="ghost" onClick={() => setDeleteCuenta(cuenta)} title="Eliminar">
+            <Trash2 className="w-4 h-4 text-red-500" />
+          </Button>
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -76,6 +105,26 @@ export default function Page() {
           bordered
         />
       </div>
+
+      {/* Diálogo de confirmación para eliminar */}
+      <AlertDialogRoot open={!!deleteCuenta} onOpenChange={() => setDeleteCuenta(null)}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Confirmar eliminación</AlertDialogTitle>
+            <AlertDialogDescription>
+              ¿Estás seguro de que deseas eliminar la cuenta <b>{deleteCuenta?.nombre}</b>? Esta acción no se puede deshacer.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setDeleteCuenta(null)}>
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
+              Eliminar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogRoot>
     </div>
   );
 }
