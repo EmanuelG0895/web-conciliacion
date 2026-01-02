@@ -29,6 +29,15 @@ export default function Home() {
       >
         <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>
+      <Card
+        image={<PackagePlusIcon width={50} height={50} />}
+        href="/backoffice/cuentasContables"
+        title="Cuentas Contables"
+        link={true}
+        textButton="ir a cuentas contables"
+      >
+        <p>Descripción de que es lo que se hace en esta zona</p>
+      </Card>
     </div>
   );
 }

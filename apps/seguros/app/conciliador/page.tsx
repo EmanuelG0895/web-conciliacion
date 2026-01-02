@@ -1,7 +1,16 @@
 "use client";
 
-import { Modal, SelectOption, StatusIndicator, Form } from "@repo/ui";
-import { Button, Card, DynamicTabs } from "@repo/ui";
+import {
+  Modal,
+  SelectOption,
+  StatusIndicator,
+  Form,
+  Button,
+  Card,
+  DynamicTabs,
+  Table,
+  TableColumn,
+} from "@repo/ui";
 import { DownloadIcon } from "lucide-react";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
@@ -121,6 +130,20 @@ export default function Conciliador() {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     console.log(data);
   };
+  interface Usuario {
+    id: number;
+    nombre: string;
+    correo: string;
+    [key: string]: unknown;
+  }
+  const columnas: TableColumn<Usuario>[] = [
+    { key: "nombre", label: "Nombre", sortable: true },
+    { key: "correo", label: "Correo", sortable: true },
+  ];
+  const datos: Usuario[] = [
+    { id: 1, nombre: "Juan", correo: "juan@mail.com" },
+    { id: 2, nombre: "Ana", correo: "ana@mail.com" },
+  ];
 
   const content = (typeContent: "download" | "detalle" | null) => {
     if (typeContent === "download") {
@@ -172,10 +195,39 @@ export default function Conciliador() {
         <div className="space-y-4">
           <DynamicTabs
             options={[
-              { label: "Resumen", content: <div>Resumen de conciliación</div> },
+              {
+                label: "Resumen",
+                content: (
+                  <div className="py-4">
+                    <Table
+                      data={datos}
+                      columns={columnas}
+                      keyExtractor={(row) => row.id}
+                      onRowClick={(row) => alert(row.nombre)}
+                      striped
+                      hoverable
+                      bordered
+                      emptyMessage="Sin usuarios"
+                    />
+                  </div>
+                ),
+              },
               {
                 label: "Detalles",
-                content: <div>Detalles de conciliación</div>,
+                content: (
+                  <div className="py-4">
+                    <Table
+                      data={datos}
+                      columns={columnas}
+                      keyExtractor={(row) => row.id}
+                      onRowClick={(row) => alert(row.nombre)}
+                      striped
+                      hoverable
+                      bordered
+                      emptyMessage="Sin usuarios"
+                    />
+                  </div>
+                ),
               },
               {
                 label: "Discrepancias",

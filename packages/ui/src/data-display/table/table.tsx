@@ -118,7 +118,12 @@ export default function Table<T extends Record<string, unknown>>({
       if (aVal == null) return 1;
       if (bVal == null) return -1;
 
-      const comparison = aVal < bVal ? -1 : aVal > bVal ? 1 : 0;
+      let comparison = 0;
+      if (aVal < bVal) {
+        comparison = -1;
+      } else if (aVal > bVal) {
+        comparison = 1;
+      }
       return sortDirection === "asc" ? comparison : -comparison;
     });
   }, [data, sortKey, sortDirection]);

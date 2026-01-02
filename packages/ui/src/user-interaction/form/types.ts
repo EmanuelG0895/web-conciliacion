@@ -8,109 +8,109 @@ export interface FormContextType {
 }
 
 export interface FormProps<T extends Record<string, unknown>> {
-  onSubmit: SubmitHandler<T>;
-  defaultValues?: DefaultValues<T>;
-  mode?: "onChange" | "onBlur" | "onSubmit";
-  loading?: boolean;
-  disabled?: boolean;
-  className?: string;
-  children: ReactNode;
+  readonly onSubmit: SubmitHandler<T>;
+  readonly defaultValues?: DefaultValues<T>;
+  readonly mode?: "onChange" | "onBlur" | "onSubmit";
+  readonly loading?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
+  readonly children: ReactNode;
 }
 
 export interface FormFieldProps {
-  name: string;
-  label?: string;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  variant?: "default" | "outlined" | "filled";
-  fullWidth?: boolean;
-  min?: string;
-  max?: string;
+  readonly name: string;
+  readonly label?: string;
+  readonly type?: string;
+  readonly placeholder?: string;
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
+  readonly size?: "sm" | "md" | "lg";
+  readonly variant?: "default" | "outlined" | "filled";
+  readonly fullWidth?: boolean;
+  readonly min?: string;
+  readonly max?: string;
 }
 
 export interface FormSelectProps {
-  name: string;
-  label?: string;
-  options: SelectOption[];
-  placeholder?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
-  size?: "sm" | "md" | "lg";
-  variant?: "default" | "outlined" | "filled";
-  fullWidth?: boolean;
-  helperText?: string;
+  readonly name: string;
+  readonly label?: string;
+  readonly options: SelectOption[];
+  readonly placeholder?: string;
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
+  readonly size?: "sm" | "md" | "lg";
+  readonly variant?: "default" | "outlined" | "filled";
+  readonly fullWidth?: boolean;
+  readonly helperText?: string;
 }
 
 export interface FormCheckboxProps {
-  name: string;
-  label: string;
-  value?: string;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
+  readonly name: string;
+  readonly label: string;
+  readonly value?: string;
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
 }
 
 export interface FormRadioProps {
-  name: string;
-  label: string;
-  options: Array<{ value: string; label: string }>;
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
+  readonly name: string;
+  readonly label: string;
+  readonly options: Array<{ value: string; label: string }>;
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
 }
 
 export interface FormFileUploadProps {
-  name: string;
-  label?: string;
-  accept?: string;
-  multiple?: boolean;
-  maxSize?: number; // in bytes
-  required?: boolean;
-  disabled?: boolean;
-  className?: string;
+  readonly name: string;
+  readonly label?: string;
+  readonly accept?: string;
+  readonly multiple?: boolean;
+  readonly maxSize?: number; // in bytes
+  readonly required?: boolean;
+  readonly disabled?: boolean;
+  readonly className?: string;
 }
 
 export interface FormActionsProps {
-  children: ReactNode;
-  className?: string;
-  align?: "left" | "center" | "right";
+  readonly children: ReactNode;
+  readonly className?: string;
+  readonly align?: "left" | "center" | "right";
 }
 
 export interface FormSubmitButtonProps {
-  children: ReactNode;
-  variant?:
+  readonly children: ReactNode;
+  readonly variant?:
     | "default"
     | "secondary"
     | "outline"
     | "ghost"
     | "link"
     | "danger";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
-  disabled?: boolean;
+  readonly size?: "default" | "sm" | "lg" | "icon";
+  readonly className?: string;
+  readonly disabled?: boolean;
 }
 
 export interface FormCancelButtonProps {
-  children: ReactNode;
-  onClick: () => void;
-  variant?:
+  readonly children: ReactNode;
+  readonly onClick: () => void;
+  readonly variant?:
     | "default"
     | "secondary"
     | "outline"
     | "ghost"
     | "link"
     | "danger";
-  size?: "default" | "sm" | "lg" | "icon";
-  className?: string;
+  readonly size?: "default" | "sm" | "lg" | "icon";
+  readonly className?: string;
 }
 
 export interface FormSectionProps {
-  title?: string;
-  children: ReactNode;
-  className?: string;
+  readonly title?: string;
+  readonly children: ReactNode;
+  readonly className?: string;
 }

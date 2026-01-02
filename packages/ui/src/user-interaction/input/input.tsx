@@ -47,8 +47,10 @@ export default function Input({
 }: InputProps) {
   const baseClasses = `
     rounded-md transition-all duration-200 outline-none
-    placeholder:text-gs-gray-medium dark:placeholder:text-gs-gray-light
+    placeholder:text-gs-gray-medium dark:placeholder:text-gs-text-light
     disabled:opacity-50 disabled:cursor-not-allowed
+    bg-gs-white text-gs-black
+    dark:bg-gs-gray-dark dark:text-gs-text-light
   `;
 
   const widthClass = fullWidth ? "w-full" : "";
@@ -62,13 +64,13 @@ export default function Input({
     ${errorClass}
     ${className || ""}
   `
-    .replace(/\s+/g, " ")
+    .replaceAll(/\s+/g, " ")
     .trim();
 
   return (
     <div className={widthClass}>
       {label && (
-        <label className="block text-sm font-medium text-gs-black dark:text-gs-white mb-2">
+        <label className="block text-sm font-medium text-gs-black dark:text-gs-text-light mb-2">
           {label}
         </label>
       )}

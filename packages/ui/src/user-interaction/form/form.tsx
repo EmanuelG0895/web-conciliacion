@@ -37,7 +37,7 @@ function Form<T extends Record<string, unknown>>({
   disabled = false,
   className,
   children,
-}: FormProps<T>) {
+}: Readonly<FormProps<T>>) {
   const methods = useForm<T>({
     defaultValues,
     mode,
@@ -51,9 +51,14 @@ function Form<T extends Record<string, unknown>>({
     }
   };
 
+  const contextValue = React.useMemo(
+    () => ({ loading, disabled }),
+    [loading, disabled]
+  );
+
   return (
     <FormProvider {...methods}>
-      <FormContext.Provider value={{ loading, disabled }}>
+      <FormContext.Provider value={contextValue}>
         <form
           onSubmit={methods.handleSubmit(handleFormSubmit)}
           className={className}
@@ -79,7 +84,7 @@ function FormField({
   fullWidth = true,
   min,
   max,
-}: FormFieldProps) {
+}: Readonly<FormFieldProps>) {
   const {
     register,
     formState: { errors },
@@ -122,7 +127,7 @@ function FormSelect({
   variant = "default",
   fullWidth = false,
   helperText,
-}: FormSelectProps) {
+}: Readonly<FormSelectProps>) {
   const { control } = useFormContext();
   const { disabled: formDisabled } = useContext(FormContext);
 
@@ -163,7 +168,7 @@ function FormCheckbox({
   required = false,
   disabled,
   className,
-}: FormCheckboxProps) {
+}: Readonly<FormCheckboxProps>) {
   const {
     register,
     formState: { errors },
@@ -208,7 +213,7 @@ function FormRadioGroup({
   required = false,
   disabled,
   className,
-}: FormRadioProps) {
+}: Readonly<FormRadioProps>) {
   const {
     register,
     formState: { errors },
@@ -266,7 +271,7 @@ function FormFileUpload({
   required = false,
   disabled,
   className,
-}: FormFileUploadProps) {
+}: Readonly<FormFileUploadProps>) {
   const {
     register,
     formState: { errors },
@@ -297,13 +302,15 @@ function FormFileUpload({
     setValue(name, multiple ? selectedFiles : selectedFiles[0]);
   };
 
-  const removeFile = (index: number) => {
-    if (multiple && Array.isArray(files)) {
+  const removeMultipleFile = (index: number) => {
+    if (Array.isArray(files)) {
       const newFiles = files.filter((_, i) => i !== index);
       setValue(name, newFiles);
-    } else {
-      setValue(name, null);
     }
+  };
+
+  const removeSingleFile = () => {
+    setValue(name, null);
   };
 
   return (
@@ -342,7 +349,7 @@ function FormFileUpload({
           {multiple && Array.isArray(files)
             ? files.map((file, index) => (
                 <div
-                  key={index}
+                  key={file.name || index}
                   className="flex items-center justify-between bg-gray-50 dark:bg-gray-800 p-2 rounded"
                 >
                   <span className="text-sm text-gray-700 dark:text-gray-300">
@@ -350,7 +357,7 @@ function FormFileUpload({
                   </span>
                   <button
                     type="button"
-                    onClick={() => removeFile(index)}
+                    onClick={() => removeMultipleFile(index)}
                     className="text-red-500 hover:text-red-700"
                   >
                     <X className="w-4 h-4" />
@@ -365,7 +372,7 @@ function FormFileUpload({
                   </span>
                   <button
                     type="button"
-                    onClick={() => removeFile(0)}
+                    onClick={removeSingleFile}
                     className="text-red-500 hover:text-red-700"
                   >
                     <X className="w-4 h-4" />
@@ -387,7 +394,7 @@ function FormActions({
   children,
   className,
   align = "right",
-}: FormActionsProps) {
+}: Readonly<FormActionsProps>) {
   const alignClasses = {
     left: "justify-start",
     center: "justify-center",
@@ -410,7 +417,7 @@ function FormSubmitButton({
   size = "default",
   className,
   disabled,
-}: FormSubmitButtonProps) {
+}: Readonly<FormSubmitButtonProps>) {
   const {
     formState: { isSubmitting },
   } = useFormContext();
@@ -438,7 +445,7 @@ function FormCancelButton({
   variant = "outline",
   size = "default",
   className,
-}: FormCancelButtonProps) {
+}: Readonly<FormCancelButtonProps>) {
   return (
     <Button
       type="button"
@@ -453,7 +460,11 @@ function FormCancelButton({
 }
 
 // Form Section Component
-function FormSection({ title, children, className }: FormSectionProps) {
+function FormSection({
+  title,
+  children,
+  className,
+}: Readonly<FormSectionProps>) {
   return (
     <div className={`space-y-4 ${className || ""}`}>
       {title && (
