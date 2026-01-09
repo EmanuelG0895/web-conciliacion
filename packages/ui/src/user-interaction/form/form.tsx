@@ -23,7 +23,9 @@ import type {
   FormSubmitButtonProps,
   FormCancelButtonProps,
   FormSectionProps,
+  CalendarProps,
 } from "./types";
+import { Calendar } from "../../layout";
 
 // Form Context
 const FormContext = createContext<FormContextType>({});
@@ -477,6 +479,57 @@ function FormSection({
   );
 }
 
+// Form Calendar Component
+function FormCalendar({
+  name,
+  label,
+  required = false,
+  disabled,
+  className,
+  minDate,
+  maxDate,
+}: Readonly<CalendarProps>) {
+  // 1. Obtenemos el control del formulario
+  const { control } = useFormContext();
+
+  // 2. Obtenemos el estado global de deshabilitado del formulario
+  const { disabled: formDisabled } = useContext(FormContext);
+
+  const isDisabled = disabled || formDisabled;
+
+  return (
+    <Controller
+      name={name as string}
+      control={control}
+      rules={{
+        required: required ? "Este campo es requerido" : false,
+      }}
+      render={({ field, fieldState: { error } }) => (
+        <div className="w-full">
+          <Calendar
+            {...field}
+            label={label}
+            minDate={minDate}
+            maxDate={maxDate}
+            disabled={isDisabled}
+            className={className}
+            required={required}
+            error={error?.message}
+            value={field.value || ""}
+          />
+
+          {/* Mensaje de error debajo del input */}
+          {error && (
+            <p className="text-red-500 dark:text-red-400 text-xs mt-1">
+              {error.message}
+            </p>
+          )}
+        </div>
+      )}
+    />
+  );
+}
+
 // Attach subcomponents to main Form component
 Form.Field = FormField;
 Form.Select = FormSelect;
@@ -487,9 +540,11 @@ Form.Actions = FormActions;
 Form.SubmitButton = FormSubmitButton;
 Form.CancelButton = FormCancelButton;
 Form.Section = FormSection;
+Form.Calendar = FormCalendar;
 
 export default Form;
 export {
+  FormCalendar,
   FormField,
   FormSelect,
   FormCheckbox,

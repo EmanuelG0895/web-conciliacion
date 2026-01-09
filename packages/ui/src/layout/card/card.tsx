@@ -2,6 +2,7 @@
 import { ArrowRightIcon } from "@radix-ui/react-icons";
 import React, { JSX } from "react";
 import Link from "next/link";
+import { Button } from "../../user-interaction";
 
 export function Card({
   className,
@@ -11,7 +12,9 @@ export function Card({
   image,
   href = "",
   link = false,
+  btn = false,
   onClick,
+  btnOnClick
 }: {
   readonly className?: string;
   readonly link?: boolean;
@@ -20,7 +23,9 @@ export function Card({
   readonly title?: string;
   readonly children: React.ReactNode;
   readonly href?: string;
+  readonly btn?: boolean;
   readonly onClick?: () => void;
+  readonly btnOnClick?: () => void;
 }): JSX.Element {
   const renderImage = () => {
     if (typeof image === "string") {
@@ -36,14 +41,12 @@ export function Card({
   };
 
   // 1. Clases Base de la Tarjeta (Fondo, Borde, y Texto)
-  const baseClasses = `${className} p-3 rounded-lg block shadow-lg transition-shadow hover:shadow-2xl 
+  const baseClasses = `${className} p-3 rounded-lg block shadow-lg transition-shadow hover:shadow-2xl    
     
-    
-    bg-gs-surface-medium /* ¡CAMBIO! Fondo de la tarjeta ahora usa blanco puro (#ffffff) */
-    border-gs-surface-medium /* ¡CAMBIO! Borde: Usamos el gris sutil (#f0f0f0) */
-    text-gs-text-dark /* Texto principal en negro */
-    border-gs-text-dark border
-    
+    bg-gs-surface-medium 
+    border-gs-surface-medium
+    text-gs-text-dark
+    border-gs-text-dark border   
 
     dark:bg-gs-surface-dark 
     dark:border-gs-surface-light 
@@ -71,7 +74,7 @@ export function Card({
       <div>{children}</div>
 
       {/* 3. Botón de Enlace (Acento Primario) */}
-      {textButton && !link && (
+      {textButton && !link && !btn&&(
         <a
           href={href}
           className={btnClassName}
@@ -84,8 +87,19 @@ export function Card({
       {link && (
         <Link href={href} className={btnClassName}>
           {textButton}
-          <ArrowRightIcon className="ml-3" />
         </Link>
+      )}
+
+      {btn && (
+        <Button
+          onClick={btnOnClick}
+          variant="default"
+          className={btnClassName}
+          icon={<ArrowRightIcon className="ml-3" />}
+          iconPosition="right"
+        >
+          {textButton}
+        </Button>
       )}
     </div>
   );
@@ -95,7 +109,7 @@ export function Card({
     return (
       <button
         type="button"
-        className={`${baseClasses} cursor-pointer text-left`}
+        className={`${baseClasses} text-left`}
         onClick={onClick}
       >
         {content}

@@ -12,8 +12,7 @@ import {
   Button,
   Modal,
   Table,
-  Form,
-  DynamicTabs,
+  Form
 } from "@repo/ui";
 
 // Interfaces para entidades
@@ -193,6 +192,13 @@ export default function Sociedades() {
           }
           className="space-y-4"
         >
+          <Form.Field name="rfc" label="RFC" required />
+          <Form.Field name="razonSocial" label="Razón Social" required />
+          <Form.Field
+            name="numeroSociedadSAP"
+            label="No. Sociedad SAP"
+            required
+          />
           <Form.Select
             fullWidth={true}
             name="ramo"
@@ -205,14 +211,7 @@ export default function Sociedades() {
               { label: "Ramo Tres", value: "Tres" },
             ]}
           />
-          <Form.Field name="rfc" label="RFC" required />
           <Form.Field name="Topico Kafca" label="Kafca" required />
-          <Form.Field name="razonSocial" label="Razón Social" required />
-          <Form.Field
-            name="numeroSociedadSAP"
-            label="No. Sociedad SAP"
-            required
-          />
           <Form.Actions>
             <Form.CancelButton onClick={() => setModalOpen(false)}>
               Cancelar

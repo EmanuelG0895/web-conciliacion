@@ -21,6 +21,7 @@ export interface TableProps<T> {
   readonly striped?: boolean;
   readonly hoverable?: boolean;
   readonly bordered?: boolean;
+  readonly tableHeight?: string;
 }
 
 const ColumnSortIndicator = ({
@@ -89,6 +90,7 @@ export default function Table<T extends Record<string, unknown>>({
   striped = false,
   hoverable = true,
   bordered = true,
+  tableHeight = "",
 }: TableProps<T>) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
@@ -140,12 +142,14 @@ export default function Table<T extends Record<string, unknown>>({
   };
 
   return (
-    <div className="w-full overflow-x-auto">
+    <div
+      className={`min:w-full overflow-x-auto overflow-y-auto ${tableHeight}`}
+    >
       <table
-        className={`w-full text-sm ${getAlignClass("left")} rtl:text-right text-gs-text-dark dark:text-gs-text-light ${className || ""}`}
+        className={`overflow-auto w-full text-sm ${getAlignClass("left")} rtl:text-right text-gs-text-dark dark:text-gs-text-light ${className || ""}`}
       >
         <thead
-          className={`text-sm uppercase ${
+          className={`text-sm uppercase sticky top-0 ${
             bordered
               ? "border-b border-gs-surface-medium dark:border-gs-tonal-dark"
               : ""
@@ -195,12 +199,12 @@ export default function Table<T extends Record<string, unknown>>({
                   bg-gs-surface-light dark:bg-gs-surface-dark
                   ${
                     hoverable
-                      ? "hover:bg-gs-surface-medium dark:hover:bg-gs-tonal-dark"
+                      ? "hover:bg-gs-surface-medium  dark:hover:bg-gs-tonal-dark dark:hover:text-gs-text-dark"
                       : ""
                   }
                   ${
                     striped && index % 2 === 1
-                      ? "bg-gs-surface-medium dark:bg-gs-tonal-dark"
+                      ? "bg-gs-surface-medium dark:bg-gs-tonal-dark dark:text-gs-black"
                       : ""
                   }
                   ${

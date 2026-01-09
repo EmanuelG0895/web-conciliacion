@@ -21,9 +21,9 @@ export default function Modal({
   };
 
   return (
-    <div className="bg-opacity-50 fixed inset-0 z-50 flex items-center justify-center bg-black/80">
+    <div className="bg-opacity-50 fixed  inset-0 z-50 flex items-center justify-center bg-black/80">
       <div
-        className={`w-full ${sizeClasses[size]} overflow-y-auto rounded-lg px-3 bg-gs-surface-light text-gs-black dark:bg-gs-surface-dark dark:text-gs-text-light`}
+        className={`w-full h-auto max-h-dvh ${sizeClasses[size]} overflow-y-auto rounded-lg px-3 bg-gs-surface-light text-gs-black dark:bg-gs-surface-dark dark:text-gs-text-light`}
       >
         <div className="flex flex-col items-stretch">
           <button

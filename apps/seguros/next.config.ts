@@ -10,7 +10,7 @@ if (process.env.NODE_ENV === "production" && !process.env.HOME_DOMAIN) {
 const PUBLIC_HOST =
   process.env.NODE_ENV === "production"
     ? (process.env.HOME_DOMAIN ?? "")
-    : "http://localhost:3000";
+    : "http://localhost:3001";
 
 const nextConfig: NextConfig = {
   // Multi-Zone: Next debe buscar los assets en el dominio del Home (siempre)

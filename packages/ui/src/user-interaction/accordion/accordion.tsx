@@ -4,25 +4,7 @@ import * as React from 'react';
 import { clsx } from 'clsx';
 import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
-
-interface AccordionItemProps extends Accordion.AccordionItemProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface AccordionTriggerProps extends Accordion.AccordionTriggerProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface AccordionContentProps extends Accordion.AccordionContentProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-interface AccordionRootProps extends Accordion.AccordionSingleProps {
-  className?: string;
-}
+import { AccordionContentProps, AccordionItemProps, AccordionRootProps, AccordionTriggerProps } from './types';
 
 const AccordionRoot = React.forwardRef<HTMLDivElement, AccordionRootProps>(
   ({ children, className, ...props }, forwardedRef) => (

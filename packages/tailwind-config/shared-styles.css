@@ -5,20 +5,20 @@
 @theme {
   /* BASE COLORS & TEXT */
   --color-gs-text-light: #ffffff; /* Usado para texto en Dark Mode: dark:text-gs-text-light */
-  --color-gs-text-dark: #000000;  /* Usado para texto en Light Mode: text-gs-text-dark */
+  --color-gs-text-dark: #000000; /* Usado para texto en Light Mode: text-gs-text-dark */
 
   /* SURFACE COLORS (Grises para Fondos y Elevación) */
-  --color-gs-surface-light: #ffffff;  /* Usado para fondo CLARO (ej: bg-gs-surface-light) */
+  --color-gs-surface-light: #ffffff; /* Usado para fondo CLARO (ej: bg-gs-surface-light) */
   --color-gs-surface-medium: #f0f0f0; /* ¡ACTUALIZADO! Variedad sutil para fondos */
-  --color-gs-surface-dark: #282828;    /* Usado para fondo OSCURO (ej: dark:bg-gs-surface-dark) */
+  --color-gs-surface-dark: #282828; /* Usado para fondo OSCURO (ej: dark:bg-gs-surface-dark) */
 
   /* TONAL SURFACE COLORS (Fondos con un tinte primario) */
-  --color-gs-tonal-light: #fffbed;  
-  --color-gs-tonal-medium: #e1ded4; 
-  --color-gs-tonal-dark: #b6b5af;   
+  --color-gs-tonal-light: #fffbed;
+  --color-gs-tonal-medium: #e1ded4;
+  --color-gs-tonal-dark: #b6b5af;
 
   /* PRIMARY (Marca) */
-  --color-gs-primary-light: #ffd93a;  /* Acento claro */
+  --color-gs-primary-light: #ffd93a; /* Acento claro */
   --color-gs-primary-medium: #dfbe36; /* ¡ACTUALIZADO! Intermedio */
-  --color-gs-primary-dark: #6a5b22;   /* Botón principal/Oscuro */
+  --color-gs-primary-dark: #6a5b22; /* Botón principal/Oscuro */
 }

@@ -38,6 +38,7 @@ export default function Home() {
       >
         <p>Descripción de que es lo que se hace en esta zona</p>
       </Card>
+      
     </div>
   );
 }
