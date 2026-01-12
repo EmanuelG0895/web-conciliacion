@@ -1,3 +1,4 @@
+"use client"
 import React, { useState, useMemo } from "react";
 
 export type SortDirection = "asc" | "desc" | null;
