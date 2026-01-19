@@ -18,7 +18,7 @@ const ThemeToggle: FC = () => {
       className="p-2 rounded-lg bg-muted hover:bg-muted/80 transition-colors"
       aria-label={`Cambiar a modo ${theme === 'dark' ? 'claro' : 'oscuro'}`}
     >
-      <Icon className="w-5 h-5 text-foreground" />
+      <Icon className="w-5 h-5 text-foreground text-gs-text-dark dark:text-gs-text-light" />
     </button>
   );
 };

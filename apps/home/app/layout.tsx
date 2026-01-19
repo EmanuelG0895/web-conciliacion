@@ -37,7 +37,7 @@ export default async function RootLayout({
                 <div className="flex flex-col md:flex-row items-end md:justify-end gap-4">
                   <ThemeToggle />
                   <Profile
-                    image_profile={<User />}
+                    image_profile={<User className="dark:text-gs-text-light" />}
                     image_alt="userImage"
                     userName="nombre de usuario"
                     showUserMenu={true}
@@ -50,7 +50,7 @@ export default async function RootLayout({
             <main className="flex flex-1 overflow-hidden">
               <Sidebar />
               {/* 3. El contenedor de children debe tener scroll independiente */}
-              <div className="flex-1 overflow-y-auto">{children}</div>
+              <div className="flex-1 overflow-y-auto p-4">{children}</div>
             </main>
 
             <footer className="shrink-0 border-t p-2">footer</footer>

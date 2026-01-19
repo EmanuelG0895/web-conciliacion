@@ -1,9 +1,12 @@
-import { useEffect } from "react";
+" "
+import { useEffect, useState } from "react";
 import { Button, Form, Modal, Radio } from "@repo/ui";
 import { DownloadIcon } from "lucide-react";
-import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { obtenerMeses, obtenerSemanas } from "./apis/data";
+
+
+//la buseda es semanal y mensaual 
 
 interface Inputs {
   fechaInicio: string;
@@ -60,7 +63,6 @@ export default function DescargarInforme() {
       >
         <span>Descargar Informe (.xlsx)</span>
       </Button>
-
       <Modal
         onClose={() => setOpenModal(!openModal)}
         open={openModal}

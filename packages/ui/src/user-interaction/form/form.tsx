@@ -143,7 +143,7 @@ function FormSelect({
         required: required ? "Este campo es requerido" : false,
       }}
       render={({ field, fieldState: { error } }) => (
-        <CustomSelect
+        <CustomSelect        
           options={options}
           placeholder={placeholder}
           label={label}

@@ -3,6 +3,7 @@
 @custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
 
 @theme {
+
   /* BASE COLORS & TEXT */
   --color-gs-text-light: #ffffff; /* Usado para texto en Dark Mode: dark:text-gs-text-light */
   --color-gs-text-dark: #000000; /* Usado para texto en Light Mode: text-gs-text-dark */

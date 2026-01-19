@@ -2,7 +2,6 @@ import "@repo/ui/styles.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import {
-  Footer,
   Navbar,
   Profile,
   Sidebar,
@@ -11,7 +10,7 @@ import {
   ThemeToggle,
 } from "@repo/ui";
 import { cookies } from "next/headers";
-import { User2 } from "lucide-react";
+import { User } from "lucide-react";
 import { SidebarProvider } from "@repo/providers";
 
 export const metadata: Metadata = {
@@ -29,15 +28,16 @@ export default async function RootLayout({
   const temaInicial = savedTheme === "dark" ? "dark" : "light";
   return (
     <html lang="en" className={temaInicial} data-theme={temaInicial}>
+      {/* 1. Aseguramos que el body ocupe todo el alto sin scroll global */}
       <body className="h-dvh flex flex-col overflow-hidden dark:bg-black">
         <ThemeProvider initialTheme={temaInicial}>
           <SidebarProvider>
             <header className="shrink-0">
               <Navbar logo={<SidebarTrigger />}>
-                <div className="flex flex-row items-end justify-end gap-4">
+                <div className="flex flex-col md:flex-row items-end md:justify-end gap-4">
                   <ThemeToggle />
                   <Profile
-                    image_profile={<User2 />}
+                    image_profile={<User className="dark:text-gs-text-light" />}
                     image_alt="userImage"
                     userName="nombre de usuario"
                     showUserMenu={true}
@@ -45,14 +45,15 @@ export default async function RootLayout({
                 </div>
               </Navbar>
             </header>
+
+            {/* 2. El main debe ser flex y ocupar el 100% del espacio restante */}
             <main className="flex flex-1 overflow-hidden">
               <Sidebar />
-              <div className="flex-1 overflow-y-auto">{children}</div>
+              {/* 3. El contenedor de children debe tener scroll independiente */}
+              <div className="flex-1 overflow-y-auto p-4">{children}</div>
             </main>
 
-            <footer>
-              <Footer />
-            </footer>
+            <footer className="shrink-0 border-t p-2">footer</footer>
           </SidebarProvider>
         </ThemeProvider>
       </body>

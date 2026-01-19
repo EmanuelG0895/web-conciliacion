@@ -1,37 +1,14 @@
-"use client";
+import Conciliador from "./Conciliador";
+import { getInfo, BusinessType, ProductType } from "@repo/api";
 
-import Iva from "./contentDetailAcelE/iva/Iva";
-import DetalleOperativo from "./contentDetailAcelE/detalleOperativo/DetalleOperativo";
-import Vida from "./vida/Vida";
-import { DynamicTabs } from "@repo/ui";
-import DescargarInforme from "./descargarInforme/DescargarInforme";
+export default async function Page() {
+  const [resBusiness, resProduct] = await Promise.all([
+    getInfo<BusinessType[]>({ endpoint: "/backoffice/sazconciliaciones/catalog/typeBusiness/" }),
+    getInfo<ProductType[]>({ endpoint: "/backoffice/sazconciliaciones/catalog/product" }),
+  ]);
 
-export default function Conciliador() {
-  const detailsContent = (
-    <DynamicTabs
-      options={[
-        { label: "Detalle por tazas", content: <Iva /> },
-        { label: "Detalle por productos", content: <DetalleOperativo /> },
-      ]}
-    />
-  );
+  const businessData = resBusiness.data ?? [];
+  const productData = resProduct.data ?? [];
 
-  return (
-    <div className="w-full space-y-3 p-2 sm:p-4">
-      <DynamicTabs
-        options={[
-          {
-            label: "Vida",
-            content: (
-              <div className="flex">
-                <Vida />
-                <DescargarInforme />
-              </div>
-            ),
-          },
-          { label: "Daños", content: "Daños" },
-        ]}
-      />
-    </div>
-  );
+  return <Conciliador businessItem={businessData} productType={productData} />;
 }

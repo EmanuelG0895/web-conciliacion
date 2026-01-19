@@ -1,0 +1,115 @@
+/* Importamos la base estructural de la librería */
+@import "react-calendar/dist/Calendar.css";
+
+:root {
+  --gs-primary: #dfbe36;
+  --gs-primary-dark: #6a5b22;
+  --gs-primary-light: #ffd93a;
+  --gs-surface-light: #ffffff;
+  --gs-surface-medium: #f0f0f0;
+  --gs-surface-dark: #282828;
+  --gs-text-dark: #000000;
+  --gs-text-light: #ffffff;
+  --gs-tonal-medium: #e1ded4;
+  --gs-tonal-dark: #b6b5af;
+  --gs-tonal-light: #fffbed;
+}
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.custom-calendar {
+  border: none !important;
+  background: var(--gs-surface-light) !important;
+  font-family: system-ui, -apple-system, sans-serif !important;
+  border-radius: 12px;
+  width: 100% !important;
+}
+
+/* Soporte para Modo Oscuro (si el padre tiene la clase .dark) */
+.dark .custom-calendar {
+  background: var(--gs-surface-dark) !important;
+  color: var(--gs-text-light) !important;
+}
+
+/* --- NAVEGACIÓN (Mes y Año) --- */
+.custom-calendar .react-calendar__navigation {
+  display: flex;
+  height: 44px;
+  margin-bottom: 1em;
+}
+
+.custom-calendar .react-calendar__navigation button {
+  min-width: 44px;
+  background: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gs-text-dark) !important;
+  border-radius: 8px;
+}
+
+.dark .custom-calendar .react-calendar__navigation button {
+  color: var(--gs-text-light) !important;
+}
+
+.custom-calendar .react-calendar__navigation button:enabled:hover,
+.custom-calendar .react-calendar__navigation button:enabled:focus {
+  background-color: var(--gs-surface-medium) !important;
+}
+
+.dark .custom-calendar .react-calendar__navigation button:enabled:hover {
+  background-color: var(--gs-primary-dark) !important;
+}
+
+/* --- DÍAS DE LA SEMANA --- */
+.custom-calendar .react-calendar__month-view__weekdays {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 0.75em;
+  color: var(--gs-primary) !important;
+}
+
+.custom-calendar .react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none !important;
+  border-bottom: none !important;
+}
+
+/* --- CELDAS DE DÍAS (TILES) --- */
+.custom-calendar .react-calendar__tile {
+  padding: 12px 6px !important;
+  border-radius: 8px !important;
+  transition: background 0.2s, color 0.2s;
+  color: var(--gs-text-dark) !important;
+}
+
+.dark .custom-calendar .react-calendar__tile {
+  color: var(--gs-text-light) !important;
+}
+
+.custom-calendar .react-calendar__tile:enabled:hover,
+.custom-calendar .react-calendar__tile:enabled:focus {
+  background-color: var(--gs-tonal-light) !important;
+  color: var(--gs-text-dark) !important;
+}
+
+.dark .custom-calendar .react-calendar__tile:enabled:hover {
+  background-color: var(--gs-primary-dark) !important;
+  color: var(--gs-text-light) !important;
+}
+
+/* --- DÍA SELECCIONADO --- */
+.custom-calendar .react-calendar__tile--active {
+  background: var(--gs-primary) !important;
+  color: var(--gs-text-dark) !important;
+  font-weight: bold;
+}
+
+/* --- DÍA ACTUAL (TODAY) --- */
+.custom-calendar .react-calendar__tile--now {
+  background: transparent !important;
+  border: 2px solid var(--gs-primary) !important;
+}
+
+/* --- DÍAS VECINOS (OTROS MESES) --- */
+.custom-calendar .react-calendar__month-view__days__day--neighboringMonth {
+  opacity: 0.3;
+}
