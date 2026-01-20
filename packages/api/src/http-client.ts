@@ -1,9 +1,7 @@
 "use server";
 
 import { APIResponse } from "./types";
-
 const BASE_URL = process.env.BASE_URL;
-console.log("BASE_URL:", BASE_URL);
 
 interface HttpRequestParams<TBody = unknown> {
   endpoint: string;
@@ -25,7 +23,6 @@ export async function httpRequest<T, TBody = unknown>({
       },
     };
 
-    // Solo agregar body si existe y el método lo soporta
     if (body && (method === "POST" || method === "PUT")) {
       config.body = JSON.stringify(body);
     }

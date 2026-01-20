@@ -36,3 +36,7 @@ export interface ProductType {
   codigo: string;
   producto: string;
 }
+export interface CatalogType {
+  ramo_id: string;
+  ramo: string;
+}

@@ -1,6 +1,7 @@
-import type { ProductType, BusinessType } from "@repo/api";
+import type { ProductType, BusinessType, CatalogType } from "@repo/api";
 
 export interface ConciliadorProps {
   productType: ProductType[];
-  businessItem: BusinessType[]; 
+  businessItem: BusinessType[];
+  catalog: CatalogType[];
 }
