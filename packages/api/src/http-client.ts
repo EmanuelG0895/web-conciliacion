@@ -28,9 +28,10 @@ export async function httpRequest<T, TBody = unknown>({
     }
 
     const res = await fetch(`${BASE_URL}${endpoint}`, config);
-
     if (!res.ok) {
-      throw new Error(`Error HTTP: ${res.status}`);
+      const errorText = await res.text();
+      console.error(`Error Response Body:`, errorText);
+      throw new Error(`Error HTTP: ${res.status} - ${errorText}`);
     }
 
     const response: APIResponse<T> =

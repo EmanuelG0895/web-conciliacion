@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useState } from "react";
+import { JSX, useState, useTransition } from "react";
 import {
   Table,
   Button,
@@ -17,8 +17,9 @@ import {
   TableColumn,
 } from "@repo/ui";
 import { Pen, Plus, Trash2 } from "lucide-react";
-import { NuevoProductoFormData, Product, ProductParams } from "./types";
-import { Delete } from "./acctions";
+import { Product, ProductParams } from "./types";
+import { Delete, Edit, Create } from "./acctions";
+import { AddInfo, ProductType } from "@repo/api";
 
 export default function NuevoProducto({
   data,
@@ -26,64 +27,74 @@ export default function NuevoProducto({
 }: Readonly<ProductParams>) {
   const [openModal, setOpenModal] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const [openSuccessAlert, setOpenSuccessAlert] = useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string>("");
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const [productDeleteName, setProductDeleteName] = useState<string | null>(
     null,
   );
-
-  const [confirmationDeletion, setConfirmationDeletion] = useState(Boolean);
+  const [productToDelete, setProductToDelete] = useState<string | null>(null);
+  const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
+  const [isPending, startTransition] = useTransition();
   const handleEdit = (row: Product) => {
-    // setModalContent(
-    //   <Form
-    //     onSubmit={onsubmit}
-    //     className="flex flex-col"
-    //     defaultValues={{
-    //       nombre: row.nombre,
-    //       codigo: row.codigo,
-    //       tipoNegocio: row.tipoNegocio,
-    //     }}
-    //   >
-    //     <Form.Field label="Nombre del Producto" name="nombre" required />
-    //     <Form.Field label="Código del Producto" name="codigo" required />
-    //     <Form.Select
-    //       fullWidth={true}
-    //       label="Tipo de Negocio"
-    //       name="tipoNegocio"
-    //       options={[{ label: row.nombre, value: row.tipoNegocio }]}
-    //       required
-    //     />
-    //     <FormActions>
-    //       <Form.SubmitButton>Guardar Producto</Form.SubmitButton>
-    //     </FormActions>
-    //   </Form>,
-    // );
+    setModalContent(
+      <Form
+        onSubmit={(data) => handleSubmitEdit(row.product_id, data)}
+        className="flex flex-col"
+        defaultValues={{
+          producto: row.producto,
+          codigo: row.codigo,
+          rfc: row.rfc,
+        }}
+      >
+        <Form.Field label="Nombre del Producto" name="producto" required />
+        <Form.Field label="Código del Producto" name="codigo" required />
+        <Form.Field label="RFC" name="rfc" required />
+        <FormActions>
+          <Form.SubmitButton disabled={isPending}>
+            {isPending ? "Guardando..." : "Guardar Cambios"}
+          </Form.SubmitButton>
+        </FormActions>
+      </Form>,
+    );
     setOpenModal(true);
   };
 
   const handleCreate = () => {
     setModalContent(
       <Form
-        onSubmit={onsubmit}
+        onSubmit={handleSubmitCreate}
         className="flex flex-col"
         defaultValues={{
-          nombre: "",
+          producto: "",
           codigo: "",
-          tipoNegocio: "",
+          rfc: "",
+          product_id: "",
+          tipo_negocio_id: 1,
+          status: 1,
         }}
       >
-        <Form.Field label="Nombre del Producto" name="nombre" required />
+        <Form.Field label="ID del Producto" name="product_id" required />
+        <Form.Field label="Nombre del Producto" name="producto" required />
         <Form.Field label="Código del Producto" name="codigo" required />
-        <Form.Select
-          fullWidth={true}
-          label="Tipo de Negocio"
-          name="tipoNegocio"
-          options={[
-            { label: "Masivo", value: "masivo" },
-            { label: "Corporativo", value: "corporativo" },
-          ]}
+        <Form.Field label="RFC" name="rfc" required />
+        <Form.Field
+          label="Tipo de Negocio ID"
+          name="tipo_negocio_id"
+          type="number"
+          required
+        />
+        <Form.Field
+          label="Estado"
+          name="status"
+          type="number"
           required
         />
         <FormActions>
-          <Form.SubmitButton>Guardar Producto</Form.SubmitButton>
+          <Form.SubmitButton disabled={isPending}>
+            {isPending ? "Creando..." : "Crear Producto"}
+          </Form.SubmitButton>
         </FormActions>
       </Form>,
     );
@@ -91,17 +102,92 @@ export default function NuevoProducto({
   };
 
   const handleDelete = (row: Product) => {
+    setProductDeleteName(row.producto);
+    setProductToDelete(row.product_id);
     setOpenAlert(true);
-    if (confirmationDeletion) {
-      const response = Delete({ id: row.product_id });
-      console.log(response);
-      setOpenAlert(false);
-    }
   };
-  const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
 
-  const onsubmit = (data: NuevoProductoFormData & Record<string, unknown>) => {
-    console.log("Formulario enviado:", data);
+  const handleSubmitCreate = (data: AddInfo) => {
+    startTransition(async () => {
+      try {
+        const response = await Create(data);
+        console.log("Producto creado:", response);
+        
+        // Verificar si la operación fue exitosa basándose en la respuesta
+        if (response?.success === true) {
+          setSuccessMessage(`Producto "${data.producto}" creado correctamente`);
+          setOpenSuccessAlert(true);
+          setOpenModal(false);
+        } else {
+          // Manejar error de la API
+          const errorMsg = response?.message || "Error al crear el producto";
+          setErrorMessage(`Error al crear producto: ${errorMsg}`);
+          setOpenErrorAlert(true);
+        }
+      } catch (error) {
+        console.error("Error al crear producto:", error);
+        setErrorMessage(`Error al crear producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+        setOpenErrorAlert(true);
+      }
+    });
+  };
+
+  const handleSubmitEdit = (id: string, data: Partial<ProductType>) => {
+    startTransition(async () => {
+      try {
+        const response = await Edit({ id, ...data });
+        console.log("Producto editado:", response);
+        
+        // Verificar si la operación fue exitosa basándose en la respuesta
+        if (response?.success === true) {
+          setSuccessMessage(`Producto "${data.producto || 'ID: ' + id}" editado correctamente`);
+          setOpenSuccessAlert(true);
+          setOpenModal(false);
+        } else {
+          // Manejar error de la API
+          const errorMsg = response?.message || "Error al editar el producto";
+          setErrorMessage(`Error al editar producto: ${errorMsg}`);
+          setOpenErrorAlert(true);
+        }
+      } catch (error) {
+        console.error("Error al editar producto:", error);
+        setErrorMessage(`Error al editar producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+        setOpenErrorAlert(true);
+      }
+    });
+  };
+
+  const handleConfirmDelete = () => {
+    if (productToDelete) {
+      startTransition(async () => {
+        try {
+          const response = await Delete({ id: productToDelete });
+          console.log("Producto eliminado:", response);
+          
+          // Verificar si la operación fue exitosa basándose en la respuesta
+          if (response?.success === true) {
+            setSuccessMessage(`Producto "${productDeleteName}" eliminado correctamente`);
+            setOpenSuccessAlert(true);
+          } else {
+            // Manejar error de la API
+            const errorMsg = response?.message || "Error al eliminar el producto";
+            setErrorMessage(`Error al eliminar producto: ${errorMsg}`);
+            setOpenErrorAlert(true);
+          }
+          
+          setOpenAlert(false);
+          setProductToDelete(null);
+          setProductDeleteName(null);
+        } catch (error) {
+          console.error("Error al eliminar producto:", error);
+          setErrorMessage(`Error al eliminar producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+          setOpenErrorAlert(true);
+          setOpenAlert(false);
+          setProductToDelete(null);
+          setProductDeleteName(null);
+        }
+      });
+    }
   };
 
   const dynamicColumns: TableColumn<Product>[] = tableHeader.map((key) => ({
@@ -181,8 +267,55 @@ export default function NuevoProducto({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancelar</AlertDialogCancel>
-            <AlertDialogAction onClick={() => setConfirmationDeletion(true)}>
-              Eliminar
+            <AlertDialogAction
+              onClick={handleConfirmDelete}
+              disabled={isPending}
+            >
+              {isPending ? "Eliminando..." : "Eliminar"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogRoot>
+
+      <AlertDialogRoot
+        open={openSuccessAlert}
+        onOpenChange={() => setOpenSuccessAlert(!openSuccessAlert)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              ¡Operación exitosa!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {successMessage}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction onClick={() => setOpenSuccessAlert(false)}>
+              Aceptar
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialogRoot>
+
+      <AlertDialogRoot
+        open={openErrorAlert}
+        onOpenChange={() => setOpenErrorAlert(!openErrorAlert)}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              ¡Error en la operación!
+            </AlertDialogTitle>
+            <AlertDialogDescription>
+              {errorMessage}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogAction 
+              onClick={() => setOpenErrorAlert(false)}
+            >
+              Entendido
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

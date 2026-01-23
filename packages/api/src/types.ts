@@ -48,3 +48,11 @@ export interface DeleteInfo {
 export interface EditInfo {
   id: string;
 }
+export interface AddInfo {
+  product_id: string;
+  rfc: string;
+  tipo_negocio_id: number;
+  codigo: string;
+  producto: string;
+  status: number;
+}
