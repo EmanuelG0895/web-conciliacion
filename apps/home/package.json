@@ -11,9 +11,9 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
     "@repo/providers": "workspace:*",
-    "next": "^16.0.7",
+    "@repo/ui": "workspace:*",
+    "next": "^16.1.4",
     "react": "^19.2.0",
     "react-dom": "^19.1.0"
   },
@@ -28,6 +28,7 @@
     "@types/react-dom": "^19.1.1",
     "autoprefixer": "^10.4.20",
     "eslint": "^9.39.1",
+    "jest": "^30.2.0",
     "postcss": "^8.5.3",
     "tailwindcss": "^4.1.5",
     "typescript": "5.9.2"

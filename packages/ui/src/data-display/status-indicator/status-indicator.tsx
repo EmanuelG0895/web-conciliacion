@@ -17,7 +17,7 @@ export default function StatusIndicator({ status }: Readonly<StatusParams>) {
         <span className="text-base text-white">
           <CheckIcon />
         </span>
-      ); // Checkmark
+      ); 
       text = 'Disponible';
       break;
     case 'EN_PROCESO':
@@ -31,7 +31,7 @@ export default function StatusIndicator({ status }: Readonly<StatusParams>) {
         <span className="text-base text-white">
           <Cross1Icon />
         </span>
-      ); // Unicode Bolt
+      ); 
       text = 'Sin Información';
       break;
   }

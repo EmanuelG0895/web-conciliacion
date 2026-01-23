@@ -10,7 +10,6 @@ export default function Conciliador({
   productType,
   catalog,
 }: Readonly<ConciliadorProps>) {
-
   const tabOptions = catalog.map((cat) => ({
     label: cat.ramo,
     content: (

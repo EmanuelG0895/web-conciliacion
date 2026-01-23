@@ -30,13 +30,21 @@ export interface BusinessType {
 }
 
 export interface ProductType {
-  product_id: string;
-  sociedad_id: string;
-  tipo_negocio_id: number;
   codigo: string;
+  product_id: string;
   producto: string;
+  rfc: string;
+  tipo_negocio_id: number;
 }
+
 export interface CatalogType {
   ramo_id: string;
   ramo: string;
+}
+
+export interface DeleteInfo {
+  id: string;
+}
+export interface EditInfo {
+  id: string;
 }

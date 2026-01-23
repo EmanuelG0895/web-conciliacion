@@ -1,25 +1,24 @@
-interface CuentaContable {
-  id: string;
-  codigo: string;
-  nombre: string;
-  descripcion?: string;
-}
+import { ProductType } from "@repo/api";
 
-interface Product {
-  id: string;
-  nombre: string;
+interface Product extends Record<string, unknown> {
+  product_id: string;
+  rfc: string;
   codigo: string;
-  tipoNegocio: string;
-  cuentasContables: CuentaContable[];
-  fechaCreacion: string;
-  [key: string]: unknown;
+  producto: string;
+  tipo_negocio_id: number;
 }
 
 interface NuevoProductoFormData {
   nombre: string;
   codigo: string;
   tipoNegocio: string;
-  cuentasContables: string[]; // Array de IDs de cuentas contables
+  cuentasContables: string[];
 }
 
-export type { Product, CuentaContable, NuevoProductoFormData };
+interface ProductParams {
+  data: ProductType[];
+  tableHeader: string[];
+  [key: string]: unknown;
+}
+
+export type { Product, NuevoProductoFormData, ProductParams };

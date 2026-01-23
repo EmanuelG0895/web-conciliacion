@@ -359,7 +359,7 @@ const polizas = [
     {
       id: "6",
       title: "ACSEL-E vs SAP FI",
-      status: "retardo",
+      status: "SIN_INFO",
       sourceA: "sourceA",
       amountA: 20,
       sourceB: 500000000,
@@ -370,7 +370,7 @@ const polizas = [
     {
       id: "5",
       title: "ACSEL-E vs SAP FI",
-      status: "retardo",
+      status: "DISPONIBLE",
       sourceA: "sourceA",
       amountA: 20,
       sourceB: 500000000,
@@ -381,7 +381,7 @@ const polizas = [
     {
       id: "4",
       title: "ACSEL-E vs SAP FI",
-      status: "retardo",
+      status: "SIN_INFO",
       sourceA: "sourceA",
       amountA: 20,
       sourceB: 500000000,
@@ -392,7 +392,7 @@ const polizas = [
     {
       id: "3",
       title: "ACSEL-E vs SAP FI",
-      status: "retardo",
+      status: "EN_PROCESO",
       sourceA: "sourceA",
       amountA: 20,
       sourceB: 500000000,
@@ -403,7 +403,7 @@ const polizas = [
     {
       id: "1",
       title: "ACSEL-E vs SAP FI",
-      status: "retardo",
+      status: "DISPONIBLE",
       sourceA: "sourceA",
       amountA: 20,
       sourceB: 500000000,
