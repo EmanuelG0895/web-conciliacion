@@ -1,5 +1,5 @@
 "use client";
-import { JSX, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   Table,
   Button,
@@ -35,70 +35,47 @@ export default function NuevoProducto({
     null,
   );
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
-  const [modalContent, setModalContent] = useState<JSX.Element | null>(null);
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [formData, setFormData] = useState<Partial<Product> & { tipo_negocio_id?: number; status?: number }>({});
   const [isPending, startTransition] = useTransition();
+
+  const getSubmitButtonText = () => {
+    if (isPending) {
+      return isEditMode ? "Guardando..." : "Creando...";
+    }
+    return isEditMode ? "Guardar Cambios" : "Crear Producto";
+  };
+
   const handleEdit = (row: Product) => {
-    setModalContent(
-      <Form
-        onSubmit={(data) => handleSubmitEdit(row.product_id, data)}
-        className="flex flex-col"
-        defaultValues={{
-          producto: row.producto,
-          codigo: row.codigo,
-          rfc: row.rfc,
-        }}
-      >
-        <Form.Field label="Nombre del Producto" name="producto" required />
-        <Form.Field label="Código del Producto" name="codigo" required />
-        <Form.Field label="RFC" name="rfc" required />
-        <FormActions>
-          <Form.SubmitButton disabled={isPending}>
-            {isPending ? "Guardando..." : "Guardar Cambios"}
-          </Form.SubmitButton>
-        </FormActions>
-      </Form>,
-    );
+    setIsEditMode(true);
+    setFormData({
+      product_id: row.product_id,
+      producto: row.producto,
+      codigo: row.codigo,
+      rfc: row.rfc,
+    });
     setOpenModal(true);
   };
 
   const handleCreate = () => {
-    setModalContent(
-      <Form
-        onSubmit={handleSubmitCreate}
-        className="flex flex-col"
-        defaultValues={{
-          producto: "",
-          codigo: "",
-          rfc: "",
-          product_id: "",
-          tipo_negocio_id: 1,
-          status: 1,
-        }}
-      >
-        <Form.Field label="ID del Producto" name="product_id" required />
-        <Form.Field label="Nombre del Producto" name="producto" required />
-        <Form.Field label="Código del Producto" name="codigo" required />
-        <Form.Field label="RFC" name="rfc" required />
-        <Form.Field
-          label="Tipo de Negocio ID"
-          name="tipo_negocio_id"
-          type="number"
-          required
-        />
-        <Form.Field
-          label="Estado"
-          name="status"
-          type="number"
-          required
-        />
-        <FormActions>
-          <Form.SubmitButton disabled={isPending}>
-            {isPending ? "Creando..." : "Crear Producto"}
-          </Form.SubmitButton>
-        </FormActions>
-      </Form>,
-    );
+    setIsEditMode(false);
+    setFormData({
+      producto: "",
+      codigo: "",
+      rfc: "",
+      product_id: "",
+      tipo_negocio_id: 1,
+      status: 1,
+    });
     setOpenModal(true);
+  };
+
+  const handleSubmitForm = (data: Partial<Product> & { tipo_negocio_id?: number; status?: number }) => {
+    if (isEditMode && formData.product_id) {
+      handleSubmitEdit(formData.product_id, data as Partial<ProductType>);
+    } else {
+      handleSubmitCreate(data as AddInfo);
+    }
   };
 
   const handleDelete = (row: Product) => {
@@ -113,13 +90,12 @@ export default function NuevoProducto({
         const response = await Create(data);
         console.log("Producto creado:", response);
         
-        // Verificar si la operación fue exitosa basándose en la respuesta
         if (response?.success === true) {
           setSuccessMessage(`Producto "${data.producto}" creado correctamente`);
           setOpenSuccessAlert(true);
           setOpenModal(false);
         } else {
-          // Manejar error de la API
+   
           const errorMsg = response?.message || "Error al crear el producto";
           setErrorMessage(`Error al crear producto: ${errorMsg}`);
           setOpenErrorAlert(true);
@@ -136,9 +112,7 @@ export default function NuevoProducto({
     startTransition(async () => {
       try {
         const response = await Edit({ id, ...data });
-        console.log("Producto editado:", response);
-        
-        // Verificar si la operación fue exitosa basándose en la respuesta
+        console.log("Producto editado:", response);        
         if (response?.success === true) {
           setSuccessMessage(`Producto "${data.producto || 'ID: ' + id}" editado correctamente`);
           setOpenSuccessAlert(true);
@@ -247,9 +221,33 @@ export default function NuevoProducto({
       <Modal
         open={openModal}
         onClose={() => setOpenModal(!openModal)}
-        title="editar?eliminar"
+        title={isEditMode ? "Editar Producto" : "Nuevo Producto"}
       >
-        {modalContent}
+        <Form
+          onSubmit={handleSubmitForm}
+          className="flex flex-col"
+          defaultValues={formData}
+        >
+          {!isEditMode && (
+            <Form.Field label="ID del Producto" name="product_id" required />
+          )}
+          <Form.Field label="Nombre del Producto" name="producto" required />
+          <Form.Field label="Código del Producto" name="codigo" required />
+          <Form.Field label="RFC" name="rfc" required />
+          {!isEditMode && (
+            <Form.Field
+              label="Tipo de Negocio ID"
+              name="tipo_negocio_id"
+              type="number"
+              required
+            />
+          )}
+          <FormActions>
+            <Form.SubmitButton disabled={isPending}>
+              {getSubmitButtonText()}
+            </Form.SubmitButton>
+          </FormActions>
+        </Form>
       </Modal>
 
       <AlertDialogRoot
