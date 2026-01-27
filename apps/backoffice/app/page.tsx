@@ -30,9 +30,9 @@ export default function Home() {
     {
       id: 4,
       image: <PackagePlusIcon width={50} height={50} />,
-      title: "Nuevo Producto",
+      title: "Cuentas contables",
       href: "/backoffice/cuentasContables",
-      textButton: "ir a cuentas contables",
+      textButton: "Ir a cuentas contables",
       link: true,
     },
   ];

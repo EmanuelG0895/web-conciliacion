@@ -5,7 +5,6 @@ import { getProductsList } from "@repo/api";
 
 export default async function Page() {
   const productData = await getProductsList();
-  console.log(productData)
   const headers =
     productData.length > 0 ? Object.keys(productData[0] as object) : [];
   const LLAVES_IGNORADAS = new Set([

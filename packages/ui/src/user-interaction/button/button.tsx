@@ -32,7 +32,7 @@ const VARIANT_STYLES = {
   danger:
     "bg-red-600 dark:bg-red-700 text-gs-text-light hover:bg-red-700 dark:hover:bg-red-800 focus-visible:ring-red-200 dark:focus-visible:ring-red-800",
   outline:
-    "flex justify-center items-baseline border dark:hover:bg-gs-primary-dark border-gs-primary-light rounded-lg px-2 py-1 w-fit mt-3 hover:bg-gs-primary-medium hover:text-whit",
+    "flex justify-center items-baseline border dark:hover:bg-gs-primary-dark border-gs-primary-light rounded-lg px-2 py-1 w-fit hover:bg-gs-primary-medium hover:text-whit",
   secondary:
     "bg-gs-surface-medium dark:bg-gs-tonal-dark text-gs-text-dark dark:text-gs-text-light hover:bg-gs-tonal-medium dark:hover:bg-gs-tonal-medium",
   ghost:

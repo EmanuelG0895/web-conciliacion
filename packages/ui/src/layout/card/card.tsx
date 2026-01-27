@@ -14,7 +14,7 @@ export function Card({
   link = false,
   btn = false,
   onClick,
-  btnOnClick
+  btnOnClick,
 }: {
   readonly className?: string;
   readonly link?: boolean;
@@ -53,7 +53,7 @@ export function Card({
     dark:text-gs-text-light 
   `;
   const btnClassName =
-    "flex justify-center items-baseline border dark:hover:bg-gs-primary-dark border-gs-primary-light rounded-lg px-2 py-1 w-fit mt-3 hover:bg-gs-primary-medium hover:text-white";
+    "flex justify-center items-center border dark:hover:bg-gs-primary-dark border-gs-primary-light rounded-lg px-2 py-1 w-fit mt-3 hover:bg-gs-primary-medium hover:text-white";
 
   const content = (
     <div className="space-y-3 sm:space-y-5">
@@ -74,7 +74,7 @@ export function Card({
       <div>{children}</div>
 
       {/* 3. Botón de Enlace (Acento Primario) */}
-      {textButton && !link && !btn&&(
+      {textButton && !link && !btn && (
         <a
           href={href}
           className={btnClassName}
@@ -86,7 +86,7 @@ export function Card({
       )}
       {link && (
         <Link href={href} className={btnClassName}>
-          {textButton}
+          {textButton} <ArrowRightIcon className="ml-3" />
         </Link>
       )}
 

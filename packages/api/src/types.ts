@@ -56,3 +56,12 @@ export interface AddInfo {
   producto: string;
   status: number;
 }
+
+export interface SocietyType {
+  ramo_id: string;
+  razon_social: string;
+  rfc: string;
+  num_sociedad_sap: number;
+  topico_kafka: string;
+  [key: string]: any;
+}
