@@ -46,6 +46,24 @@
       ]
     },
     "test": {
+      "dependsOn": ["^test"],
+      "inputs": [
+        "src/**/*.tsx",
+        "src/**/*.ts", 
+        "test/**/*.tsx",
+        "test/**/*.ts",
+        "**/*.test.tsx",
+        "**/*.test.ts",
+        "**/*.spec.tsx", 
+        "**/*.spec.ts",
+        "jest.config.js",
+        "jest.setup.js"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
+    },
+    "test:watch": {
       "cache": false,
       "persistent": true
     }
