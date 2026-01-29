@@ -6,6 +6,7 @@ import {
   useFormContext,
   Controller,
   SubmitHandler,
+  FieldValues,
 } from "react-hook-form";
 import Input from "../input/input";
 import Button from "../button/button";
@@ -27,11 +28,9 @@ import type {
 } from "./types";
 import { Calendar } from "../../layout";
 
-// Form Context
 const FormContext = createContext<FormContextType>({});
 
-// Base Form Component
-function Form<T extends Record<string, unknown>>({
+function Form<T extends FieldValues>({
   onSubmit,
   defaultValues,
   mode = "onChange",
@@ -55,7 +54,7 @@ function Form<T extends Record<string, unknown>>({
 
   const contextValue = React.useMemo(
     () => ({ loading, disabled }),
-    [loading, disabled]
+    [loading, disabled],
   );
 
   return (
@@ -143,7 +142,7 @@ function FormSelect({
         required: required ? "Este campo es requerido" : false,
       }}
       render={({ field, fieldState: { error } }) => (
-        <CustomSelect        
+        <CustomSelect
           options={options}
           placeholder={placeholder}
           label={label}
@@ -291,11 +290,11 @@ function FormFileUpload({
 
     if (maxSize) {
       const oversizedFiles = selectedFiles.filter(
-        (file) => file.size > maxSize
+        (file) => file.size > maxSize,
       );
       if (oversizedFiles.length > 0) {
         alert(
-          `Algunos archivos exceden el tamaño máximo de ${maxSize / 1024 / 1024}MB`
+          `Algunos archivos exceden el tamaño máximo de ${maxSize / 1024 / 1024}MB`,
         );
         return;
       }

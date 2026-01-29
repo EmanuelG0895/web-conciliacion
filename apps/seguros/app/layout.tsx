@@ -48,7 +48,7 @@ export default async function RootLayout({
             </header>
             <main className="flex flex-1 overflow-hidden">
               <Sidebar />
-              <div className="flex-1 overflow-y-auto p-4">{children}</div>
+              <div className="flex-1 overflow-y-auto md:p-4 p-2">{children}</div>
             </main>
             <footer>
               <Footer />

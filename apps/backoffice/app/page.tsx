@@ -1,5 +1,10 @@
 import { Card } from "@repo/ui";
-import { Building2, PackagePlusIcon, User } from "lucide-react";
+import {
+  BriefcaseBusinessIcon,
+  Building2,
+  PackagePlusIcon,
+  User,
+} from "lucide-react";
 
 export default function Home() {
   const routes = [
@@ -33,6 +38,14 @@ export default function Home() {
       title: "Cuentas contables",
       href: "/backoffice/cuentasContables",
       textButton: "Ir a cuentas contables",
+      link: true,
+    },
+    {
+      id: 5,
+      image: <BriefcaseBusinessIcon width={50} height={50} />,
+      title: "Cuentas contables",
+      href: "/backoffice/negocios",
+      textButton: "Ir a negocios",
       link: true,
     },
   ];

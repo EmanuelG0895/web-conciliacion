@@ -28,7 +28,6 @@ export default async function RootLayout({
   const temaInicial = savedTheme === "dark" ? "dark" : "light";
   return (
     <html lang="en" className={temaInicial} data-theme={temaInicial}>
-      {/* 1. Aseguramos que el body ocupe todo el alto sin scroll global */}
       <body className="h-dvh flex flex-col overflow-hidden dark:bg-black">
         <ThemeProvider initialTheme={temaInicial}>
           <SidebarProvider>
@@ -45,14 +44,10 @@ export default async function RootLayout({
                 </div>
               </Navbar>
             </header>
-
-            {/* 2. El main debe ser flex y ocupar el 100% del espacio restante */}
             <main className="flex flex-1 overflow-hidden">
               <Sidebar />
-              {/* 3. El contenedor de children debe tener scroll independiente */}
               <div className="flex-1 overflow-y-auto p-4">{children}</div>
             </main>
-
             <footer className="shrink-0 border-t p-2">footer</footer>
           </SidebarProvider>
         </ThemeProvider>

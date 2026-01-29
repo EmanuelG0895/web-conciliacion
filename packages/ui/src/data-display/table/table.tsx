@@ -1,29 +1,6 @@
-"use client"
+"use client";
 import React, { useState, useMemo } from "react";
-
-export type SortDirection = "asc" | "desc" | null;
-
-export interface TableColumn<T> {
-  readonly key: string;
-  readonly label: string;
-  readonly sortable?: boolean;
-  readonly render?: (row: T, index: number) => React.ReactNode;
-  readonly align?: "left" | "center" | "right";
-  readonly className?: string;
-}
-
-export interface TableProps<T> {
-  readonly data: T[];
-  readonly columns: TableColumn<T>[];
-  readonly keyExtractor: (row: T, index: number) => string | number;
-  readonly onRowClick?: (row: T, index: number) => void;
-  readonly className?: string;
-  readonly emptyMessage?: string;
-  readonly striped?: boolean;
-  readonly hoverable?: boolean;
-  readonly bordered?: boolean;
-  readonly tableHeight?: string;
-}
+import { SortDirection, TableProps } from "./types";
 
 const ColumnSortIndicator = ({
   isActive,
@@ -81,7 +58,7 @@ const ColumnSortIndicator = ({
   );
 };
 
-export default function Table<T extends Record<string, unknown>>({
+export default function Table<T extends object>({
   data,
   columns,
   keyExtractor,
@@ -92,7 +69,7 @@ export default function Table<T extends Record<string, unknown>>({
   hoverable = true,
   bordered = true,
   tableHeight = "",
-}: TableProps<T>) {
+}: Readonly<TableProps<T>>) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDirection, setSortDirection] = useState<SortDirection>(null);
 
@@ -115,19 +92,17 @@ export default function Table<T extends Record<string, unknown>>({
     if (!sortKey || !sortDirection) return data;
 
     return [...data].sort((a, b) => {
-      const aVal = a[sortKey];
-      const bVal = b[sortKey];
+      // Usamos 'keyof T' para asegurar que estamos accediendo a una propiedad válida
+      const aVal = a[sortKey as keyof T];
+      const bVal = b[sortKey as keyof T];
 
       if (aVal == null) return 1;
       if (bVal == null) return -1;
 
-      let comparison = 0;
-      if (aVal < bVal) {
-        comparison = -1;
-      } else if (aVal > bVal) {
-        comparison = 1;
-      }
-      return sortDirection === "asc" ? comparison : -comparison;
+      // Para comparar valores unknown, debemos asegurar que son comparables
+      if (aVal < bVal) return sortDirection === "asc" ? -1 : 1;
+      if (aVal > bVal) return sortDirection === "asc" ? 1 : -1;
+      return 0;
     });
   }, [data, sortKey, sortDirection]);
 
@@ -139,6 +114,17 @@ export default function Table<T extends Record<string, unknown>>({
         return "text-right";
       default:
         return "text-left";
+    }
+  };
+
+  const getJustifyClass = (align?: "left" | "center" | "right") => {
+    switch (align) {
+      case "center":
+        return "justify-center";
+      case "right":
+        return "justify-end";
+      default:
+        return "justify-start";
     }
   };
 
@@ -168,7 +154,9 @@ export default function Table<T extends Record<string, unknown>>({
                 } ${getAlignClass(column.align)} ${column.className || ""}`}
                 onClick={() => column.sortable && handleSort(column.key)}
               >
-                <div className="flex items-center">
+                <div
+                  className={`flex items-center ${getJustifyClass(column.align)}`}
+                >
                   {column.label}
                   {column.sortable && (
                     <ColumnSortIndicator
@@ -219,9 +207,11 @@ export default function Table<T extends Record<string, unknown>>({
               >
                 {columns.map((column, colIndex) => {
                   const CellTag = colIndex === 0 ? "th" : "td";
+
+                  // Obtenemos el contenido de forma segura
                   const content = column.render
                     ? column.render(row, index)
-                    : (row[column.key] as React.ReactNode);
+                    : (row as Record<string, unknown>)[column.key]; // <--- Cambio clave aquí
 
                   return (
                     <CellTag
@@ -231,7 +221,10 @@ export default function Table<T extends Record<string, unknown>>({
                         colIndex === 0 ? "font-medium whitespace-nowrap" : ""
                       } ${getAlignClass(column.align)} ${column.className || ""}`}
                     >
-                      {content}
+                      {/* Casteamos a ReactNode solo al final para el renderizado, 
+         esto es seguro para strings, numbers y nulls.
+      */}
+                      {content as React.ReactNode}
                     </CellTag>
                   );
                 })}

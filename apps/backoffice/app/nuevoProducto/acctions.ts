@@ -57,7 +57,6 @@ export const Edit = async ({
 export const Create = async (productData: AddInfo) => {
   try {
     const response = await addProduct(productData);
-    console.log("RESPUESTA AL CREAR", response);
     revalidatePath("/nuevoProducto");
     return {
       ...response,

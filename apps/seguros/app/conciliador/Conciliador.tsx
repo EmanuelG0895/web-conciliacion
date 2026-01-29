@@ -14,7 +14,7 @@ export default function Conciliador({
     label: cat.ramo,
     content: (
       <div className="space-y-4 p-4">
-        <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-center">
+        <div className="flex flex-col items-start justify-between gap-4 md:flex-row lg:flex-row lg:items-center">
           <Buscar businessType={businessItem} productType={productType} />
           <DescargarInforme />
         </div>

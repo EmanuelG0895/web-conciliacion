@@ -3,10 +3,10 @@
 import { httpRequest } from "../http-client";
 import { APIResponse, RequestDeleteParams } from "../types";
 
-export async function deleteInfo<T>({
+export async function deleteInfo<TResponse>({
   endpoint,
-}: RequestDeleteParams): Promise<APIResponse<T>> {
-  return httpRequest<T>({
+}: RequestDeleteParams): Promise<APIResponse<TResponse>> {
+  return httpRequest<TResponse>({
     endpoint,
     method: "DELETE",
   });

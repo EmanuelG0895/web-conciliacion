@@ -36,7 +36,9 @@ export default function NuevoProducto({
   );
   const [productToDelete, setProductToDelete] = useState<string | null>(null);
   const [isEditMode, setIsEditMode] = useState(false);
-  const [formData, setFormData] = useState<Partial<Product> & { tipo_negocio_id?: number; status?: number }>({});
+  const [formData, setFormData] = useState<
+    Partial<Product> & { tipo_negocio_id?: number; status?: number }
+  >({});
   const [isPending, startTransition] = useTransition();
 
   const getSubmitButtonText = () => {
@@ -70,7 +72,9 @@ export default function NuevoProducto({
     setOpenModal(true);
   };
 
-  const handleSubmitForm = (data: Partial<Product> & { tipo_negocio_id?: number; status?: number }) => {
+  const handleSubmitForm = (
+    data: Partial<Product> & { tipo_negocio_id?: number; status?: number },
+  ) => {
     if (isEditMode && formData.product_id) {
       handleSubmitEdit(formData.product_id, data as Partial<ProductType>);
     } else {
@@ -88,21 +92,20 @@ export default function NuevoProducto({
     startTransition(async () => {
       try {
         const response = await Create(data);
-        console.log("Producto creado:", response);
-        
-        if (response?.success === true) {
+        if (response?.status === 200) {
           setSuccessMessage(`Producto "${data.producto}" creado correctamente`);
           setOpenSuccessAlert(true);
           setOpenModal(false);
         } else {
-   
           const errorMsg = response?.message || "Error al crear el producto";
           setErrorMessage(`Error al crear producto: ${errorMsg}`);
           setOpenErrorAlert(true);
         }
       } catch (error) {
         console.error("Error al crear producto:", error);
-        setErrorMessage(`Error al crear producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+        setErrorMessage(
+          `Error al crear producto: ${error instanceof Error ? error.message : "Error desconocido"}`,
+        );
         setOpenErrorAlert(true);
       }
     });
@@ -112,9 +115,11 @@ export default function NuevoProducto({
     startTransition(async () => {
       try {
         const response = await Edit({ id, ...data });
-        console.log("Producto editado:", response);        
+
         if (response?.success === true) {
-          setSuccessMessage(`Producto "${data.producto || 'ID: ' + id}" editado correctamente`);
+          setSuccessMessage(
+            `Producto "${data.producto || "ID: " + id}" editado correctamente`,
+          );
           setOpenSuccessAlert(true);
           setOpenModal(false);
         } else {
@@ -125,7 +130,9 @@ export default function NuevoProducto({
         }
       } catch (error) {
         console.error("Error al editar producto:", error);
-        setErrorMessage(`Error al editar producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+        setErrorMessage(
+          `Error al editar producto: ${error instanceof Error ? error.message : "Error desconocido"}`,
+        );
         setOpenErrorAlert(true);
       }
     });
@@ -136,25 +143,29 @@ export default function NuevoProducto({
       startTransition(async () => {
         try {
           const response = await Delete({ id: productToDelete });
-          console.log("Producto eliminado:", response);
-          
+
           // Verificar si la operación fue exitosa basándose en la respuesta
           if (response?.success === true) {
-            setSuccessMessage(`Producto "${productDeleteName}" eliminado correctamente`);
+            setSuccessMessage(
+              `Producto "${productDeleteName}" eliminado correctamente`,
+            );
             setOpenSuccessAlert(true);
           } else {
             // Manejar error de la API
-            const errorMsg = response?.message || "Error al eliminar el producto";
+            const errorMsg =
+              response?.message || "Error al eliminar el producto";
             setErrorMessage(`Error al eliminar producto: ${errorMsg}`);
             setOpenErrorAlert(true);
           }
-          
+
           setOpenAlert(false);
           setProductToDelete(null);
           setProductDeleteName(null);
         } catch (error) {
           console.error("Error al eliminar producto:", error);
-          setErrorMessage(`Error al eliminar producto: ${error instanceof Error ? error.message : 'Error desconocido'}`);
+          setErrorMessage(
+            `Error al eliminar producto: ${error instanceof Error ? error.message : "Error desconocido"}`,
+          );
           setOpenErrorAlert(true);
           setOpenAlert(false);
           setProductToDelete(null);
@@ -281,12 +292,8 @@ export default function NuevoProducto({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              ¡Operación exitosa!
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {successMessage}
-            </AlertDialogDescription>
+            <AlertDialogTitle>¡Operación exitosa!</AlertDialogTitle>
+            <AlertDialogDescription>{successMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogAction onClick={() => setOpenSuccessAlert(false)}>
@@ -302,17 +309,11 @@ export default function NuevoProducto({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>
-              ¡Error en la operación!
-            </AlertDialogTitle>
-            <AlertDialogDescription>
-              {errorMessage}
-            </AlertDialogDescription>
+            <AlertDialogTitle>¡Error en la operación!</AlertDialogTitle>
+            <AlertDialogDescription>{errorMessage}</AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogAction 
-              onClick={() => setOpenErrorAlert(false)}
-            >
+            <AlertDialogAction onClick={() => setOpenErrorAlert(false)}>
               Entendido
             </AlertDialogAction>
           </AlertDialogFooter>

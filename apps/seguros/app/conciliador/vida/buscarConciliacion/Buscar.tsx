@@ -24,7 +24,7 @@ function Buscar({ businessType, productType }: Readonly<SearchProps>) {
         label: item.tipo_negocio,
         value: item.tipo_negocio_id.toString(),
       })),
-    [businessType]
+    [businessType],
   );
 
   const productTypeOptions: SelectOption[] = useMemo(
@@ -33,13 +33,13 @@ function Buscar({ businessType, productType }: Readonly<SearchProps>) {
         label: item.producto,
         value: item.product_id,
       })),
-    [productType]
+    [productType],
   );
   return (
-    <div className="bg-gs-white dark:bg-gs-gray-dark p-4 rounded-xl shadow-md w-full lg:w-auto">
+    <div className="bg-gs-white dark:bg-gs-gray-dark p-4 rounded-xl shadow-md">
       <Form
+        className="space-y-2 flex flex-col"
         onSubmit={onSubmitSearch}
-        className="text-gs-gray-medium flex flex-col items-start lg:items-end gap-2 lg:flex-row"
         defaultValues={{
           dateStart: "",
           dateEnd: "",
@@ -47,37 +47,43 @@ function Buscar({ businessType, productType }: Readonly<SearchProps>) {
           tipoProducto: "",
         }}
       >
-        <Form.Calendar
-          name="dateStart"
-          maxDate={fechaMaximaAyer}
-          minDate={fechaMinima}
-          required={true}
-          label="Fecha de inicio"
-        />
-        <Form.Calendar
-          label="Fecha de termino"
-          name="dateEnd"
-          maxDate={fechaMaximaAyer}
-          minDate={fechaMinima}
-          required={true}
-        />
-        <Form.Select
-          size="lg"
-          name="tipoNegocio"
-          options={businessOptions}
-          placeholder="Tipo de negocio"
-          label="Tipo de negocio"
-          required={true}
-        />
-        <Form.Select
-          name="tipoProducto"
-          options={productTypeOptions}
-          placeholder="Tipo de producto"
-          label="Tipo producto"
-          size="lg"
-          required={true}
-        />
-        <Form.SubmitButton variant="default">Buscar</Form.SubmitButton>
+        <div className="flex flex-col md:flex-col lg:flex-row space-x-2.5">
+          <Form.Calendar
+            name="dateStart"
+            maxDate={fechaMaximaAyer}
+            minDate={fechaMinima}
+            required={true}
+            label="Fecha de inicio"
+          />
+          <Form.Calendar
+            label="Fecha de termino"
+            name="dateEnd"
+            maxDate={fechaMaximaAyer}
+            minDate={fechaMinima}
+            required={true}
+          />
+        </div>
+        <div className="flex flex-col md:flex-col lg:flex-row space-x-2.5">
+          <Form.Select
+            size="lg"
+            name="tipoNegocio"
+            options={businessOptions}
+            placeholder="Tipo de negocio"
+            label="Tipo de negocio"
+            required={true}
+          />
+          <Form.Select
+            name="tipoProducto"
+            options={productTypeOptions}
+            placeholder="Tipo de producto"
+            label="Tipo producto"
+            size="lg"
+            required={true}
+          />
+        </div>
+        <div className="flex flex-col items-end">
+          <Form.SubmitButton variant="default">Buscar</Form.SubmitButton>
+        </div>
       </Form>
     </div>
   );

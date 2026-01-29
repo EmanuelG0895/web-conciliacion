@@ -436,7 +436,7 @@ function Detalles() {
       <div className="bg-gs-white dark:bg-gs-gray-dark flex flex-wrap gap-4 py-3 px-2 sm:px-4 md:gap-6 lg:gap-8">
         {polizas.map((data) => (
           <Card
-            className="border-gs-yellow dark:border-gs-yellow-dark border-l-4"
+            className="border-gs-primary-medium dark:border-gs-primary-dark border-l-4 min-w-64"
             key={data.id}
             title={data.title}
             btnOnClick={() => handleModal()}

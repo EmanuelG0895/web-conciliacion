@@ -14,12 +14,12 @@ const sizeClasses = {
 const variantClasses = {
   default: `
     border transition-all
-    bg-gs-surface-light border-gs-tonal-medium text-gs-text-dark
+    border-gs-primary-dark text-gs-text-dark
     dark:bg-gs-surface-dark dark:border-gs-tonal-dark dark:text-gs-text-light   
     dark:border-gs-gray-dark dark:bg-gs-surface-dark dark:text-gs-surface-light
     focus:border-gs-yellow dark:focus:border-gs-yellow-dark
     hover:border-gs-gray-dark dark:hover:border-gs-gray-light`,
-    outlined: `border-2 border-gs-gray-medium 
+  outlined: `border-2 border-gs-gray-medium 
     bg-transparent text-gs-black
     dark:border-gs-gray-medium dark:text-gs-surface-light
     focus:border-gs-yellow dark:focus:border-gs-yellow-dark

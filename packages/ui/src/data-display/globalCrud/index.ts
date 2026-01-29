@@ -1,0 +1,1 @@
+export { GlobalCrud } from "./GlobalCrud";

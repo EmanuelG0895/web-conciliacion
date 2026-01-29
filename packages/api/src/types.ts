@@ -27,6 +27,7 @@ export interface RequestDeleteParams {
 export interface BusinessType {
   tipo_negocio_id: number;
   tipo_negocio: string;
+  [key: string]: any;
 }
 
 export interface ProductType {
@@ -37,9 +38,10 @@ export interface ProductType {
   tipo_negocio_id: number;
 }
 
-export interface CatalogType {
-  ramo_id: string;
+export interface RamosType {
+  id: string;
   ramo: string;
+  [key: string]: any;
 }
 
 export interface DeleteInfo {
@@ -64,4 +66,12 @@ export interface SocietyType {
   num_sociedad_sap: number;
   topico_kafka: string;
   [key: string]: any;
+}
+
+export interface ResponseSociety {
+  status: number;
+  type: string;
+  date: string;
+  message: string;
+  data: "";
 }

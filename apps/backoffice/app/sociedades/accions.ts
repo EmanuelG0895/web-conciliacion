@@ -8,7 +8,6 @@ import {
   addSociety,
   SocietyType,
   DeleteInfo,
-  
 } from "@repo/api";
 
 import { revalidatePath } from "next/cache";
@@ -53,11 +52,15 @@ export async function Create(formData: SocietyType) {
   }
 }
 
-export async function Edit(data: { rfc: string; razon_social: string }) {
+export async function Edit(data: SocietyType) {
   try {
-    const response = await editSociety({ 
-      id: data.rfc, 
-      razon_social: data.razon_social 
+    const response = await editSociety({
+      id: data.rfc,
+      razon_social: data.razon_social,
+      num_sociedad_sap: data.num_sociedad_sap,
+      ramo_id: data.ramo_id,
+      rfc: data.rfc,
+      topico_kafka: data.topico_kafka,
     });
     revalidatePath("/sociedades");
     return response;

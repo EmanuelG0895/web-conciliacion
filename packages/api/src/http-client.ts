@@ -3,17 +3,17 @@
 import { APIResponse } from "./types";
 const BASE_URL = process.env.BASE_URL;
 
-interface HttpRequestParams<TBody = unknown> {
+interface HttpRequestParams<TBody> {
   endpoint: string;
   method: "GET" | "POST" | "PUT" | "DELETE";
   body?: TBody;
 }
 
-export async function httpRequest<T, TBody = unknown>({
+export async function httpRequest<TResponse, TBody = unknown>({
   endpoint,
   method,
   body,
-}: HttpRequestParams<TBody>): Promise<APIResponse<T>> {
+}: HttpRequestParams<TBody>): Promise<APIResponse<TResponse>> {
   try {
     const config: RequestInit = {
       method,
@@ -28,14 +28,15 @@ export async function httpRequest<T, TBody = unknown>({
     }
 
     const res = await fetch(`${BASE_URL}${endpoint}`, config);
+
     if (!res.ok) {
       const errorText = await res.text();
       console.error(`Error Response Body:`, errorText);
       throw new Error(`Error HTTP: ${res.status} - ${errorText}`);
     }
 
-    const response: APIResponse<T> =
-      (await res.json()) as APIResponse<T>;
+    const response: APIResponse<TResponse> =
+      (await res.json()) as APIResponse<TResponse>;
 
     return { ...response };
   } catch (error) {
@@ -49,7 +50,7 @@ export async function httpRequest<T, TBody = unknown>({
         error instanceof Error
           ? error.message
           : "Error desconocido en el servidor",
-      data: [] as unknown as T,
+      data: [] as unknown as TResponse,
     };
   }
 }

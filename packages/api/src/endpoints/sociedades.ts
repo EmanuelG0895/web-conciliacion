@@ -1,5 +1,5 @@
 import { deleteInfo, getInfo, postInfo, putInfo } from "../methods";
-import { AddInfo, DeleteInfo, EditInfo, SocietyType } from "../types";
+import { DeleteInfo, SocietyType } from "../types";
 
 const getSocietiesList = async (): Promise<SocietyType[]> => {
   const response = await getInfo<SocietyType[]>({
@@ -22,19 +22,16 @@ const deleteSociety = async ({ id }: DeleteInfo) => {
   return response;
 };
 
-const editSociety = async ({
-  id,
-  ...societyData
-}: EditInfo & Partial<SocietyType>) => {
-  const response = await putInfo<SocietyType, Partial<SocietyType>>({
-    endpoint: `/backoffice/sazconciliaciones/catalog/society/update/${id}`,
-    body: societyData,
+const editSociety = async (data: SocietyType) => {
+  const response = await putInfo({
+    endpoint: `/backoffice/sazconciliaciones/catalog/society/update/${data.rfc}`,
+    body: data,
   });
   return response;
 };
 
 const addSociety = async (societyData: SocietyType) => {
-  const response = await postInfo<SocietyType>({
+  const response = await postInfo({
     endpoint: `/backoffice/sazconciliaciones/catalog/society/add`,
     body: societyData,
   });

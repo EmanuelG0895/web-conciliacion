@@ -1,27 +1,17 @@
-"use server"
+"use server";
 import Conciliador from "./Conciliador";
-import {
-  getInfo,
-  BusinessType,
-  CatalogType,
-  getProductsList
-} from "@repo/api";
+import { getProductsList, getBranchList, getBusinessList } from "@repo/api";
 
 export default async function Page() {
-  const [resBusiness, resCatalog, resProduct] = await Promise.all([
-    getInfo<BusinessType[]>({
-      endpoint: "/backoffice/sazconciliaciones/catalog/typeBusiness/",
-    }),
-
-    getInfo<CatalogType[]>({
-      endpoint: "/backoffice/sazconciliaciones/catalog/branch",
-    }),
+  const [resBusiness, resBranch, resProduct] = await Promise.all([
+    getBusinessList(),
+    getBranchList(),
     getProductsList(),
   ]);
-
-  const businessData = resBusiness.data ?? [];
+  
+  const businessData = resBusiness ?? [];
   const productData = resProduct ?? [];
-  const catalogList = resCatalog.data ?? [];
+  const catalogList = resBranch ?? [];
 
   return (
     <Conciliador
