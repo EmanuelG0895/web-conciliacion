@@ -1,0 +1,6 @@
+projectKey=WEB-CONCILIACION-SEGUROS-AZTECA
+serverUrl=http://10.57.113.51:9000
+serverVersion=2025.4.3.113915
+dashboardUrl=http://10.57.113.51:9000/dashboard?id=WEB-CONCILIACION-SEGUROS-AZTECA
+ceTaskId=01e2ce38-c6f0-4d02-973c-ed4303c1292e
+ceTaskUrl=http://10.57.113.51:9000/api/ce/task?id=01e2ce38-c6f0-4d02-973c-ed4303c1292e

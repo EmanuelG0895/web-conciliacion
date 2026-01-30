@@ -83,8 +83,7 @@ export default function Sociedades({
       onDelete={handleDelete}
       labelCreate="Nueva Sociedad"
       modalContent={
-        <Form<FormType>
-          // IMPORTANTE: La 'key' fuerza al formulario a reiniciarse cuando cambia la selección
+        <Form<FormType>        
           key={selected ? selected.rfc : "new-society-form"}
           onSubmit={handleSave}
           defaultValues={defaultValues}
@@ -104,7 +103,7 @@ export default function Sociedades({
             <Form.Field
               name="num_sociedad_sap"
               label="Sociedad SAP"
-              type="number" // Agregado type number para coincidir con tus datos
+              type="number" 
               required
             />
             <Form.Field name="topico_kafka" label="Tópico Kafka" required />
